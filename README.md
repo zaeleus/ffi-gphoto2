@@ -62,4 +62,7 @@ canonical Ruby way.
     # ...and save it in the current working directory
     file.save
 
+More examples can be found in [`examples/`][2].
+
 [1]: http://www.gphoto.org/
+[2]: https://github.com/zaeleus/ffi-gphoto2/tree/master/examples
