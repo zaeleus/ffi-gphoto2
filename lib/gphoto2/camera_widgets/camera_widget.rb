@@ -4,15 +4,16 @@ module GPhoto2
 
     attr_reader :ptr
 
-    def self.factory(ptr)
+    def self.factory(ptr, parent = nil)
       # ptr fields are supposed to be private, but we ignore that here
       type = ptr[:type].to_s.split('_').last.capitalize
       klass = GPhoto2.const_get("#{type}CameraWidget")
-      klass.new(ptr)
+      klass.new(ptr, parent)
     end
 
-    def initialize(ptr)
+    def initialize(ptr, parent = nil)
       @ptr = ptr
+      @parent = parent
     end
 
     def name
@@ -95,7 +96,7 @@ module GPhoto2
       rc = gp_widget_get_child(ptr, index, widget_ptr)
       GPhoto2.check!(rc)
       widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
-      CameraWidget.factory(widget)
+      CameraWidget.factory(widget, self)
     end
   end
 end
