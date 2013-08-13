@@ -16,6 +16,10 @@ module GPhoto2
       @parent = parent
     end
 
+    def finalize
+      free
+    end
+
     def name
       get_name
     end
@@ -59,6 +63,11 @@ module GPhoto2
     end
 
     private
+
+    def free
+      rc = gp_widget_free(ptr)
+      GPhoto2.check!(rc)
+    end
 
     def get_name
       str = FFI::MemoryPointer.new(:string)

@@ -64,6 +64,7 @@ module FFI
     attach_function :gp_list_get_value, [:pointer, :int, :pointer], :int
 
     # gphoto2/gphoto2-widget.h
+    attach_function :gp_widget_free, [:pointer], :int
     attach_function :gp_widget_get_name, [:pointer, :pointer], :int
     attach_function :gp_widget_get_type, [:pointer, :pointer], :int
     attach_function :gp_widget_set_value, [:pointer, :pointer], :int
