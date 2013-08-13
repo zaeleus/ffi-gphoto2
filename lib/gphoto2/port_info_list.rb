@@ -9,10 +9,6 @@ module GPhoto2
       load
     end
 
-    def finalize
-      free
-    end
-
     def lookup_path(port)
       _lookup_path(port)
     end
@@ -38,11 +34,6 @@ module GPhoto2
 
     def load
       rc = gp_port_info_list_load(ptr)
-      GPhoto2.check!(rc)
-    end
-
-    def free
-      rc = gp_port_info_list_free(ptr)
       GPhoto2.check!(rc)
     end
 

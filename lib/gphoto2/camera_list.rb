@@ -34,11 +34,6 @@ module GPhoto2
       @ptr = FFI::GPhoto2::CameraList.new(ptr.read_pointer)
     end
 
-    def free
-      rc = gp_list_free(ptr)
-      GPhoto2.check!(rc)
-    end
-
     def count
       rc = gp_list_count(ptr)
       GPhoto2.check!(rc)

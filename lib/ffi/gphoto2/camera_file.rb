@@ -1,6 +1,6 @@
 module FFI
   module GPhoto2
-    class CameraFile < FFI::Struct
+    class CameraFile < FFI::ManagedStruct
       MAX_PATH = 256
 
       # libgphoto2/gphoto2-file.c
@@ -19,6 +19,10 @@ module FFI
 
              :handler, :pointer, # CameraFileHandler
              :private, :pointer # void*
+
+      def self.release(ptr)
+        FFI::GPhoto2.gp_file_free(ptr)
+      end
     end
   end
 end
