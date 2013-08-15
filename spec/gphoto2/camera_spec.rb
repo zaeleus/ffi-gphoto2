@@ -28,6 +28,29 @@ module GPhoto2
       end
     end
 
+    describe '.open' do
+      let(:camera) { double('camera') }
+      before { Camera.stub(:new).and_return(camera) }
+
+      context 'when a block is given' do
+        it 'yeilds a new camera instance' do
+          expect(Camera).to receive(:open).and_yield(camera)
+          Camera.open(port) { |c| }
+        end
+
+        it 'finalizes the camera when the block terminates' do
+          expect(camera).to receive(:finalize)
+          Camera.open(port) { |c| }
+        end
+      end
+
+      context 'when no block is given' do
+        it 'returns a new camera instance' do
+           expect(Camera.open(port)).to eq(camera)
+        end
+      end
+    end
+
     describe '#capture' do
       it 'returns a new CameraFile' do
         camera = Camera.new(port)
