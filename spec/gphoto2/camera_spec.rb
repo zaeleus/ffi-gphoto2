@@ -64,12 +64,26 @@ module GPhoto2
       end
     end
 
+    describe '#window' do
+      let(:camera) { Camera.new(port) }
+      let(:window) { double('camera_widget') }
+
+      before do
+        CameraWidget.stub(:factory).and_return(window)
+        camera.stub(:get_config)
+      end
+
+      it 'always returns the same CameraWidget instance' do
+        expect(camera.window).to eq(window)
+        expect(camera.window).to eq(window)
+      end
+    end
+
     describe '#config' do
       it 'returns a map of configuration widgets' do
         camera = Camera.new(port)
-        camera.stub(:get_config)
         window = double('camera_widget')
-        CameraWidget.stub(:factory).and_return(window)
+        camera.stub(:window).and_return(window)
         window.stub(:flatten).and_return({ 'iso' => window })
 
         expect(camera.config).to eq({ 'iso' => window })

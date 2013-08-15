@@ -42,11 +42,12 @@ module GPhoto2
       file_get(path)
     end
 
+    def window
+      @window ||= CameraWidget.factory(get_config)
+    end
+
     def config
-      @config ||= begin
-        @window = CameraWidget.factory(get_config)
-        @window.flatten
-      end
+      @config ||= window.flatten
     end
 
     def [](key)
@@ -104,7 +105,7 @@ module GPhoto2
     end
 
     def set_config
-      rc = gp_camera_set_config(ptr, @window.ptr, @context.ptr)
+      rc = gp_camera_set_config(ptr, window.ptr, @context.ptr)
       GPhoto2.check!(rc)
     end
 
