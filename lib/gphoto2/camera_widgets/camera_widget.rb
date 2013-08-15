@@ -19,6 +19,7 @@ module GPhoto2
     def finalize
       free
     end
+    alias_method :close, :finalize
 
     def name
       get_name

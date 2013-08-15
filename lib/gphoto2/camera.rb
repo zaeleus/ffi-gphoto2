@@ -35,6 +35,7 @@ module GPhoto2
       @window.finalize if @window
       unref
     end
+    alias_method :close, :finalize
 
     def capture(type = :GP_CAPTURE_IMAGE)
       path = _capture(type)
