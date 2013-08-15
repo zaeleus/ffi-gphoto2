@@ -10,10 +10,6 @@ module GPhoto2
       new
     end
 
-    def finalize
-      free
-    end
-
     def save(pathname = nil)
       data = get_data_and_size.first
       pathname ||= @camera_file_path.name
@@ -31,11 +27,6 @@ module GPhoto2
       rc = gp_file_new(ptr)
       GPhoto2.check!(rc)
       @ptr = FFI::GPhoto2::CameraFile.new(ptr.read_pointer)
-    end
-
-    def free
-      rc = gp_file_free(ptr)
-      GPhoto2.check!(rc)
     end
 
     def get_data_and_size
