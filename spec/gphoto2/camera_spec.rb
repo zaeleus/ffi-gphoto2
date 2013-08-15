@@ -9,7 +9,6 @@ module GPhoto2
       PortInfo.stub(:find).and_return(double('port_info'))
       Camera.any_instance.stub(:new)
       Camera.any_instance.stub(:port_info=)
-      Camera.any_instance.stub(:ref)
     end
 
     describe '.first' do

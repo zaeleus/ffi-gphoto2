@@ -29,7 +29,6 @@ module GPhoto2
       @context = Context.new
       new
       self.port_info = PortInfo.find(port)
-      ref
     end
 
     def finalize
@@ -117,11 +116,6 @@ module GPhoto2
       GPhoto2.check!(rc)
 
       file
-    end
-
-    def ref
-      rc = gp_camera_ref(ptr)
-      GPhoto2.check!(rc)
     end
 
     def unref
