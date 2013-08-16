@@ -32,6 +32,7 @@ module GPhoto2
     end
 
     def finalize
+      @context.finalize
       @window.finalize if @window
       unref
     end

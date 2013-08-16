@@ -6,7 +6,11 @@ module GPhoto2
       camera_abilities_list = CameraAbilitiesList.new(context)
       camera_list = camera_abilities_list.detect
 
-      camera_list.to_a.map(&:value)
+      ports = camera_list.to_a.map(&:value)
+
+      context.finalize
+
+      ports
     end
   end
 end

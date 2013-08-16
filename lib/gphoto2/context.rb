@@ -5,9 +5,13 @@ module GPhoto2
     attr_reader :ptr
 
     def initialize
-      ctx = new
-      @ptr = GPContext.new(ctx)
+      new
     end
+
+    def finalize
+      unref
+    end
+    alias_method :close, :finalize
 
     def to_ptr
       @ptr
@@ -16,7 +20,12 @@ module GPhoto2
     private
 
     def new
-      gp_context_new()
+      ctx = gp_context_new()
+      @ptr = GPContext.new(ctx)
+    end
+
+    def unref
+      gp_context_unref(ptr)
     end
   end
 end

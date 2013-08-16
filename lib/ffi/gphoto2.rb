@@ -50,6 +50,8 @@ module FFI
 
     # gphoto2/gphoto2-context.h
     attach_function :gp_context_new, [], :pointer
+    attach_function :gp_context_ref, [:pointer], :void
+    attach_function :gp_context_unref, [:pointer], :void
 
     # gphoto2/gphoto2-file.h
     attach_function :gp_file_new, [:pointer], :int
