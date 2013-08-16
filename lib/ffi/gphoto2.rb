@@ -30,50 +30,48 @@ module FFI
 
     # gphoto2/gphoto2-abilities-list.h
     attach_function :gp_abilities_list_new, [:pointer], :int
-    attach_function :gp_abilities_list_free, [:pointer], :int
-    attach_function :gp_abilities_list_load, [:pointer, :pointer], :int
-    attach_function :gp_abilities_list_detect, [:pointer, :pointer, :pointer, :pointer], :int
+    attach_function :gp_abilities_list_free, [CameraAbilitiesList.by_ref], :int
+    attach_function :gp_abilities_list_load, [CameraAbilitiesList.by_ref, GPContext.by_ref], :int
+    attach_function :gp_abilities_list_detect, [CameraAbilitiesList.by_ref, GPhoto2Port::GPPortInfoList.by_ref, CameraList.by_ref, GPContext.by_ref], :int
 
     # gphoto2/gphoto2-camera.h
     attach_function :gp_camera_new, [:pointer], :int
-    attach_function :gp_camera_set_port_info, [:pointer, GPhoto2Port::GPPortInfo], :int
-    attach_function :gp_camera_exit, [:pointer, :pointer], :int
-    attach_function :gp_camera_ref, [:pointer], :int
-    attach_function :gp_camera_unref, [:pointer], :int
-    attach_function :gp_camera_get_config, [:pointer, :pointer, :pointer], :int
-    attach_function :gp_camera_set_config, [:pointer, :pointer, :pointer], :int
-    attach_function :gp_camera_capture, [:pointer, CameraCaptureType, :pointer, :pointer], :int
-    attach_function :gp_camera_file_get,
-                    [:pointer, :string, :string, CameraFileType, :pointer, :pointer],
-                    :int
+    attach_function :gp_camera_set_port_info, [Camera.by_ref, GPhoto2Port::GPPortInfo], :int
+    attach_function :gp_camera_exit, [Camera.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_ref, [Camera.by_ref], :int
+    attach_function :gp_camera_unref, [Camera.by_ref], :int
+    attach_function :gp_camera_get_config, [Camera.by_ref, :pointer, GPContext.by_ref], :int
+    attach_function :gp_camera_set_config, [Camera.by_ref, CameraWidget.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_capture, [Camera.by_ref, CameraCaptureType, CameraFilePath.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_file_get, [Camera.by_ref, :string, :string, CameraFileType, CameraFile.by_ref, GPContext.by_ref], :int
 
     # gphoto2/gphoto2-context.h
     attach_function :gp_context_new, [], :pointer
-    attach_function :gp_context_ref, [:pointer], :void
-    attach_function :gp_context_unref, [:pointer], :void
+    attach_function :gp_context_ref, [GPContext.by_ref], :void
+    attach_function :gp_context_unref, [GPContext.by_ref], :void
 
     # gphoto2/gphoto2-file.h
     attach_function :gp_file_new, [:pointer], :int
-    attach_function :gp_file_free, [:pointer], :int
-    attach_function :gp_file_get_data_and_size, [:pointer, :pointer, :pointer], :int
+    attach_function :gp_file_free, [CameraFile.by_ref], :int
+    attach_function :gp_file_get_data_and_size, [CameraFile.by_ref, :pointer, :pointer], :int
 
     # gphoto2/gphoto2-list.h
     attach_function :gp_list_new, [:pointer], :int
-    attach_function :gp_list_free, [:pointer], :int
-    attach_function :gp_list_count, [:pointer], :int
-    attach_function :gp_list_get_name, [:pointer, :int, :pointer], :int
-    attach_function :gp_list_get_value, [:pointer, :int, :pointer], :int
+    attach_function :gp_list_free, [CameraList.by_ref], :int
+    attach_function :gp_list_count, [CameraList.by_ref], :int
+    attach_function :gp_list_get_name, [CameraList.by_ref, :int, :pointer], :int
+    attach_function :gp_list_get_value, [CameraList.by_ref, :int, :pointer], :int
 
     # gphoto2/gphoto2-widget.h
-    attach_function :gp_widget_free, [:pointer], :int
-    attach_function :gp_widget_get_name, [:pointer, :pointer], :int
-    attach_function :gp_widget_get_type, [:pointer, :pointer], :int
-    attach_function :gp_widget_set_value, [:pointer, :pointer], :int
-    attach_function :gp_widget_get_value, [:pointer, :pointer], :int
-    attach_function :gp_widget_count_children, [:pointer], :int
-    attach_function :gp_widget_get_child, [:pointer, :int, :pointer], :int
-    attach_function :gp_widget_get_range, [:pointer, :pointer, :pointer, :pointer], :int
-    attach_function :gp_widget_count_choices, [:pointer], :int
-    attach_function :gp_widget_get_choice, [:pointer, :int, :pointer], :int 
+    attach_function :gp_widget_free, [CameraWidget.by_ref], :int
+    attach_function :gp_widget_count_children, [CameraWidget.by_ref], :int
+    attach_function :gp_widget_get_child, [CameraWidget.by_ref, :int, :pointer], :int
+    attach_function :gp_widget_set_value, [CameraWidget.by_ref, :pointer], :int
+    attach_function :gp_widget_get_value, [CameraWidget.by_ref, :pointer], :int
+    attach_function :gp_widget_get_name, [CameraWidget.by_ref, :pointer], :int
+    attach_function :gp_widget_get_type, [CameraWidget.by_ref, :pointer], :int
+    attach_function :gp_widget_get_range, [CameraWidget.by_ref, :pointer, :pointer, :pointer], :int
+    attach_function :gp_widget_count_choices, [CameraWidget.by_ref], :int
+    attach_function :gp_widget_get_choice, [CameraWidget.by_ref, :int, :pointer], :int
   end
 end

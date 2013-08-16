@@ -20,9 +20,9 @@ module FFI
     attach_function :gp_port_info_get_type, [GPPortInfo, :pointer], :int 
 
     attach_function :gp_port_info_list_new, [:pointer], :int
-    attach_function :gp_port_info_list_free, [:pointer], :int
-    attach_function :gp_port_info_list_load, [:pointer], :int
-    attach_function :gp_port_info_list_lookup_path, [:pointer, :string], :int
-    attach_function :gp_port_info_list_get_info, [:pointer, :int, :pointer], :int
+    attach_function :gp_port_info_list_free, [GPPortInfoList.by_ref], :int
+    attach_function :gp_port_info_list_load, [GPPortInfoList.by_ref], :int
+    attach_function :gp_port_info_list_lookup_path, [GPPortInfoList.by_ref, :string], :int
+    attach_function :gp_port_info_list_get_info, [GPPortInfoList.by_ref, :int, :pointer], :int
   end
 end
