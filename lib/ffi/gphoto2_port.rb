@@ -15,9 +15,9 @@ module FFI
     require 'ffi/gphoto2_port/gp_port_info_list'
 
     # libgphoto2_port/gphoto2/gphoto2-port-info-list.h
-    attach_function :gp_port_info_get_name, [GPPortInfo.by_value, :pointer], :int
-    attach_function :gp_port_info_get_path, [GPPortInfo.by_value, :pointer], :int 
-    attach_function :gp_port_info_get_type, [GPPortInfo.by_value, :pointer], :int 
+    attach_function :gp_port_info_get_name, [GPPortInfo, :pointer], :int
+    attach_function :gp_port_info_get_path, [GPPortInfo, :pointer], :int 
+    attach_function :gp_port_info_get_type, [GPPortInfo, :pointer], :int 
 
     attach_function :gp_port_info_list_new, [:pointer], :int
     attach_function :gp_port_info_list_free, [:pointer], :int

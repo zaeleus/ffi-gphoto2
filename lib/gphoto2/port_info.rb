@@ -43,18 +43,20 @@ module GPhoto2
 
     def get_name
       name = FFI::MemoryPointer.new(:string)
-      ptr = FFI::MemoryPointer.new(:pointer)
-      ptr.writer_pointer(name)
-      rc = gp_port_info_get_name(ptr)
-      ptr.read_pointer.read_string
+      name_ptr = FFI::MemoryPointer.new(:pointer)
+      name_ptr.write_pointer(name)
+      rc = gp_port_info_get_name(ptr, name_ptr)
+      GPhoto2.check!(rc)
+      name_ptr.read_pointer.read_string
     end
 
     def get_path
       path = FFI::MemoryPointer.new(:string)
-      ptr = FFI::MemoryPointer.new(:pointer)
-      ptr.writer_pointer(path)
-      rc = gp_port_info_get_path(ptr)
-      ptr.read_pointer.read_string
+      path_ptr = FFI::MemoryPointer.new(:pointer)
+      path_ptr.write_pointer(path)
+      rc = gp_port_info_get_path(ptr, path_ptr)
+      GPhoto2.check!(rc)
+      path_ptr.read_pointer.read_string
     end
 
     def get_type
