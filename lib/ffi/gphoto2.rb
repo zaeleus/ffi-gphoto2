@@ -36,8 +36,7 @@ module FFI
 
     # gphoto2/gphoto2-camera.h
     attach_function :gp_camera_new, [:pointer], :int
-    attach_function :gp_camera_set_port_info, [:pointer, GPhoto2Port::GPPortInfo.by_value], :int
-    attach_function :gp_camera_set_port_info, [:pointer, :pointer], :int
+    attach_function :gp_camera_set_port_info, [:pointer, GPhoto2Port::GPPortInfo], :int
     attach_function :gp_camera_exit, [:pointer, :pointer], :int
     attach_function :gp_camera_ref, [:pointer], :int
     attach_function :gp_camera_unref, [:pointer], :int
