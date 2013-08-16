@@ -39,6 +39,7 @@ module GPhoto2
     alias_method :close, :finalize
 
     def capture(type = :GP_CAPTURE_IMAGE)
+      save
       path = _capture(type)
       file_get(path)
     end

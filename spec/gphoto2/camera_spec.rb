@@ -51,15 +51,23 @@ module GPhoto2
     end
 
     describe '#capture' do
+      let(:camera) { Camera.new(port) }
+      let(:path) { double('camera_file_path') }
+      let(:file) { double('camera_file') }
+
+      before do
+        camera.stub(:_capture).and_return(path)
+        camera.stub(:file_get).and_return(file)
+      end
+
+      it 'saves the camera configuration' do
+        expect(camera).to receive(:save)
+        camera.capture
+      end
+
       it 'returns a new CameraFile' do
-        camera = Camera.new(port)
-        path = double('camera_file_path')
-        file = double('camera_file')
-        type = :GP_CAPTURE_IMAGE
-
-        expect(camera).to receive(:_capture).with(type).and_return(path)
-        expect(camera).to receive(:file_get).with(path).and_return(file)
-
+        expect(camera).to receive(:_capture)
+        expect(camera).to receive(:file_get).with(path)
         expect(camera.capture).to eq(file)
       end
     end
