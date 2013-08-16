@@ -28,7 +28,7 @@ module GPhoto2
       @dirty = false
       @context = Context.new
       new
-      self.port_info = PortInfo.find(port)
+      set_port_info(PortInfo.find(port))
     end
 
     def finalize
@@ -86,7 +86,7 @@ module GPhoto2
       @ptr = FFI::GPhoto2::Camera.new(ptr.read_pointer)
     end
 
-    def port_info=(port_info)
+    def set_port_info(port_info)
       rc = gp_camera_set_port_info(ptr, port_info.ptr)
       GPhoto2.check!(rc)
       @port_info = port_info
