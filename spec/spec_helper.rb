@@ -8,12 +8,4 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.order = 'random'
-
-  config.before do
-    [FFI::GPhoto2, FFI::GPhoto2Port].each do |klass|
-      klass.instance_methods.each do |method|
-        klass.stub(method).and_return(FFI::GPhoto2Port::GP_OK)
-      end
-    end
-  end
 end
