@@ -76,12 +76,8 @@ module GPhoto2
       let(:camera) { Camera.new(port) }
       let(:window) { double('camera_widget') }
 
-      before do
-        CameraWidget.stub(:factory).and_return(window)
-        camera.stub(:get_config)
-      end
-
       it 'always returns the same CameraWidget instance' do
+        camera.stub(:get_config).and_return(window)
         expect(camera.window).to eq(window)
         expect(camera.window).to eq(window)
       end

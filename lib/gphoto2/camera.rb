@@ -45,7 +45,7 @@ module GPhoto2
     end
 
     def window
-      @window ||= CameraWidget.factory(get_config)
+      @window ||= get_config
     end
 
     def config
@@ -103,7 +103,8 @@ module GPhoto2
       widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
       rc = gp_camera_get_config(ptr, widget_ptr, @context.ptr)
       GPhoto2.check!(rc)
-      FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
+      widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
+      CameraWidget.factory(widget)
     end
 
     def set_config
