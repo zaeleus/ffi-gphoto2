@@ -43,7 +43,7 @@ module GPhoto2
 
     describe '#type' do
       it 'returns the type of the port' do
-        type = :GP_PORT_USB
+        type = :usb
         port_info = PortInfo.new(port_info_list, index)
         port_info.stub(:get_type).and_return(type)
         expect(port_info.type).to eq(type)

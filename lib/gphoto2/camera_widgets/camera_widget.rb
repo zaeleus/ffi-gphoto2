@@ -44,9 +44,9 @@ module GPhoto2
     
     def flatten(map = {})
       case type
-      when :GP_WIDGET_WINDOW, :GP_WIDGET_SECTION
+      when :window, :section
         children.each { |child| child.flatten(map) }
-      when :GP_WIDGET_MENU
+      when :menu
         # noop
       else
         map[name] = self

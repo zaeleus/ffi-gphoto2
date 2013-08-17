@@ -39,7 +39,7 @@ module GPhoto2
     end
     alias_method :close, :finalize
 
-    def capture(type = :GP_CAPTURE_IMAGE)
+    def capture(type = :image)
       save
       path = _capture(type)
       file_get(path)
@@ -119,7 +119,7 @@ module GPhoto2
       GPhoto2.check!(rc)
     end
 
-    def file_get(path, type = :GP_FILE_TYPE_NORMAL)
+    def file_get(path, type = :normal)
       folder = path.folder
       name = path.name
       file = CameraFile.new(self, path)

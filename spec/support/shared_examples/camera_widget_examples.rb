@@ -36,7 +36,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
 
   describe '#type' do
     it 'returns the type of the widget' do
-      type = :GP_WIDGET_WINDOW
+      type = :window
       widget = klass.new(nil)
       widget.stub(:get_type).and_return(type)
       expect(widget.type).to eq(type)
@@ -62,7 +62,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
       let(name.to_sym) do
         widget = GPhoto2::TextCameraWidget.new(nil)
         widget.stub(:name).and_return(name)
-        widget.stub(:type).and_return(:GP_WIDGET_TEXT)
+        widget.stub(:type).and_return(:text)
         widget.stub(:children).and_return([])
         widget
       end
@@ -71,7 +71,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     it 'returns a map of name-widget pairs of its descendents' do
       widget = klass.new(nil)
       widget.stub(:name).and_return('a')
-      widget.stub(:type).and_return(:GP_WIDGET_SECTION)
+      widget.stub(:type).and_return(:section)
       widget.stub(:children).and_return([a, b])
 
       expect(widget.flatten).to eq({ 'a' => a, 'b' => b })
