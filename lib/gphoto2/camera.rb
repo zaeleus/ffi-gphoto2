@@ -4,7 +4,7 @@ module GPhoto2
 
     attr_reader :model, :port
 
-    def self.autodetect
+    def self.all
       context = Context.new
 
       camera_abilities_list = CameraAbilitiesList.new(context)
@@ -18,7 +18,7 @@ module GPhoto2
     end
 
     def self.first
-      entries = autodetect
+      entries = all
       raise RuntimeError, 'no devices detected' if entries.empty?
       entries.first
     end

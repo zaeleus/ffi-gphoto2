@@ -21,16 +21,16 @@ canonical Ruby way.
 
     require 'gphoto2'
 
-    # list available devices
-    entries = GPhoto2::Port.autodetect
-    # => [GPhoto2::Entry, ...]
+    # list available cameras
+    cameras = GPhoto2::Camera.all
+    # => [#<GPhoto2::Camera>, ...]
 
-    # list devices by model and port path
-    entries.map { |e| [e.name, e.value] }
+    # list found cameras by model and port path
+    cameras.map { |c| [c.model, c.port] }
     # => [['Nikon DSC D5100 (PTP mode)', 'usb:250,006'], ...]
 
-    # instantiate a new camara from an entry
-    camera = GPhoto2::Camera.new(entry.first)
+    # use the first camera
+    camera = cameras.first
 
     # list camera configuration names
     camera.config.keys
