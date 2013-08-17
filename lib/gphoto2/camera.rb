@@ -2,7 +2,7 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
 
-    attr_reader :abilities, :port_info, :ptr
+    attr_reader :model, :port
 
     def self.first(&blk)
       entries = Port.autodetect
@@ -25,17 +25,14 @@ module GPhoto2
     end
 
     def initialize(entry)
+      @model, @port = entry.name, entry.value
       @dirty = false
-      @context = Context.new
-      new
-      set_abilities(CameraAbilities.find(entry.name))
-      set_port_info(PortInfo.find(entry.value))
     end
 
     def finalize
-      @context.finalize
+      @context.finalize if @context
       @window.finalize if @window
-      unref
+      unref if @ptr
     end
     alias_method :close, :finalize
 
@@ -43,6 +40,22 @@ module GPhoto2
       save
       path = _capture(type)
       file_get(path)
+    end
+
+    def ptr
+      @ptr || (init && @ptr)
+    end
+
+    def abilities
+      @abilities || (init && @abilities)
+    end
+
+    def port_info
+      @port_info || (init && @port_info)
+    end
+
+    def context
+      @context ||= Context.new
     end
 
     def window
@@ -80,6 +93,12 @@ module GPhoto2
 
     private
 
+    def init
+      new
+      set_abilities(CameraAbilities.find(@model))
+      set_port_info(PortInfo.find(@port))
+    end
+
     def new
       ptr = FFI::MemoryPointer.new(FFI::GPhoto2::Camera)
       rc = gp_camera_new(ptr)
@@ -101,21 +120,21 @@ module GPhoto2
 
     def _capture(type)
       path = CameraFilePath.new
-      rc = gp_camera_capture(ptr, type, path.ptr, @context.ptr)
+      rc = gp_camera_capture(ptr, type, path.ptr, context.ptr)
       GPhoto2.check!(rc)
       path
     end
 
     def get_config
       widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
-      rc = gp_camera_get_config(ptr, widget_ptr, @context.ptr)
+      rc = gp_camera_get_config(ptr, widget_ptr, context.ptr)
       GPhoto2.check!(rc)
       widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
       CameraWidget.factory(widget)
     end
 
     def set_config
-      rc = gp_camera_set_config(ptr, window.ptr, @context.ptr)
+      rc = gp_camera_set_config(ptr, window.ptr, context.ptr)
       GPhoto2.check!(rc)
     end
 
@@ -124,7 +143,7 @@ module GPhoto2
       name = path.name
       file = CameraFile.new(self, path)
 
-      rc = gp_camera_file_get(ptr, folder, name, type, file.ptr, @context.ptr)
+      rc = gp_camera_file_get(ptr, folder, name, type, file.ptr, context.ptr)
       GPhoto2.check!(rc)
 
       file
