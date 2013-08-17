@@ -6,13 +6,23 @@ module GPhoto2
 
     def initialize(context)
       @context = context
-      new 
+      new
       load
     end
 
     def detect
       _detect
     end
+
+    def lookup_model(model)
+      _lookup_model(model)
+    end
+    alias_method :index, :lookup_model
+
+    def at(index)
+      CameraAbilities.new(self, index)
+    end
+    alias_method :[], :at
 
     def to_ptr
       @ptr
@@ -43,6 +53,12 @@ module GPhoto2
       GPhoto2.check!(rc)
 
       camera_list
+    end
+
+    def _lookup_model(model)
+      index = rc = gp_abilities_list_lookup_model(ptr, model)
+      GPhoto2.check!(rc)
+      index
     end
   end
 end

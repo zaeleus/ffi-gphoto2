@@ -14,7 +14,7 @@ module GPhoto2
 
         list = PortInfoList.new
         list.stub(:_lookup_path).and_return(index)
-        
+
         expect(list.lookup_path(port)).to eq(index)
       end
     end

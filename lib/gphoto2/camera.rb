@@ -2,16 +2,16 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
 
-    attr_reader :port_info, :ptr
+    attr_reader :abilities, :port_info, :ptr
 
     def self.first(&blk)
-      ports = Port.autodetect
-      raise RuntimeError, 'no devices detected' if ports.empty?
-      open(ports.first, &blk)
+      entries = Port.autodetect
+      raise RuntimeError, 'no devices detected' if entries.empty?
+      open(entries.first, &blk)
     end
 
-    def self.open(port)
-      camera = new(port)
+    def self.open(entry)
+      camera = new(entry)
 
       if block_given?
         begin
@@ -24,11 +24,12 @@ module GPhoto2
       end
     end
 
-    def initialize(port)
+    def initialize(entry)
       @dirty = false
       @context = Context.new
       new
-      set_port_info(PortInfo.find(port))
+      set_abilities(CameraAbilities.find(entry.name))
+      set_port_info(PortInfo.find(entry.value))
     end
 
     def finalize
@@ -90,6 +91,12 @@ module GPhoto2
       rc = gp_camera_set_port_info(ptr, port_info.ptr)
       GPhoto2.check!(rc)
       @port_info = port_info
+    end
+
+    def set_abilities(abilities)
+      rc = gp_camera_set_abilities(ptr, abilities.ptr)
+      GPhoto2.check!(rc)
+      @abilities = abilities
     end
 
     def _capture(type)

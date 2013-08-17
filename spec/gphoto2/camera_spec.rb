@@ -2,18 +2,20 @@ require 'spec_helper'
 
 module GPhoto2
   describe Camera do
-    let(:port) { 'usb:250,006' }
+    let(:port) { double('entry', name: 'model', value: 'usb:250,006') }
 
     before do
       Context.stub(:new).and_return(double('context'))
       PortInfo.stub(:find).and_return(double('port_info'))
+      CameraAbilities.stub(:find).and_return(double('camera_abilities'))
       Camera.any_instance.stub(:new)
       Camera.any_instance.stub(:set_port_info)
+      Camera.any_instance.stub(:set_abilities)
     end
 
     describe '.first' do
       context 'when devices are automatically detected' do
-        it 'returns a new Camera using the first port path' do
+        it 'returns a new Camera using the first entry' do
           Port.stub(:autodetect).and_return([port])
           expect(Camera.first).to be_kind_of(Camera)
         end

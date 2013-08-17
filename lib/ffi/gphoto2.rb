@@ -33,9 +33,12 @@ module FFI
     attach_function :gp_abilities_list_free, [CameraAbilitiesList.by_ref], :int
     attach_function :gp_abilities_list_load, [CameraAbilitiesList.by_ref, GPContext.by_ref], :int
     attach_function :gp_abilities_list_detect, [CameraAbilitiesList.by_ref, GPhoto2Port::GPPortInfoList.by_ref, CameraList.by_ref, GPContext.by_ref], :int
+    attach_function :gp_abilities_list_lookup_model, [CameraAbilitiesList.by_ref, :string], :int
+    attach_function :gp_abilities_list_get_abilities, [CameraAbilitiesList.by_ref, :int, CameraAbilities.by_ref], :int
 
     # gphoto2/gphoto2-camera.h
     attach_function :gp_camera_new, [:pointer], :int
+    attach_function :gp_camera_set_abilities, [Camera.by_ref, CameraAbilities.by_value], :int
     attach_function :gp_camera_set_port_info, [Camera.by_ref, GPhoto2Port::GPPortInfo], :int
     attach_function :gp_camera_exit, [Camera.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_ref, [Camera.by_ref], :int
