@@ -10,17 +10,17 @@ module GPhoto2
       camera_abilities_list = CameraAbilitiesList.new(context)
       camera_list = camera_abilities_list.detect
 
-      entries = camera_list.to_a
+      entries = camera_list.to_a.map { |entry| Camera.new(entry) }
 
       context.finalize
 
       entries
     end
 
-    def self.first(&blk)
+    def self.first
       entries = autodetect
       raise RuntimeError, 'no devices detected' if entries.empty?
-      open(entries.first, &blk)
+      entries.first
     end
 
     def self.open(entry)

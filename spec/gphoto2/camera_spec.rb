@@ -5,23 +5,29 @@ module GPhoto2
     let(:port) { double('entry', name: 'model', value: 'usb:250,006') }
 
     describe '.autodetect' do
-      it 'returns a list of device entries' do
-        abilities_list = double('camera_abilities_list')
-        camera_list = double('camera_list')
+      let(:abilities_list) { double('camera_abilities_list') }
+      let(:camera_list) { double('camera_list') }
+      let(:camera) { Camera.new(port) }
 
+      before do
         Context.stub(:stub)
         CameraAbilitiesList.stub(:new).and_return(abilities_list)
         abilities_list.stub(:detect).and_return(camera_list)
-        camera_list.stub(:to_a).and_return([])
+        camera_list.stub(:to_a).and_return([port])
+      end
 
-        expect(Camera.autodetect).to be_kind_of(Array)
+      it 'returns a list of device entries' do
+        list = Camera.autodetect
+        expect(list).to be_kind_of(Array)
+        expect(list.first).to be_kind_of(Camera)
       end
     end
 
     describe '.first' do
       context 'when devices are automatically detected' do
         it 'returns a new Camera using the first entry' do
-          Camera.stub(:autodetect).and_return([port])
+          camera = Camera.new(port)
+          Camera.stub(:autodetect).and_return([camera])
           expect(Camera.first).to be_kind_of(Camera)
         end
       end
