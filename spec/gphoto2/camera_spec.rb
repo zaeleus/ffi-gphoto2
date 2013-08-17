@@ -63,6 +63,14 @@ module GPhoto2
       end
     end
 
+    describe '#where' do
+      it 'filters all detected cameras by model' do
+        cameras = %w[cheese toast wine].map { |model| double('camera', model: model) }
+        Camera.stub(:all).and_return(cameras)
+        expect(Camera.where(/e/)).to match_array([cameras[0], cameras[2]])
+      end
+    end
+
     describe '#capture' do
       let(:camera) { Camera.new(port) }
       let(:path) { double('camera_file_path') }

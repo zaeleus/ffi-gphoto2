@@ -37,6 +37,10 @@ module GPhoto2
       end
     end
 
+    def self.where(pattern)
+      all.select { |c| c.model.match(pattern) }
+    end
+
     def initialize(entry)
       @model, @port = entry.name, entry.value
       @dirty = false

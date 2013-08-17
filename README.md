@@ -32,6 +32,12 @@ canonical Ruby way.
     # use the first camera
     camera = cameras.first
 
+    # ...or more conveniently
+    camera = GPhoto2::Camera.first
+
+    # ...or even search by model name
+    camera = GPhoto2::Camera.where(/nikon/i).first
+
     # list camera configuration names
     camera.config.keys
     # => ['autofocusdrive', 'manualfocusdrive', 'controlmode', ...]
