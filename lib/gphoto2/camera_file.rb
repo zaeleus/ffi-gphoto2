@@ -11,9 +11,20 @@ module GPhoto2
     end
 
     def save(pathname = nil)
-      data = get_data_and_size.first
       pathname ||= @camera_file_path.name
       File.binwrite(pathname, data)
+    end
+
+    def data
+      data_and_size.first
+    end
+
+    def size
+      data_and_size.last
+    end
+
+    def data_and_size
+      @data_and_size ||= get_data_and_size
     end
 
     def to_ptr

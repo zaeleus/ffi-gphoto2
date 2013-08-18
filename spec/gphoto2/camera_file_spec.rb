@@ -15,7 +15,9 @@ module GPhoto2
       let(:file) { CameraFile.new(camera, camera_file_path) }
       let(:data) { data_and_size.first }
 
-      before { File.stub(:binwrite) }
+      before do
+        File.stub(:binwrite)
+      end
 
       context 'when a pathname is passed' do
         it 'saves the data to the passed pathname' do
@@ -31,6 +33,30 @@ module GPhoto2
           expect(File).to receive(:binwrite).with(pathname, data)
           file.save
         end
+      end
+    end
+
+    describe '#data' do
+      it 'returns the data of the camera file' do
+        file = CameraFile.new(camera, camera_file_path)
+        file.stub(:data_and_size).and_return(data_and_size)
+        expect(file.data).to eq(data_and_size.first)
+      end
+    end
+
+    describe '#size' do
+      it 'returns the size of the camera file' do
+        file = CameraFile.new(camera, camera_file_path)
+        file.stub(:data_and_size).and_return(data_and_size)
+        expect(file.size).to eq(data_and_size.last)
+      end
+    end
+
+    describe '#data_and_size' do
+      it 'returns the data and size of the camera file' do
+        file = CameraFile.new(camera, camera_file_path)
+        file.stub(:get_data_and_size).and_return(data_and_size)
+        expect(file.data_and_size).to eq(data_and_size)
       end
     end
   end
