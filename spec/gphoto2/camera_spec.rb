@@ -71,6 +71,15 @@ module GPhoto2
       end
     end
 
+    describe '#exit' do
+      it "calls libgphoto2's camera exit function" do
+        camera = Camera.new(port)
+        camera.stub(:_exit)
+        expect(camera).to receive(:_exit)
+        camera.exit
+      end
+    end
+
     describe '#capture' do
       let(:camera) { Camera.new(port) }
       let(:path) { double('camera_file_path') }
@@ -90,6 +99,26 @@ module GPhoto2
         expect(camera).to receive(:_capture)
         expect(camera).to receive(:file_get).with(path)
         expect(camera.capture).to eq(file)
+      end
+    end
+
+    describe '#preview' do
+      let(:camera) { Camera.new(port) }
+      let(:file) { double('camera_file') }
+
+      before do
+        camera.stub(:save)
+        camera.stub(:capture_preview).and_return(file)
+      end
+
+      it 'saves the camera configuration' do
+        expect(camera).to receive(:save)
+        camera.preview
+      end
+
+      it 'returns a new CameraFile' do
+
+        expect(camera.preview).to eq(file)
       end
     end
 

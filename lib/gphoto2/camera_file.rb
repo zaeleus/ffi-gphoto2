@@ -4,14 +4,13 @@ module GPhoto2
 
     attr_reader :ptr
 
-    def initialize(camera, camera_file_path)
+    def initialize(camera, camera_file_path = nil)
       @camera = camera
       @camera_file_path = camera_file_path
       new
     end
 
-    def save(pathname = nil)
-      pathname ||= @camera_file_path.name
+    def save(pathname = default_filename)
       File.binwrite(pathname, data)
     end
 
@@ -23,15 +22,19 @@ module GPhoto2
       data_and_size.last
     end
 
-    def data_and_size
-      @data_and_size ||= get_data_and_size
-    end
-
     def to_ptr
       @ptr
     end
 
     private
+
+    def data_and_size
+      @data_and_size ||= get_data_and_size
+    end
+
+    def default_filename
+      @camera_file_path ? @camera_file_path.name : 'capture_preview'
+    end
 
     def new
       ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraFile)

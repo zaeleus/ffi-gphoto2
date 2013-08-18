@@ -46,6 +46,7 @@ module FFI
     attach_function :gp_camera_get_config, [Camera.by_ref, :pointer, GPContext.by_ref], :int
     attach_function :gp_camera_set_config, [Camera.by_ref, CameraWidget.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_capture, [Camera.by_ref, CameraCaptureType, CameraFilePath.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_capture_preview, [Camera.by_ref, CameraFile.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_file_get, [Camera.by_ref, :string, :string, CameraFileType, CameraFile.by_ref, GPContext.by_ref], :int
 
     # gphoto2/gphoto2-context.h

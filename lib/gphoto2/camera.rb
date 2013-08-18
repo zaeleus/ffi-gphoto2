@@ -53,10 +53,19 @@ module GPhoto2
     end
     alias_method :close, :finalize
 
+    def exit
+      _exit
+    end
+
     def capture(type = :image)
       save
       path = _capture(type)
       file_get(path)
+    end
+
+    def preview
+      save
+      capture_preview
     end
 
     def ptr
@@ -123,6 +132,11 @@ module GPhoto2
       @ptr = FFI::GPhoto2::Camera.new(ptr.read_pointer)
     end
 
+    def _exit
+      rc = gp_camera_exit(ptr, context.ptr)
+      GPhoto2.check!(rc)
+    end
+
     def set_port_info(port_info)
       rc = gp_camera_set_port_info(ptr, port_info.ptr)
       GPhoto2.check!(rc)
@@ -140,6 +154,13 @@ module GPhoto2
       rc = gp_camera_capture(ptr, type, path.ptr, context.ptr)
       GPhoto2.check!(rc)
       path
+    end
+
+    def capture_preview
+      file = CameraFile.new(self)
+      rc = gp_camera_capture_preview(ptr, file.ptr, context.ptr)
+      GPhoto2.check!(rc)
+      file
     end
 
     def get_config
