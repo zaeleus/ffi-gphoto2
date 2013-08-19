@@ -7,11 +7,11 @@ module GPhoto2
     end
 
     def name
-      @ptr[:name]
+      ptr[:name].to_s
     end
 
     def folder
-      @ptr[:folder]
+      ptr[:folder].to_s
     end
 
     def to_ptr
