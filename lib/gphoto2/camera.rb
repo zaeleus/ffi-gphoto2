@@ -68,6 +68,11 @@ module GPhoto2
       capture_preview
     end
 
+    # timeout in milliseconds
+    def wait(timeout = 2000)
+      wait_for_event(timeout)
+    end
+
     def ptr
       @ptr || (init && @ptr)
     end
@@ -190,6 +195,20 @@ module GPhoto2
     def unref
       rc = gp_camera_unref(ptr)
       GPhoto2.check!(rc)
+    end
+
+    def wait_for_event(timeout)
+      # assume CameraEventType is an int
+      type = FFI::MemoryPointer.new(:int)
+
+      data = FFI::MemoryPointer.new(:pointer)
+      data_ptr = FFI::MemoryPointer.new(:pointer)
+      data_ptr.write_pointer(data)
+
+      rc = gp_camera_wait_for_event(ptr, timeout, type, data, context.ptr)
+      GPhoto2.check!(rc)
+
+      CameraEventType[type.read_int]
     end
   end
 end

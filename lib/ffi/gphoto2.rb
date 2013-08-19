@@ -9,6 +9,7 @@ module FFI
     # enums
     require 'ffi/gphoto2/camera_capture_type'
     require 'ffi/gphoto2/camera_driver_status'
+    require 'ffi/gphoto2/camera_event_type'
     require 'ffi/gphoto2/camera_file_access_type'
     require 'ffi/gphoto2/camera_file_operation'
     require 'ffi/gphoto2/camera_file_type'
@@ -47,6 +48,7 @@ module FFI
     attach_function :gp_camera_set_config, [Camera.by_ref, CameraWidget.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_capture, [Camera.by_ref, CameraCaptureType, CameraFilePath.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_capture_preview, [Camera.by_ref, CameraFile.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_wait_for_event, [Camera.by_ref, :int, :pointer, :pointer, GPContext.by_ref], :int
     attach_function :gp_camera_file_get, [Camera.by_ref, :string, :string, CameraFileType, CameraFile.by_ref, GPContext.by_ref], :int
 
     # gphoto2/gphoto2-context.h

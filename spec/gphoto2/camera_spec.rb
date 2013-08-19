@@ -63,7 +63,7 @@ module GPhoto2
       end
     end
 
-    describe '#where' do
+    describe '.where' do
       it 'filters all detected cameras by model' do
         cameras = %w[cheese toast wine].map { |model| double('camera', model: model) }
         Camera.stub(:all).and_return(cameras)
@@ -72,7 +72,7 @@ module GPhoto2
     end
 
     describe '#exit' do
-      it "calls libgphoto2's camera exit function" do
+      it 'closes the camera connection' do
         camera = Camera.new(port)
         camera.stub(:_exit)
         expect(camera).to receive(:_exit)
@@ -117,8 +117,25 @@ module GPhoto2
       end
 
       it 'returns a new CameraFile' do
-
         expect(camera.preview).to eq(file)
+      end
+    end
+
+    describe '#wait' do
+      let(:camera) { Camera.new(port) }
+      let(:event) { :capture_complete }
+
+      before do
+        camera.stub(:wait_for_event).and_return(event)
+      end
+
+      it 'waits for a camera event' do
+        expect(camera).to receive(:wait_for_event)
+        camera.wait
+      end
+
+      it 'returns an event symbol' do
+        expect(camera.wait).to eq(event)
       end
     end
 
