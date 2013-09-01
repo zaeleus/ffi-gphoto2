@@ -8,8 +8,8 @@ canonical Ruby way.
 
 ### Prerequisites
 
-  * Ruby 1.9+
-  * libgphoto2 (`brew install libgphoto2`)
+  * Ruby >= 1.9
+  * libgphoto2 >= 2.5.0 (`brew install libgphoto2`)
 
 ### Gem
 
