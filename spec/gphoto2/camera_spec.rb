@@ -161,6 +161,16 @@ module GPhoto2
       end
     end
 
+    describe '#filesystem' do
+      it 'returns a folder starting at the root of the filesystem' do
+        camera = Camera.new(port)
+        fs = camera.filesystem
+
+        expect(fs).to be_kind_of(CameraFolder)
+        expect(fs.path).to eq('/')
+      end
+    end
+
     describe '#[]' do
       let(:window) { double('camera_widget') }
 

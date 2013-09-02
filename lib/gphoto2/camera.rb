@@ -2,7 +2,7 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
 
-    attr_reader :model, :port
+    attr_reader :context, :model, :port
 
     def self.all
       context = Context.new
@@ -96,6 +96,11 @@ module GPhoto2
     def config
       @config ||= window.flatten
     end
+
+    def filesystem
+      CameraFolder.new(self)
+    end
+    alias_method :fs, :filesystem
 
     def [](key)
       config[key]
