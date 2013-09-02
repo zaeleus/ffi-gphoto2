@@ -11,6 +11,22 @@ module GPhoto2
       end
     end
 
+    describe '#name' do
+      context 'when the folder is the root' do
+        it 'returns /' do
+          folder = CameraFolder.new(camera, '/')
+          expect(folder.name).to eq('/')
+        end
+      end
+
+      context 'when the folder is not the root' do
+        it 'returns the current folder name' do
+          folder = CameraFolder.new(camera, '/store_00010001/DCIM')
+          expect(folder.name).to eq('DCIM')
+        end
+      end
+    end
+
     describe '#folders' do
       it 'returns a list of subfolders' do
         folder = CameraFolder.new(camera)
@@ -85,9 +101,9 @@ module GPhoto2
     end
 
     describe '#to_s' do
-      it 'returns the path of the folder' do
+      it 'returns the name of the folder' do
         folder = CameraFolder.new(camera, '/store_00010001')
-        expect(folder.to_s).to eq('/store_00010001')
+        expect(folder.to_s).to eq('store_00010001')
       end
     end
   end

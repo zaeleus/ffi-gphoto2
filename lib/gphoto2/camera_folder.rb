@@ -13,6 +13,14 @@ module GPhoto2
       @path == '/'
     end
 
+    def name
+      if root?
+        '/'
+      else
+        @path.rpartition('/').last
+      end
+    end
+
     def folders
       folder_list_folders
     end
@@ -48,7 +56,7 @@ module GPhoto2
     end
 
     def to_s
-      @path
+      name
     end
 
     private
