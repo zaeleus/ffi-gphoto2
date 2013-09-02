@@ -13,9 +13,7 @@ canonical Ruby way.
 
 ### Gem
 
-    $ git clone https://github.com/zaeleus/ffi-gphoto2.git
-    $ cd ffi-gphoto2
-    $ rake install
+    $ gem install ffi-gphoto2
 
 ## Usage
 
