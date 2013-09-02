@@ -22,6 +22,14 @@ module GPhoto2
       data_and_size.last
     end
 
+    def folder
+      @camera_file_path.folder
+    end
+
+    def name
+      @camera_file_path.name
+    end
+
     def to_ptr
       @ptr
     end
@@ -29,7 +37,10 @@ module GPhoto2
     private
 
     def data_and_size
-      @data_and_size ||= get_data_and_size
+      @data_and_size ||= begin
+        @camera.file(self) if @camera_file_path
+        get_data_and_size
+      end
     end
 
     def default_filename

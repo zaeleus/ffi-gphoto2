@@ -60,7 +60,7 @@ module GPhoto2
     def capture(type = :image)
       save
       path = _capture(type)
-      file_get(path)
+      CameraFile.new(self, path)
     end
 
     def preview
@@ -101,6 +101,10 @@ module GPhoto2
       CameraFolder.new(self)
     end
     alias_method :fs, :filesystem
+
+    def file(file)
+      file_get(file)
+    end
 
     def [](key)
       config[key]
@@ -186,14 +190,9 @@ module GPhoto2
       GPhoto2.check!(rc)
     end
 
-    def file_get(path, type = :normal)
-      folder = path.folder
-      name = path.name
-      file = CameraFile.new(self, path)
-
-      rc = gp_camera_file_get(ptr, folder, name, type, file.ptr, context.ptr)
+    def file_get(file, type = :normal)
+      rc = gp_camera_file_get(ptr, file.folder, file.name, type, file.ptr, context.ptr)
       GPhoto2.check!(rc)
-
       file
     end
 

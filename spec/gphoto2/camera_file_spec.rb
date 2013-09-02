@@ -8,7 +8,7 @@ module GPhoto2
 
     before do
       CameraFile.any_instance.stub(:new)
-      CameraFile.any_instance.stub(:get_data_and_size).and_return(data_and_size)
+      CameraFile.any_instance.stub(:data_and_size).and_return(data_and_size)
     end
 
     describe '#save' do

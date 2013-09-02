@@ -83,11 +83,9 @@ module GPhoto2
     describe '#capture' do
       let(:camera) { Camera.new(port) }
       let(:path) { double('camera_file_path') }
-      let(:file) { double('camera_file') }
 
       before do
         camera.stub(:_capture).and_return(path)
-        camera.stub(:file_get).and_return(file)
       end
 
       it 'saves the camera configuration' do
@@ -97,8 +95,7 @@ module GPhoto2
 
       it 'returns a new CameraFile' do
         expect(camera).to receive(:_capture)
-        expect(camera).to receive(:file_get).with(path)
-        expect(camera.capture).to eq(file)
+        expect(camera.capture).to be_kind_of(CameraFile)
       end
     end
 
@@ -168,6 +165,15 @@ module GPhoto2
 
         expect(fs).to be_kind_of(CameraFolder)
         expect(fs.path).to eq('/')
+      end
+    end
+
+    describe '#file' do
+      it 'retrieves a file from the camera' do
+        camera = Camera.new(port)
+        camera.stub(:file_get)
+        expect(camera).to receive(:file_get)
+        camera.file(double('camera_file'))
       end
     end
 
