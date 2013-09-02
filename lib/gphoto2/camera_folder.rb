@@ -17,6 +17,10 @@ module GPhoto2
       folder_list_folders
     end
 
+    def files
+      folder_list_files
+    end
+
     def cd(name)
       case name
       when '.'
@@ -28,6 +32,10 @@ module GPhoto2
       end
     end
     alias_method :/, :cd
+
+    def open(name)
+      CameraFile.new(@camera, @path, name)
+    end
 
     def up
       if root?
@@ -44,6 +52,15 @@ module GPhoto2
     end
 
     private
+
+    def folder_list_files
+      list = CameraList.new
+
+      rc = gp_camera_folder_list_files(@camera.ptr, @path, list.ptr, @camera.context.ptr)
+      GPhoto2.check!(rc)
+
+      list.to_a.map { |f| open(f.name) }
+    end
 
     def folder_list_folders
       list = CameraList.new

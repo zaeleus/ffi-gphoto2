@@ -11,18 +11,30 @@ module GPhoto2
       end
     end
 
-    describe 'folders' do
+    describe '#folders' do
       it 'returns a list of subfolders' do
         folder = CameraFolder.new(camera)
 
         folders = 2.times.map { folder }
         folder.stub(:folder_list_folders).and_return(folders)
 
-        expect(folder.folders).to match_array(folders)
+        expect(folder.folders).to eq(folders)
       end
     end
 
-    describe 'cd' do
+    describe '#files' do
+      it 'returns a list of files in the folder' do
+        folder = CameraFolder.new(camera)
+
+        file = double('camera_file')
+        files = 2.times.map { file }
+        folder.stub(:folder_list_files).and_return(files)
+
+        expect(folder.files).to eq(files)
+      end
+    end
+
+    describe '#cd' do
       let(:folder) { CameraFolder.new(camera, '/store_00010001') }
 
       context 'when passed "."' do
@@ -43,6 +55,16 @@ module GPhoto2
           child = folder.cd('DCIM')
           expect(child.path).to eq('/store_00010001/DCIM')
         end
+      end
+    end
+
+    describe '#open' do
+      it 'returns a new CameraFile of a file in the folder' do
+        file = double('camera_file')
+        CameraFile.stub(:new).and_return(file)
+
+        folder = CameraFolder.new(camera)
+        expect(folder.open('capt0001.jpg')).to eq(file)
       end
     end
 
