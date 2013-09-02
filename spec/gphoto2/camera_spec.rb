@@ -159,12 +159,27 @@ module GPhoto2
     end
 
     describe '#filesystem' do
-      it 'returns a folder starting at the root of the filesystem' do
-        camera = Camera.new(port)
-        fs = camera.filesystem
+      let(:camera) { Camera.new(port) }
 
-        expect(fs).to be_kind_of(CameraFolder)
-        expect(fs.path).to eq('/')
+      context 'when a path is passed' do
+        let(:path) { '/store_00010001' }
+
+        it 'assumes the path is absolute' do
+          fs = camera.filesystem(path[1..-1])
+          expect(fs.path).to eq(path)
+        end
+
+        it 'returns a folder at the path that was passed' do
+          fs = camera.filesystem(path)
+          expect(fs.path).to eq(path)
+        end
+      end
+
+      context 'when no path is passed' do
+        it 'returns a folder at the root of the filesystem' do
+          fs = camera.filesystem
+          expect(fs.path).to eq('/')
+        end
       end
     end
 

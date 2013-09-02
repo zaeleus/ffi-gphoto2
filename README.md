@@ -69,8 +69,19 @@ canonical Ruby way.
     # take a photo
     file = camera.capture
 
-    # ...and save it in the current working directory
+    # ...and save it to the current working directory
     file.save
+
+    # traverse the camera filesystem
+    folder = camera/'store_00010001/DCIM/100D5100'
+
+    # list files
+    files = folder.files
+    folder.files.map(&:name)
+    => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
+
+    # save a file
+    files.first.save
 
     # close the camera
     camera.finalize

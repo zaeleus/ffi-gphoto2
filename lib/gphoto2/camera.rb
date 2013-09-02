@@ -97,10 +97,11 @@ module GPhoto2
       @config ||= window.flatten
     end
 
-    def filesystem
-      CameraFolder.new(self)
+    def filesystem(root = '/')
+      root = "/#{root}" if root[0] != '/'
+      CameraFolder.new(self, root)
     end
-    alias_method :fs, :filesystem
+    alias_method :/, :filesystem
 
     def file(file)
       file_get(file)
