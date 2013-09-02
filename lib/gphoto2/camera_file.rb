@@ -2,12 +2,16 @@ module GPhoto2
   class CameraFile
     include FFI::GPhoto2
 
-    attr_reader :ptr
+    attr_reader :folder, :name, :ptr
 
-    def initialize(camera, camera_file_path = nil)
+    def initialize(camera, folder = nil, name = nil)
       @camera = camera
-      @camera_file_path = camera_file_path
+      @folder, @name = folder, name
       new
+    end
+
+    def preview?
+      @folder.nil? && @name.nil?
     end
 
     def save(pathname = default_filename)
@@ -22,14 +26,6 @@ module GPhoto2
       data_and_size.last
     end
 
-    def folder
-      @camera_file_path.folder
-    end
-
-    def name
-      @camera_file_path.name
-    end
-
     def to_ptr
       @ptr
     end
@@ -38,13 +34,14 @@ module GPhoto2
 
     def data_and_size
       @data_and_size ||= begin
-        @camera.file(self) if @camera_file_path
+        @camera.file(self) unless preview?
         get_data_and_size
       end
     end
 
     def default_filename
-      @camera_file_path ? @camera_file_path.name : 'capture_preview'
+      # previews are always jpg
+      preview? ? 'capture_preview.jpg' : @name
     end
 
     def new

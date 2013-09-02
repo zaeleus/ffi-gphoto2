@@ -60,7 +60,7 @@ module GPhoto2
     def capture(type = :image)
       save
       path = _capture(type)
-      CameraFile.new(self, path)
+      CameraFile.new(self, path.folder, path.name)
     end
 
     def preview

@@ -3,7 +3,8 @@ require 'spec_helper'
 module GPhoto2
   describe CameraFile do
     let(:camera) { double('camera') }
-    let(:camera_file_path) { double('camera_file_path', name: 'capt0001.jpg') }
+    let(:folder) { '/store_00010001' }
+    let(:name) { 'capt0100.jpg' }
     let(:data_and_size) { ['data', 384] }
 
     before do
@@ -11,8 +12,24 @@ module GPhoto2
       CameraFile.any_instance.stub(:data_and_size).and_return(data_and_size)
     end
 
+    describe '#preview' do
+      context 'when a folder and file are set' do
+        it 'returns false' do
+          file = CameraFile.new(camera, folder, name)
+          expect(file.preview?).to be_false
+        end
+      end
+
+      context 'when no folder or file is set' do
+        it 'returns true' do
+          file = CameraFile.new(camera)
+          expect(file.preview?).to be_true
+        end
+      end
+    end
+
     describe '#save' do
-      let(:file) { CameraFile.new(camera, camera_file_path) }
+      let(:file) { CameraFile.new(camera, folder, name) }
       let(:data) { data_and_size.first }
 
       before do
@@ -29,8 +46,7 @@ module GPhoto2
 
       context 'when no arguments are passed' do
         it 'saves the data to the working directory using file path name' do
-          pathname = camera_file_path.name
-          expect(File).to receive(:binwrite).with(pathname, data)
+          expect(File).to receive(:binwrite).with(name, data)
           file.save
         end
       end
@@ -38,7 +54,7 @@ module GPhoto2
 
     describe '#data' do
       it 'returns the data of the camera file' do
-        file = CameraFile.new(camera, camera_file_path)
+        file = CameraFile.new(camera, folder, name)
         file.stub(:data_and_size).and_return(data_and_size)
         expect(file.data).to eq(data_and_size.first)
       end
@@ -46,7 +62,7 @@ module GPhoto2
 
     describe '#size' do
       it 'returns the size of the camera file' do
-        file = CameraFile.new(camera, camera_file_path)
+        file = CameraFile.new(camera, folder, name)
         file.stub(:data_and_size).and_return(data_and_size)
         expect(file.size).to eq(data_and_size.last)
       end

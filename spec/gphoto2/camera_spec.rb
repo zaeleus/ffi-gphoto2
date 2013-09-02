@@ -82,7 +82,7 @@ module GPhoto2
 
     describe '#capture' do
       let(:camera) { Camera.new(port) }
-      let(:path) { double('camera_file_path') }
+      let(:path) { double('camera_file_path', folder: 'folder', name: 'name') }
 
       before do
         camera.stub(:_capture).and_return(path)
