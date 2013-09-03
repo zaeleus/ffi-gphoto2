@@ -210,10 +210,29 @@ module GPhoto2
       data_ptr = FFI::MemoryPointer.new(:pointer)
       data_ptr.write_pointer(data)
 
-      rc = gp_camera_wait_for_event(ptr, timeout, type, data, context.ptr)
+      rc = gp_camera_wait_for_event(ptr, timeout, type, data_ptr, context.ptr)
       GPhoto2.check!(rc)
 
-      CameraEventType[type.read_int]
+      type = CameraEventType[type.read_int]
+      data = data_ptr.read_pointer
+
+      data =
+        case type
+        when :unknown
+          data.null? ? nil : data.read_string
+        when :file_added
+          path_ptr = FFI::GPhoto2::CameraFilePath.new(data)
+          path = CameraFilePath.new(path_ptr)
+          CameraFile.new(self, path.folder, path.name)
+        when :folder_added
+          path_ptr = FFI::GPhoto2::CameraFilePath.new(data)
+          path = CameraFilePath.new(path_ptr)
+          CameraFolder.new(self, '%s/%s' % [path.folder, path.name])
+        else
+          nil
+        end
+
+      CameraEvent.new(type, data)
     end
   end
 end
