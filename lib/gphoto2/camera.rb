@@ -117,6 +117,14 @@ module GPhoto2
       value
     end
 
+    def update(attributes = {})
+      attributes.each do |key, value|
+        self[key] = value
+      end
+
+      save
+    end
+
     def dirty?
       @dirty
     end

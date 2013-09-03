@@ -227,7 +227,7 @@ module GPhoto2
         camera
       end
 
-      it "set a widget's value" do
+      it "sets a widget's value" do
         camera['iso'] = 400
       end
 
@@ -239,6 +239,25 @@ module GPhoto2
       it 'returns the passed value' do
         expect(camera['iso'] = 400).to eq(400)
       end
+    end
+
+    describe '#update' do
+      let(:camera) do
+        camera = Camera.new(port)
+        camera.stub(:[]=)
+        camera.stub(:save)
+        camera
+      end
+
+      it 'sets one or more camera setting' do
+        expect(camera).to receive(:[]=).exactly(2).times
+        camera.update('iso' => 400, 'shutterspeed2' => '1/30')
+      end
+
+       it 'immediately saves the settings to the camera' do
+        expect(camera).to receive(:save)
+        camera.update
+       end
     end
 
     describe '#dirty?' do
