@@ -2,8 +2,8 @@ module GPhoto2
   class CameraFilePath
     attr_reader :ptr
 
-    def initialize
-      @ptr = FFI::GPhoto2::CameraFilePath.new
+    def initialize(ptr = nil)
+      @ptr = ptr || FFI::GPhoto2::CameraFilePath.new
     end
 
     def name
