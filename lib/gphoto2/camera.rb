@@ -108,7 +108,7 @@ module GPhoto2
     end
 
     def [](key)
-      config[key]
+      config[key.to_s]
     end
 
     def []=(key, value)
