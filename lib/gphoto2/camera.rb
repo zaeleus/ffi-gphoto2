@@ -2,15 +2,18 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
 
-    attr_reader :context, :model, :port
+    attr_reader :context, :port
 
     def self.all
       context = Context.new
 
-      camera_abilities_list = CameraAbilitiesList.new(context)
-      camera_list = camera_abilities_list.detect
+      abilities = CameraAbilitiesList.new(context)
+      cameras = abilities.detect
 
-      entries = camera_list.to_a.map { |entry| Camera.new(entry) }
+      entries = cameras.to_a.map do |entry|
+        model, port = entry.name, entry.value
+        Camera.new(port, model)
+      end
 
       context.finalize
 
@@ -23,8 +26,8 @@ module GPhoto2
       entries.first
     end
 
-    def self.open(entry)
-      camera = new(entry)
+    def self.open(port, model = nil)
+      camera = new(port, model)
 
       if block_given?
         begin
@@ -41,8 +44,8 @@ module GPhoto2
       all.select { |c| c.model.match(pattern) }
     end
 
-    def initialize(entry)
-      @model, @port = entry.name, entry.value
+    def initialize(port, model = nil)
+      @port, @model = port, model
       @dirty = false
     end
 
@@ -71,6 +74,19 @@ module GPhoto2
     # timeout in milliseconds
     def wait(timeout = 2000)
       wait_for_event(timeout)
+    end
+
+    def model
+      @model ||= begin
+        abilities = CameraAbilitiesList.new(context).detect
+        cameras = abilities.detect
+
+        entry = cameras.map(&:value).find { |port| port == @port }
+
+        raise RuntimeError, "no camera found on port #{@port}" if entry.nil?
+
+        entry.name
+      end
     end
 
     def ptr

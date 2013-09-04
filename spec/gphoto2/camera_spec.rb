@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GPhoto2
   describe Camera do
-    let(:port) { double('entry', name: 'model', value: 'usb:250,006') }
+    let(:port) { 'usb:250,006' }
 
     describe '.all' do
       let(:abilities_list) { double('camera_abilities_list') }
@@ -13,7 +13,7 @@ module GPhoto2
         Context.stub(:stub)
         CameraAbilitiesList.stub(:new).and_return(abilities_list)
         abilities_list.stub(:detect).and_return(camera_list)
-        camera_list.stub(:to_a).and_return([port])
+        camera_list.stub_chain(:to_a, :map).and_return([camera])
       end
 
       it 'returns a list of device entries' do
