@@ -9,7 +9,7 @@ canonical Ruby way.
 ### Prerequisites
 
   * Ruby >= 1.9
-  * libgphoto2 >= 2.5.0 (`brew install libgphoto2`)
+  * libgphoto2 >= 2.5.0
 
 ### Gem
 
@@ -79,7 +79,11 @@ canonical Ruby way.
     => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
 
     # save a file
-    files.first.save
+    file = files.first
+    file.save
+
+    # and delete it
+    file.delete
 
     # close the camera
     camera.finalize
