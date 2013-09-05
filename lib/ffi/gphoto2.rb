@@ -52,6 +52,7 @@ module FFI
     attach_function :gp_camera_folder_list_files, [Camera.by_ref, :string, CameraList.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_folder_list_folders, [Camera.by_ref, :string, CameraList.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_file_get, [Camera.by_ref, :string, :string, CameraFileType, CameraFile.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_file_delete, [Camera.by_ref, :string, :string, GPContext.by_ref], :int
 
     # gphoto2/gphoto2-context.h
     attach_function :gp_context_new, [], :pointer

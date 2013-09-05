@@ -123,6 +123,10 @@ module GPhoto2
       file_get(file)
     end
 
+    def delete(file)
+      file_delete(file)
+    end
+
     def [](key)
       config[key.to_s]
     end
@@ -219,6 +223,11 @@ module GPhoto2
       rc = gp_camera_file_get(ptr, file.folder, file.name, type, file.ptr, context.ptr)
       GPhoto2.check!(rc)
       file
+    end
+
+    def file_delete(file)
+      rc = gp_camera_file_delete(ptr, file.folder, file.name, context.ptr)
+      GPhoto2.check!(rc)
     end
 
     def unref

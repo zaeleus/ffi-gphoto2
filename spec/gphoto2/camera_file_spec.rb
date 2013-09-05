@@ -52,6 +52,14 @@ module GPhoto2
       end
     end
 
+    describe '#delete' do
+      it 'delegates the deletion of the file to the camera' do
+        file = CameraFile.new(camera, folder, name)
+        expect(camera).to receive(:delete).with(file)
+        file.delete
+      end
+    end
+
     describe '#data' do
       it 'returns the data of the camera file' do
         file = CameraFile.new(camera, folder, name)

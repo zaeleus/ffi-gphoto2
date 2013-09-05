@@ -18,6 +18,10 @@ module GPhoto2
       File.binwrite(pathname, data)
     end
 
+    def delete
+      @camera.delete(self)
+    end
+
     def data
       data_and_size.first
     end

@@ -192,6 +192,15 @@ module GPhoto2
       end
     end
 
+    describe '#delete' do
+      it 'deletes a file from the camera' do
+        camera = Camera.new(port)
+        camera.stub(:file_delete)
+        expect(camera).to receive(:file_delete)
+        camera.delete(double('camera_file'))
+      end
+    end
+
     describe '#[]' do
       let(:window) { double('camera_widget') }
 
