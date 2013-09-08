@@ -41,7 +41,7 @@ module GPhoto2
     def children
       count_children.times.map { |i| get_child(i) }
     end
-    
+
     def flatten(map = {})
       case type
       when :window, :section
