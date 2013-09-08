@@ -136,6 +136,18 @@ module GPhoto2
       end
     end
 
+    describe '#wait_for' do
+      it 'blocks until a given event is returned from #wait' do
+        camera = Camera.new(port)
+        event = double('camera_event', type: :capture_complete)
+        camera.stub(:wait).and_return(event)
+
+        expect(camera).to receive(:wait)
+
+        camera.wait_for(:capture_complete)
+      end
+    end
+
     describe '#window' do
       let(:camera) { Camera.new(port) }
       let(:window) { double('camera_widget') }

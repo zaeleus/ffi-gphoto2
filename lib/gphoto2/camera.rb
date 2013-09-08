@@ -76,6 +76,12 @@ module GPhoto2
       wait_for_event(timeout)
     end
 
+    def wait_for(event_type)
+      begin
+        event = wait
+      end until event.type == event_type
+    end
+
     def model
       @model ||= begin
         abilities = CameraAbilitiesList.new(context).detect

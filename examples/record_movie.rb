@@ -18,10 +18,8 @@ begin
   # stop recording
   camera.update(movie: false)
 
-  # wait for the camera to finish with the file
-  begin
-    event = camera.wait
-  end until event.type == :file_added
+  # block until the camera finishes with the file
+  camera.wait_for(:file_added)
 
   # the event data has a camera file that can be saved
   event.data.save
