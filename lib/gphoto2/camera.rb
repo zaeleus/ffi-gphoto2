@@ -2,7 +2,7 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
 
-    attr_reader :context, :port
+    attr_reader :context, :model, :port
 
     def self.all
       context = Context.new
@@ -12,7 +12,7 @@ module GPhoto2
 
       entries = cameras.to_a.map do |entry|
         model, port = entry.name, entry.value
-        Camera.new(port, model)
+        Camera.new(model, port)
       end
 
       context.finalize
@@ -26,8 +26,8 @@ module GPhoto2
       entries.first
     end
 
-    def self.open(port, model = nil)
-      camera = new(port, model)
+    def self.open(model, port)
+      camera = new(model, port)
 
       if block_given?
         begin
@@ -44,8 +44,8 @@ module GPhoto2
       all.select { |c| c.model.match(pattern) }
     end
 
-    def initialize(port, model = nil)
-      @port, @model = port, model
+    def initialize(model, port)
+      @model, @port = model, port
       @dirty = false
     end
 
@@ -80,19 +80,6 @@ module GPhoto2
       begin
         event = wait
       end until event.type == event_type
-    end
-
-    def model
-      @model ||= begin
-        abilities = CameraAbilitiesList.new(context).detect
-        cameras = abilities.detect
-
-        entry = cameras.map(&:value).find { |port| port == @port }
-
-        raise RuntimeError, "no camera found on port #{@port}" if entry.nil?
-
-        entry.name
-      end
     end
 
     def ptr

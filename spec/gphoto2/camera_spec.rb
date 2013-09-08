@@ -2,12 +2,13 @@ require 'spec_helper'
 
 module GPhoto2
   describe Camera do
+    let(:model) { 'Nikon DSC D5100 (PTP mode)' }
     let(:port) { 'usb:250,006' }
 
     describe '.all' do
       let(:abilities_list) { double('camera_abilities_list') }
       let(:camera_list) { double('camera_list') }
-      let(:camera) { Camera.new(port) }
+      let(:camera) { Camera.new(model, port) }
 
       before do
         Context.stub(:stub)
@@ -26,7 +27,7 @@ module GPhoto2
     describe '.first' do
       context 'when devices are automatically detected' do
         it 'returns a new Camera using the first entry' do
-          camera = Camera.new(port)
+          camera = Camera.new(model, port)
           Camera.stub(:all).and_return([camera])
           expect(Camera.first).to be_kind_of(Camera)
         end
@@ -47,18 +48,18 @@ module GPhoto2
       context 'when a block is given' do
         it 'yeilds a new camera instance' do
           expect(Camera).to receive(:open).and_yield(camera)
-          Camera.open(port) { |c| }
+          Camera.open(model, port) { |c| }
         end
 
         it 'finalizes the camera when the block terminates' do
           expect(camera).to receive(:finalize)
-          Camera.open(port) { |c| }
+          Camera.open(model, port) { |c| }
         end
       end
 
       context 'when no block is given' do
         it 'returns a new camera instance' do
-           expect(Camera.open(port)).to eq(camera)
+           expect(Camera.open(model, port)).to eq(camera)
         end
       end
     end
@@ -73,7 +74,7 @@ module GPhoto2
 
     describe '#exit' do
       it 'closes the camera connection' do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub(:_exit)
         expect(camera).to receive(:_exit)
         camera.exit
@@ -81,7 +82,7 @@ module GPhoto2
     end
 
     describe '#capture' do
-      let(:camera) { Camera.new(port) }
+      let(:camera) { Camera.new(model, port) }
       let(:path) { double('camera_file_path', folder: 'folder', name: 'name') }
 
       before do
@@ -100,7 +101,7 @@ module GPhoto2
     end
 
     describe '#preview' do
-      let(:camera) { Camera.new(port) }
+      let(:camera) { Camera.new(model, port) }
       let(:file) { double('camera_file') }
 
       before do
@@ -119,7 +120,7 @@ module GPhoto2
     end
 
     describe '#wait' do
-      let(:camera) { Camera.new(port) }
+      let(:camera) { Camera.new(model, port) }
       let(:event) { :capture_complete }
 
       before do
@@ -138,7 +139,7 @@ module GPhoto2
 
     describe '#wait_for' do
       it 'blocks until a given event is returned from #wait' do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         event = double('camera_event', type: :capture_complete)
         camera.stub(:wait).and_return(event)
 
@@ -149,7 +150,7 @@ module GPhoto2
     end
 
     describe '#window' do
-      let(:camera) { Camera.new(port) }
+      let(:camera) { Camera.new(model, port) }
       let(:window) { double('camera_widget') }
 
       it 'always returns the same CameraWidget instance' do
@@ -161,7 +162,7 @@ module GPhoto2
 
     describe '#config' do
       it 'returns a map of configuration widgets' do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         window = double('camera_widget')
         camera.stub(:window).and_return(window)
         window.stub(:flatten).and_return({ 'iso' => window })
@@ -171,7 +172,7 @@ module GPhoto2
     end
 
     describe '#filesystem' do
-      let(:camera) { Camera.new(port) }
+      let(:camera) { Camera.new(model, port) }
 
       context 'when a path is passed' do
         let(:path) { '/store_00010001' }
@@ -197,7 +198,7 @@ module GPhoto2
 
     describe '#file' do
       it 'retrieves a file from the camera' do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub(:file_get)
         expect(camera).to receive(:file_get)
         camera.file(double('camera_file'))
@@ -206,7 +207,7 @@ module GPhoto2
 
     describe '#delete' do
       it 'deletes a file from the camera' do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub(:file_delete)
         expect(camera).to receive(:file_delete)
         camera.delete(double('camera_file'))
@@ -217,7 +218,7 @@ module GPhoto2
       let(:window) { double('camera_widget') }
 
       let(:camera) do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub(:config).and_return({ 'iso' => window })
         camera
       end
@@ -243,7 +244,7 @@ module GPhoto2
       end
 
       let(:camera) do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub(:[]).and_return(window)
         camera
       end
@@ -264,7 +265,7 @@ module GPhoto2
 
     describe '#update' do
       let(:camera) do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub(:[]=)
         camera.stub(:save)
         camera
@@ -284,7 +285,7 @@ module GPhoto2
     describe '#dirty?' do
       context 'when the configuration changed' do
         it 'returns true' do
-          camera = Camera.new(port)
+          camera = Camera.new(model, port)
           camera.stub_chain(:[], :value=)
 
           camera['iso'] = 400
@@ -295,7 +296,7 @@ module GPhoto2
 
       context 'when the configuration has not changed' do
         it 'returns false' do
-          camera = Camera.new(port)
+          camera = Camera.new(model, port)
           expect(camera).not_to be_dirty 
         end
       end
@@ -303,7 +304,7 @@ module GPhoto2
 
     describe '#save' do
       let(:camera) do
-        camera = Camera.new(port)
+        camera = Camera.new(model, port)
         camera.stub_chain(:[], :value=)
         camera.stub(:set_config)
         camera
