@@ -121,7 +121,7 @@ module GPhoto2
 
     describe '#wait' do
       let(:camera) { Camera.new(model, port) }
-      let(:event) { :capture_complete }
+      let(:event) { double('camera_event') }
 
       before do
         camera.stub(:wait_for_event).and_return(event)
@@ -138,14 +138,20 @@ module GPhoto2
     end
 
     describe '#wait_for' do
-      it 'blocks until a given event is returned from #wait' do
-        camera = Camera.new(model, port)
-        event = double('camera_event', type: :capture_complete)
+      let(:camera) { Camera.new(model, port) }
+      let(:event) { double('camera_event', type: :capture_complete) }
+
+      before do
         camera.stub(:wait).and_return(event)
+      end
 
+      it 'blocks until a given event is returned from #wait' do
         expect(camera).to receive(:wait)
-
         camera.wait_for(:capture_complete)
+      end
+
+      it 'returns the first event of the given type' do
+        expect(camera.wait_for(:capture_complete)).to eq(event)
       end
     end
 

@@ -80,6 +80,8 @@ module GPhoto2
       begin
         event = wait
       end until event.type == event_type
+
+      event
     end
 
     def ptr

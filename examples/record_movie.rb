@@ -19,7 +19,7 @@ begin
   camera.update(movie: false)
 
   # block until the camera finishes with the file
-  camera.wait_for(:file_added)
+  event = camera.wait_for(:file_added)
 
   # the event data has a camera file that can be saved
   event.data.save
