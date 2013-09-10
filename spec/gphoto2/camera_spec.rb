@@ -308,6 +308,29 @@ module GPhoto2
       end
     end
 
+    describe '#can?' do
+      let(:camera) { Camera.new(model, port) }
+      let(:operations) { FFI::GPhoto2::CameraOperation[:capture_image] }
+
+      before do
+        camera.stub_chain(:abilities, :[])
+          .with(:operations)
+          .and_return(operations)
+      end
+
+      context 'when the camera does not have the ability perform an operation' do
+        it 'return false' do
+          expect(camera.can?(:capture_audio)).to be_false
+        end
+      end
+
+      context 'when the camera does have the ability to perform an operation' do
+        it 'returns true' do
+          expect(camera.can?(:capture_image)).to be_true
+        end
+      end
+    end
+
     describe '#save' do
       let(:camera) do
         camera = Camera.new(model, port)

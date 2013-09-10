@@ -36,6 +36,10 @@ canonical Ruby way.
     # ...or even search by model name
     camera = GPhoto2::Camera.where(/nikon/i).first
 
+    # check camera abilities
+    camera.can? :capture_image
+    # => true
+
     # list camera configuration names
     camera.config.keys
     # => ['autofocusdrive', 'manualfocusdrive', 'controlmode', ...]

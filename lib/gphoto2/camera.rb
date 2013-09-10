@@ -144,6 +144,10 @@ module GPhoto2
       @dirty
     end
 
+    def can?(operation)
+      (abilities[:operations] & CameraOperation[operation]) != 0
+    end
+
     def save
       return false unless dirty?
       set_config
