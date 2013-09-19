@@ -10,5 +10,11 @@ module GPhoto2
       GPhoto2.check!(rc)
       val_ptr.read_pointer.read_string
     end
+
+    def set_value(text)
+      val = FFI::MemoryPointer.from_string(text)
+      rc = gp_widget_set_value(ptr, val)
+      GPhoto2.check!(rc)
+    end
   end
 end
