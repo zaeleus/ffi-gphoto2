@@ -65,10 +65,28 @@ module GPhoto2
     end
 
     describe '.where' do
-      it 'filters all detected cameras by model' do
-        cameras = %w[cheese toast wine].map { |model| double('camera', model: model) }
+      let(:cameras) do
+        cameras = []
+        cameras << double('camera', model: 'Canon EOS 5D Mark III', port: 'usb:250,004')
+        cameras << double('camera', model: 'Nikon DSC D800', port: 'usb:250,005')
+        cameras << double('camera', model: 'Nikon DSC D5100', port: 'usb:250,006')
+        cameras
+      end
+
+      before do
         Camera.stub(:all).and_return(cameras)
-        expect(Camera.where(/e/)).to match_array([cameras[0], cameras[2]])
+      end
+
+      it 'filters all detected cameras by model' do
+        actual = Camera.where(model: /nikon/i)
+        expected = [cameras[1], cameras[2]]
+        expect(actual).to match_array(expected)
+      end
+
+      it 'filters all detected cameras by port' do
+        actual = Camera.where(port: 'usb:250,004')
+        expected = [cameras[0]]
+        expect(actual).to match_array(expected)
       end
     end
 

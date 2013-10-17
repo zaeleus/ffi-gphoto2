@@ -40,8 +40,10 @@ module GPhoto2
       end
     end
 
-    def self.where(pattern)
-      all.select { |c| c.model.match(pattern) }
+    def self.where(condition)
+      name = condition.keys.first
+      pattern = condition.values.first
+      all.select { |c| c.send(name).match(pattern) }
     end
 
     def initialize(model, port)
