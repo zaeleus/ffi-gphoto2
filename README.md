@@ -34,7 +34,7 @@ canonical Ruby way.
     camera = GPhoto2::Camera.first
 
     # ...or even search by model name
-    camera = GPhoto2::Camera.where(/nikon/i).first
+    camera = GPhoto2::Camera.where(model: /nikon/i).first
 
     # check camera abilities
     camera.can? :capture_image
