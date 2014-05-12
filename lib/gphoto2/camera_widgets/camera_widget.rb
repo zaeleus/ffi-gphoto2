@@ -76,7 +76,8 @@ module GPhoto2
       str_ptr.write_pointer(str)
       rc = gp_widget_get_name(ptr, str_ptr)
       GPhoto2.check!(rc)
-      str_ptr.read_pointer.read_string
+      strPtr = str_ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
 
     def get_value
