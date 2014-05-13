@@ -21,6 +21,10 @@ module GPhoto2
     end
     alias_method :close, :finalize
 
+    def label
+      get_label
+    end
+
     def name
       get_name
     end
@@ -96,6 +100,17 @@ module GPhoto2
       rc = gp_widget_get_type(ptr, type)
       GPhoto2.check!(rc)
       CameraWidgetType[type.read_int]
+    end
+
+    def get_label
+      str = FFI::MemoryPointer.new(:string)
+      str_ptr = FFI::MemoryPointer.new(:pointer)
+      str_ptr.write_pointer(str)
+
+      rc = gp_widget_get_type(ptr, str_ptr)
+
+      str_ptr = str_ptr.read_pointer
+      str_ptr.null? ? nil : str_ptr.read_string
     end
 
     def count_children

@@ -43,6 +43,15 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     end
   end
 
+  describe '#label' do
+    it 'returns the label of the widget' do
+      label = 'Beep'
+      widget = klass.new(nil)
+      widget.stub(:get_label).and_return(label)
+      expect(widget.label).to eq(label)
+    end
+  end
+
   describe '#children' do
     it 'returns an array of child widgets' do
       size = 2
@@ -50,10 +59,10 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
       widget = klass.new(nil)
       widget.stub(:count_children).and_return(size)
       widget.stub(:get_child)
-      
+
       expect(widget).to receive(:get_child).exactly(size).times
 
-      expect(widget.children).to be_kind_of(Array) 
+      expect(widget.children).to be_kind_of(Array)
     end
   end
 

@@ -79,6 +79,7 @@ module FFI
     attach_function :gp_widget_get_value, [CameraWidget.by_ref, :pointer], :int
     attach_function :gp_widget_get_name, [CameraWidget.by_ref, :pointer], :int
     attach_function :gp_widget_get_type, [CameraWidget.by_ref, :pointer], :int
+    attach_function :gp_widget_get_label, [CameraWidget.by_ref, :pointer], :int
     attach_function :gp_widget_get_range, [CameraWidget.by_ref, :pointer, :pointer, :pointer], :int
     attach_function :gp_widget_count_choices, [CameraWidget.by_ref], :int
     attach_function :gp_widget_get_choice, [CameraWidget.by_ref, :int, :pointer], :int
