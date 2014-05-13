@@ -23,7 +23,8 @@ module GPhoto2
       ptr.write_pointer(name)
       rc = gp_list_get_name(@camera_list.ptr, @index, ptr)
       GPhoto2.check!(rc)
-      ptr.read_pointer.read_string
+      strPtr = ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
 
     def get_value
@@ -32,7 +33,8 @@ module GPhoto2
       ptr.write_pointer(value)
       rc = gp_list_get_value(@camera_list.ptr, @index, ptr)
       GPhoto2.check!(rc)
-      ptr.read_pointer.read_string
+      strPtr = ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
   end
 end

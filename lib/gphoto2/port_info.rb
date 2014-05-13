@@ -47,7 +47,8 @@ module GPhoto2
       name_ptr.write_pointer(name)
       rc = gp_port_info_get_name(ptr, name_ptr)
       GPhoto2.check!(rc)
-      name_ptr.read_pointer.read_string
+      strPtr = name_ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
 
     def get_path
@@ -56,7 +57,8 @@ module GPhoto2
       path_ptr.write_pointer(path)
       rc = gp_port_info_get_path(ptr, path_ptr)
       GPhoto2.check!(rc)
-      path_ptr.read_pointer.read_string
+      strPtr = path_ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
 
     def get_type

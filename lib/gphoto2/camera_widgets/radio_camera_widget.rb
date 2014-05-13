@@ -12,7 +12,8 @@ module GPhoto2
       val_ptr.write_pointer(val)
       rc = gp_widget_get_value(ptr, val_ptr)
       GPhoto2.check!(rc)
-      val_ptr.read_pointer.read_string
+      strPtr = val_ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
 
     def set_value(value)
@@ -35,7 +36,8 @@ module GPhoto2
       val_ptr.write_pointer(val)
       rc = gp_widget_get_choice(ptr, i, val_ptr)
       GPhoto2.check!(rc)
-      val_ptr.read_pointer.read_string
+      strPtr = val_ptr.read_pointer
+      return strPtr.null? ? nil : strPtr.read_string
     end
   end
 end
