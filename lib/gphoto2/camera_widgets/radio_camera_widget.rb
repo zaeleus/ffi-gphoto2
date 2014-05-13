@@ -10,10 +10,12 @@ module GPhoto2
       val = FFI::MemoryPointer.new(:string)
       val_ptr = FFI::MemoryPointer.new(:pointer)
       val_ptr.write_pointer(val)
+
       rc = gp_widget_get_value(ptr, val_ptr)
       GPhoto2.check!(rc)
-      strPtr = val_ptr.read_pointer
-      return strPtr.null? ? nil : strPtr.read_string
+
+      val_ptr = val_ptr.read_pointer
+      val_ptr.null? ? nil : val_ptr.read_string
     end
 
     def set_value(value)
@@ -28,16 +30,18 @@ module GPhoto2
       rc = gp_widget_count_choices(ptr)
       GPhoto2.check!(rc)
       rc
-    end 
+    end
 
     def get_choice(i)
       val = FFI::MemoryPointer.new(:string)
       val_ptr = FFI::MemoryPointer.new(:pointer)
       val_ptr.write_pointer(val)
+
       rc = gp_widget_get_choice(ptr, i, val_ptr)
       GPhoto2.check!(rc)
-      strPtr = val_ptr.read_pointer
-      return strPtr.null? ? nil : strPtr.read_string
+
+      val_ptr = val_ptr.read_pointer
+      val_ptr.null? ? nil : val_ptr.read_string
     end
   end
 end

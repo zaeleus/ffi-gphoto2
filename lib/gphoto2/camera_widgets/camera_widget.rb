@@ -74,10 +74,12 @@ module GPhoto2
       str = FFI::MemoryPointer.new(:string)
       str_ptr = FFI::MemoryPointer.new(:pointer)
       str_ptr.write_pointer(str)
+
       rc = gp_widget_get_name(ptr, str_ptr)
       GPhoto2.check!(rc)
-      strPtr = str_ptr.read_pointer
-      return strPtr.null? ? nil : strPtr.read_string
+
+      str_ptr = str_ptr.read_pointer
+      str_ptr.null? ? nil : str_ptr.read_string
     end
 
     def get_value

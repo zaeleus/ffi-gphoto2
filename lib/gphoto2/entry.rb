@@ -21,20 +21,24 @@ module GPhoto2
       name = FFI::MemoryPointer.new(:string)
       ptr = FFI::MemoryPointer.new(:pointer)
       ptr.write_pointer(name)
+
       rc = gp_list_get_name(@camera_list.ptr, @index, ptr)
       GPhoto2.check!(rc)
-      strPtr = ptr.read_pointer
-      return strPtr.null? ? nil : strPtr.read_string
+
+      ptr = ptr.read_pointer
+      ptr.null? ? nil : ptr.read_string
     end
 
     def get_value
       value = FFI::MemoryPointer.new(:string)
       ptr = FFI::MemoryPointer.new(:pointer)
       ptr.write_pointer(value)
+
       rc = gp_list_get_value(@camera_list.ptr, @index, ptr)
       GPhoto2.check!(rc)
-      strPtr = ptr.read_pointer
-      return strPtr.null? ? nil : strPtr.read_string
+
+      ptr = ptr.read_pointer
+      ptr.null? ? nil : ptr.read_string
     end
   end
 end
