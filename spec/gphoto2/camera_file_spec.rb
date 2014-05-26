@@ -16,14 +16,14 @@ module GPhoto2
       context 'when a folder and file are set' do
         it 'returns false' do
           file = CameraFile.new(camera, folder, name)
-          expect(file.preview?).to be_false
+          expect(file.preview?).to be(false)
         end
       end
 
       context 'when no folder or file is set' do
         it 'returns true' do
           file = CameraFile.new(camera)
-          expect(file.preview?).to be_true
+          expect(file.preview?).to be(true)
         end
       end
     end

@@ -321,7 +321,7 @@ module GPhoto2
       context 'when the configuration has not changed' do
         it 'returns false' do
           camera = Camera.new(model, port)
-          expect(camera).not_to be_dirty 
+          expect(camera).not_to be_dirty
         end
       end
     end
@@ -338,13 +338,13 @@ module GPhoto2
 
       context 'when the camera does not have the ability perform an operation' do
         it 'return false' do
-          expect(camera.can?(:capture_audio)).to be_false
+          expect(camera.can?(:capture_audio)).to be(false)
         end
       end
 
       context 'when the camera does have the ability to perform an operation' do
         it 'returns true' do
-          expect(camera.can?(:capture_image)).to be_true
+          expect(camera.can?(:capture_image)).to be(true)
         end
       end
     end
@@ -360,7 +360,7 @@ module GPhoto2
       context 'when the camera is marked as dirty' do
         it 'returns true' do
           camera['iso'] = 400
-          expect(camera.save).to be_true
+          expect(camera.save).to be(true)
         end
 
         it 'marks the camera as not dirty' do
@@ -372,7 +372,7 @@ module GPhoto2
 
       context 'when the camera is not marked as dirty' do
         it 'returns false' do
-          expect(camera.save).to be_false
+          expect(camera.save).to be(false)
         end
       end
     end

@@ -14,9 +14,8 @@ module GPhoto2
         PortInfoList.any_instance.stub(:new)
         PortInfoList.any_instance.stub(:load)
         PortInfoList.any_instance.stub(:lookup_path)
-        PortInfoList.any_instance.stub(:[]).and_return do
-          PortInfo.new(port_info_list, index)
-        end
+        info = PortInfo.new(port_info_list, index)
+        PortInfoList.any_instance.stub(:[]).and_return(info)
 
         port_info = PortInfo.find('usb:250,006')
         expect(port_info).to be_kind_of(PortInfo)

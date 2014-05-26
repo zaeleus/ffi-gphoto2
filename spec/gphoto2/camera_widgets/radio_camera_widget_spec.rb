@@ -21,7 +21,7 @@ module GPhoto2
         widget.stub(:get_choice).and_return("choice")
 
         expect(widget).to receive(:get_choice).exactly(size).times
-      
+
         choices = widget.choices
 
         expect(choices.size).to eq(size)
