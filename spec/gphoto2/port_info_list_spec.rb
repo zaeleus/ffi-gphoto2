@@ -3,8 +3,8 @@ require 'spec_helper'
 module GPhoto2
   describe PortInfoList do
     before do
-      PortInfoList.any_instance.stub(:new)
-      PortInfoList.any_instance.stub(:load)
+      allow_any_instance_of(PortInfoList).to receive(:new)
+      allow_any_instance_of(PortInfoList).to receive(:load)
     end
 
     describe '#lookup_path' do
@@ -13,7 +13,7 @@ module GPhoto2
         index = 0
 
         list = PortInfoList.new
-        list.stub(:_lookup_path).and_return(index)
+        allow(list).to receive(:_lookup_path).and_return(index)
 
         expect(list.lookup_path(port)).to eq(index)
       end
@@ -21,7 +21,7 @@ module GPhoto2
 
     describe '#at' do
       it 'returns a new PortInfo instance at the specified index' do
-        PortInfo.any_instance.stub(:new)
+        allow_any_instance_of(PortInfo).to receive(:new)
 
         list = PortInfoList.new
         port_info = list.at(0)

@@ -3,7 +3,7 @@ require 'spec_helper'
 module GPhoto2
   describe CameraList do
     before do
-      CameraList.any_instance.stub(:new)
+      allow_any_instance_of(CameraList).to receive(:new)
     end
 
     describe '#size' do
@@ -11,7 +11,7 @@ module GPhoto2
         size = 2
 
         list = CameraList.new
-        list.stub(:count).and_return(size)
+        allow(list).to receive(:count).and_return(size)
 
         expect(list.size).to eq(size)
       end
@@ -22,7 +22,7 @@ module GPhoto2
         size = 2
 
         list = CameraList.new
-        list.stub(:size).and_return(size)
+        allow(list).to receive(:size).and_return(size)
 
         ary = list.to_a
 

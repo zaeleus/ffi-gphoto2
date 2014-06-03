@@ -7,13 +7,13 @@ module GPhoto2
     describe '#value' do
       it 'can have a TrueClass return value' do
         widget = ToggleCameraWidget.new(nil)
-        widget.stub(:value).and_return(true)
+        allow(widget).to receive(:value).and_return(true)
         expect(widget.value).to be_kind_of(TrueClass)
       end
 
       it 'can have a FalseClass return value' do
         widget = ToggleCameraWidget.new(nil)
-        widget.stub(:value).and_return(false)
+        allow(widget).to receive(:value).and_return(false)
         expect(widget.value).to be_kind_of(FalseClass)
       end
     end

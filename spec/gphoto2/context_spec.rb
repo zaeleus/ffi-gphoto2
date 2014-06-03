@@ -3,7 +3,7 @@ require 'spec_helper'
 module GPhoto2
   describe Context do
     before do
-      Context.any_instance.stub(:new)
+      allow_any_instance_of(Context).to receive(:new)
     end
 
     describe '#finalize' do

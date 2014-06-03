@@ -8,8 +8,8 @@ module GPhoto2
     let(:value) { 'usb:250,006' }
 
     before do
-      entry.stub(:get_name).and_return(name)
-      entry.stub(:get_value).and_return(value)
+      allow(entry).to receive(:get_name).and_return(name)
+      allow(entry).to receive(:get_value).and_return(value)
     end
 
     describe '#name' do

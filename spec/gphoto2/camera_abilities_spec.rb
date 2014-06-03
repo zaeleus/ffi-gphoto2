@@ -6,7 +6,7 @@ module GPhoto2
     let(:index) { 0 }
 
     before do
-      CameraAbilities.any_instance.stub(:get_abilities)
+      allow_any_instance_of(CameraAbilities).to receive(:get_abilities)
     end
 
     describe '.find' do
@@ -14,13 +14,13 @@ module GPhoto2
         abilities = double('camera_abilities')
 
         context = double('context')
-        context.stub(:finalize)
-        Context.stub(:new).and_return(context)
+        allow(context).to receive(:finalize)
+        allow(Context).to receive(:new).and_return(context)
 
         camera_abilities_list = double('camera_abilities_list')
-        CameraAbilitiesList.stub(:new).and_return(camera_abilities_list)
-        camera_abilities_list.stub(:lookup_model).and_return(0)
-        camera_abilities_list.stub(:[]).and_return(abilities)
+        allow(CameraAbilitiesList).to receive(:new).and_return(camera_abilities_list)
+        allow(camera_abilities_list).to receive(:lookup_model).and_return(0)
+        allow(camera_abilities_list).to receive(:[]).and_return(abilities)
 
         expect(CameraAbilities.find('model')).to eq(abilities)
       end
@@ -30,7 +30,7 @@ module GPhoto2
       it 'returns the value at the given field' do
         key, value = :model, 'name'
         abilities = CameraAbilities.new(camera_abilities_list, index)
-        abilities.stub(:ptr).and_return({ key => value })
+        allow(abilities).to receive(:ptr).and_return({ key => value })
         expect(abilities[key]).to eq(value)
       end
     end

@@ -7,7 +7,7 @@ module GPhoto2
     describe '#value' do
       it 'has a Float return value' do
         widget = RangeCameraWidget.new(nil)
-        widget.stub(:value).and_return(0.0)
+        allow(widget).to receive(:value).and_return(0.0)
         expect(widget.value).to be_kind_of(Float)
       end
     end
@@ -18,7 +18,7 @@ module GPhoto2
         range = (min..max).step(inc).to_a
 
         widget = RangeCameraWidget.new(nil)
-        widget.stub(:get_range).and_return([min, max, inc])
+        allow(widget).to receive(:get_range).and_return([min, max, inc])
 
         expect(widget.range).to eq(range)
       end

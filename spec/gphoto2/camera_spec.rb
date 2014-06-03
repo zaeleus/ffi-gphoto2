@@ -11,10 +11,9 @@ module GPhoto2
       let(:camera) { Camera.new(model, port) }
 
       before do
-        Context.stub(:stub)
-        CameraAbilitiesList.stub(:new).and_return(abilities_list)
-        abilities_list.stub(:detect).and_return(camera_list)
-        camera_list.stub_chain(:to_a, :map).and_return([camera])
+        allow(CameraAbilitiesList).to receive(:new).and_return(abilities_list)
+        allow(abilities_list).to receive(:detect).and_return(camera_list)
+        allow(camera_list).to receive_message_chain(:to_a, :map).and_return([camera])
       end
 
       it 'returns a list of device entries' do
@@ -28,14 +27,14 @@ module GPhoto2
       context 'when devices are automatically detected' do
         it 'returns a new Camera using the first entry' do
           camera = Camera.new(model, port)
-          Camera.stub(:all).and_return([camera])
+          allow(Camera).to receive(:all).and_return([camera])
           expect(Camera.first).to be_kind_of(Camera)
         end
       end
 
       context 'when no devices are detected' do
         it 'raises a RuntimeError' do
-          Camera.stub(:all).and_return([])
+          allow(Camera).to receive(:all).and_return([])
           expect { Camera.first }.to raise_error(RuntimeError)
         end
       end
@@ -43,7 +42,7 @@ module GPhoto2
 
     describe '.open' do
       let(:camera) { double('camera') }
-      before { Camera.stub(:new).and_return(camera) }
+      before { allow(Camera).to receive(:new).and_return(camera) }
 
       context 'when a block is given' do
         it 'yeilds a new camera instance' do
@@ -74,7 +73,7 @@ module GPhoto2
       end
 
       before do
-        Camera.stub(:all).and_return(cameras)
+        allow(Camera).to receive(:all).and_return(cameras)
       end
 
       it 'filters all detected cameras by model' do
@@ -93,7 +92,7 @@ module GPhoto2
     describe '#exit' do
       it 'closes the camera connection' do
         camera = Camera.new(model, port)
-        camera.stub(:_exit)
+        allow(camera).to receive(:_exit)
         expect(camera).to receive(:_exit)
         camera.exit
       end
@@ -104,7 +103,7 @@ module GPhoto2
       let(:path) { double('camera_file_path', folder: 'folder', name: 'name') }
 
       before do
-        camera.stub(:_capture).and_return(path)
+        allow(camera).to receive(:_capture).and_return(path)
       end
 
       it 'saves the camera configuration' do
@@ -123,8 +122,8 @@ module GPhoto2
       let(:file) { double('camera_file') }
 
       before do
-        camera.stub(:save)
-        camera.stub(:capture_preview).and_return(file)
+        allow(camera).to receive(:save)
+        allow(camera).to receive(:capture_preview).and_return(file)
       end
 
       it 'saves the camera configuration' do
@@ -142,7 +141,7 @@ module GPhoto2
       let(:event) { double('camera_event') }
 
       before do
-        camera.stub(:wait_for_event).and_return(event)
+        allow(camera).to receive(:wait_for_event).and_return(event)
       end
 
       it 'waits for a camera event' do
@@ -160,7 +159,7 @@ module GPhoto2
       let(:event) { double('camera_event', type: :capture_complete) }
 
       before do
-        camera.stub(:wait).and_return(event)
+        allow(camera).to receive(:wait).and_return(event)
       end
 
       it 'blocks until a given event is returned from #wait' do
@@ -178,7 +177,7 @@ module GPhoto2
       let(:window) { double('camera_widget') }
 
       it 'always returns the same CameraWidget instance' do
-        camera.stub(:get_config).and_return(window)
+        allow(camera).to receive(:get_config).and_return(window)
         expect(camera.window).to eq(window)
         expect(camera.window).to eq(window)
       end
@@ -188,8 +187,8 @@ module GPhoto2
       it 'returns a map of configuration widgets' do
         camera = Camera.new(model, port)
         window = double('camera_widget')
-        camera.stub(:window).and_return(window)
-        window.stub(:flatten).and_return({ 'iso' => window })
+        allow(camera).to receive(:window).and_return(window)
+        allow(window).to receive(:flatten).and_return({ 'iso' => window })
 
         expect(camera.config).to eq({ 'iso' => window })
       end
@@ -223,7 +222,7 @@ module GPhoto2
     describe '#file' do
       it 'retrieves a file from the camera' do
         camera = Camera.new(model, port)
-        camera.stub(:file_get)
+        allow(camera).to receive(:file_get)
         expect(camera).to receive(:file_get)
         camera.file(double('camera_file'))
       end
@@ -232,7 +231,7 @@ module GPhoto2
     describe '#delete' do
       it 'deletes a file from the camera' do
         camera = Camera.new(model, port)
-        camera.stub(:file_delete)
+        allow(camera).to receive(:file_delete)
         expect(camera).to receive(:file_delete)
         camera.delete(double('camera_file'))
       end
@@ -243,7 +242,7 @@ module GPhoto2
 
       let(:camera) do
         camera = Camera.new(model, port)
-        camera.stub(:config).and_return({ 'iso' => window })
+        allow(camera).to receive(:config).and_return({ 'iso' => window })
         camera
       end
 
@@ -269,7 +268,7 @@ module GPhoto2
 
       let(:camera) do
         camera = Camera.new(model, port)
-        camera.stub(:[]).and_return(window)
+        allow(camera).to receive(:[]).and_return(window)
         camera
       end
 
@@ -290,8 +289,8 @@ module GPhoto2
     describe '#update' do
       let(:camera) do
         camera = Camera.new(model, port)
-        camera.stub(:[]=)
-        camera.stub(:save)
+        allow(camera).to receive(:[]=)
+        allow(camera).to receive(:save)
         camera
       end
 
@@ -310,7 +309,7 @@ module GPhoto2
       context 'when the configuration changed' do
         it 'returns true' do
           camera = Camera.new(model, port)
-          camera.stub_chain(:[], :value=)
+          allow(camera).to receive_message_chain(:[], :value=)
 
           camera['iso'] = 400
 
@@ -331,9 +330,7 @@ module GPhoto2
       let(:operations) { FFI::GPhoto2::CameraOperation[:capture_image] }
 
       before do
-        camera.stub_chain(:abilities, :[])
-          .with(:operations)
-          .and_return(operations)
+        allow(camera).to receive_message_chain(:abilities, :[]).and_return(operations)
       end
 
       context 'when the camera does not have the ability perform an operation' do
@@ -352,8 +349,8 @@ module GPhoto2
     describe '#save' do
       let(:camera) do
         camera = Camera.new(model, port)
-        camera.stub_chain(:[], :value=)
-        camera.stub(:set_config)
+        allow(camera).to receive_message_chain(:[], :value=)
+        allow(camera).to receive(:set_config)
         camera
       end
 

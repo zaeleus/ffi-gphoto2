@@ -32,7 +32,7 @@ module GPhoto2
         folder = CameraFolder.new(camera)
 
         folders = 2.times.map { folder }
-        folder.stub(:folder_list_folders).and_return(folders)
+        allow(folder).to receive(:folder_list_folders).and_return(folders)
 
         expect(folder.folders).to eq(folders)
       end
@@ -44,7 +44,7 @@ module GPhoto2
 
         file = double('camera_file')
         files = 2.times.map { file }
-        folder.stub(:folder_list_files).and_return(files)
+        allow(folder).to receive(:folder_list_files).and_return(files)
 
         expect(folder.files).to eq(files)
       end
@@ -77,7 +77,7 @@ module GPhoto2
     describe '#open' do
       it 'returns a new CameraFile of a file in the folder' do
         file = double('camera_file')
-        CameraFile.stub(:new).and_return(file)
+        allow(CameraFile).to receive(:new).and_return(file)
 
         folder = CameraFolder.new(camera)
         expect(folder.open('capt0001.jpg')).to eq(file)

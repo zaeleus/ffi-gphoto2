@@ -5,8 +5,8 @@ module GPhoto2
     let(:context) { double('context') }
 
     before do
-      CameraAbilitiesList.any_instance.stub(:new)
-      CameraAbilitiesList.any_instance.stub(:load)
+      allow_any_instance_of(CameraAbilitiesList).to receive(:new)
+      allow_any_instance_of(CameraAbilitiesList).to receive(:load)
     end
 
     describe '#detect' do
@@ -14,7 +14,7 @@ module GPhoto2
         camera_list = double('camera_list')
 
         abilities_list = CameraAbilitiesList.new(context)
-        abilities_list.stub(:_detect).and_return(camera_list)
+        allow(abilities_list).to receive(:_detect).and_return(camera_list)
 
         expect(abilities_list.detect).to eq(camera_list)
       end
@@ -25,7 +25,7 @@ module GPhoto2
         index = 0
 
         list = CameraAbilitiesList.new(context)
-        list.stub(:_lookup_model).and_return(index)
+        allow(list).to receive(:_lookup_model).and_return(index)
 
         expect(list.lookup_model('model')).to eq(index)
       end
@@ -35,7 +35,7 @@ module GPhoto2
       it 'returns a new CameraAbilities instance at the specified index' do
         abilities = double('camera_abilities')
 
-        CameraAbilities.stub(:new).and_return(abilities)
+        allow(CameraAbilities).to receive(:new).and_return(abilities)
         list = CameraAbilitiesList.new(context)
 
         expect(list.at(0)).to eq(abilities)

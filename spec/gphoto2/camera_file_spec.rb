@@ -8,8 +8,8 @@ module GPhoto2
     let(:data_and_size) { ['data', 384] }
 
     before do
-      CameraFile.any_instance.stub(:new)
-      CameraFile.any_instance.stub(:data_and_size).and_return(data_and_size)
+      allow_any_instance_of(CameraFile).to receive(:new)
+      allow_any_instance_of(CameraFile).to receive(:data_and_size).and_return(data_and_size)
     end
 
     describe '#preview' do
@@ -33,7 +33,7 @@ module GPhoto2
       let(:data) { data_and_size.first }
 
       before do
-        File.stub(:binwrite)
+        allow(File).to receive(:binwrite)
       end
 
       context 'when a pathname is passed' do
@@ -63,7 +63,7 @@ module GPhoto2
     describe '#data' do
       it 'returns the data of the camera file' do
         file = CameraFile.new(camera, folder, name)
-        file.stub(:data_and_size).and_return(data_and_size)
+        allow(file).to receive(:data_and_size).and_return(data_and_size)
         expect(file.data).to eq(data_and_size.first)
       end
     end
@@ -71,7 +71,7 @@ module GPhoto2
     describe '#size' do
       it 'returns the size of the camera file' do
         file = CameraFile.new(camera, folder, name)
-        file.stub(:data_and_size).and_return(data_and_size)
+        allow(file).to receive(:data_and_size).and_return(data_and_size)
         expect(file.size).to eq(data_and_size.last)
       end
     end

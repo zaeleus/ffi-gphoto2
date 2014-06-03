@@ -3,7 +3,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     it 'returns the name of the widget' do
       name = 'name'
       widget = klass.new(nil)
-      widget.stub(:get_name).and_return(name)
+      allow(widget).to receive(:get_name).and_return(name)
       expect(widget.name).to eq(name)
     end
   end
@@ -12,7 +12,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     it 'returns the value of the widget' do
       value = 'value'
       widget = klass.new(nil)
-      widget.stub(:get_value).and_return(value)
+      allow(widget).to receive(:get_value).and_return(value)
       expect(widget.value).to eq(value)
     end
   end
@@ -38,7 +38,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     it 'returns the type of the widget' do
       type = :window
       widget = klass.new(nil)
-      widget.stub(:get_type).and_return(type)
+      allow(widget).to receive(:get_type).and_return(type)
       expect(widget.type).to eq(type)
     end
   end
@@ -47,7 +47,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     it 'returns the label of the widget' do
       label = 'Beep'
       widget = klass.new(nil)
-      widget.stub(:get_label).and_return(label)
+      allow(widget).to receive(:get_label).and_return(label)
       expect(widget.label).to eq(label)
     end
   end
@@ -57,8 +57,8 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
       size = 2
 
       widget = klass.new(nil)
-      widget.stub(:count_children).and_return(size)
-      widget.stub(:get_child)
+      allow(widget).to receive(:count_children).and_return(size)
+      allow(widget).to receive(:get_child)
 
       expect(widget).to receive(:get_child).exactly(size).times
 
@@ -70,18 +70,18 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     %w[a b].each do |name|
       let(name.to_sym) do
         widget = GPhoto2::TextCameraWidget.new(nil)
-        widget.stub(:name).and_return(name)
-        widget.stub(:type).and_return(:text)
-        widget.stub(:children).and_return([])
+        allow(widget).to receive(:name).and_return(name)
+        allow(widget).to receive(:type).and_return(:text)
+        allow(widget).to receive(:children).and_return([])
         widget
       end
     end
 
     it 'returns a map of name-widget pairs of its descendents' do
       widget = klass.new(nil)
-      widget.stub(:name).and_return('a')
-      widget.stub(:type).and_return(:section)
-      widget.stub(:children).and_return([a, b])
+      allow(widget).to receive(:name).and_return('a')
+      allow(widget).to receive(:type).and_return(:section)
+      allow(widget).to receive(:children).and_return([a, b])
 
       expect(widget.flatten).to eq({ 'a' => a, 'b' => b })
     end
@@ -91,7 +91,7 @@ shared_examples_for GPhoto2::CameraWidget do |klass|
     it "returns the string value of the widget" do
       value = 'value'
       widget = klass.new(nil)
-      widget.stub(:value).and_return(value)
+      allow(widget).to receive(:value).and_return(value)
       expect(widget.to_s).to eq(value)
     end
   end

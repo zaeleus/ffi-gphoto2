@@ -6,8 +6,8 @@ module GPhoto2
     let(:folder) { '/' }
 
     before do
-      CameraFilePath.any_instance.stub(:name).and_return(name)
-      CameraFilePath.any_instance.stub(:folder).and_return(folder)
+      allow_any_instance_of(CameraFilePath).to receive(:name).and_return(name)
+      allow_any_instance_of(CameraFilePath).to receive(:folder).and_return(folder)
     end
 
     describe '#name' do

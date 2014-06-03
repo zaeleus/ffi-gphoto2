@@ -6,16 +6,16 @@ module GPhoto2
     let(:index) { 0 }
 
     before do
-      PortInfo.any_instance.stub(:new)
+      allow_any_instance_of(PortInfo).to receive(:new)
     end
 
     describe '.find' do
       it 'returns a new PortInfo instance from a port path' do
-        PortInfoList.any_instance.stub(:new)
-        PortInfoList.any_instance.stub(:load)
-        PortInfoList.any_instance.stub(:lookup_path)
+        allow_any_instance_of(PortInfoList).to receive(:new)
+        allow_any_instance_of(PortInfoList).to receive(:load)
+        allow_any_instance_of(PortInfoList).to receive(:lookup_path)
         info = PortInfo.new(port_info_list, index)
-        PortInfoList.any_instance.stub(:[]).and_return(info)
+        allow_any_instance_of(PortInfoList).to receive(:[]).and_return(info)
 
         port_info = PortInfo.find('usb:250,006')
         expect(port_info).to be_kind_of(PortInfo)
@@ -26,7 +26,7 @@ module GPhoto2
       it 'returns the name of the port' do
         name = 'name'
         port_info = PortInfo.new(port_info_list, index)
-        port_info.stub(:get_name).and_return(name)
+        allow(port_info).to receive(:get_name).and_return(name)
         expect(port_info.name).to eq(name)
       end
     end
@@ -35,7 +35,7 @@ module GPhoto2
       it 'returns the path of the port' do
         path = 'path'
         port_info = PortInfo.new(port_info_list, index)
-        port_info.stub(:get_path).and_return(path)
+        allow(port_info).to receive(:get_path).and_return(path)
         expect(port_info.path).to eq(path)
       end
     end
@@ -44,7 +44,7 @@ module GPhoto2
       it 'returns the type of the port' do
         type = :usb
         port_info = PortInfo.new(port_info_list, index)
-        port_info.stub(:get_type).and_return(type)
+        allow(port_info).to receive(:get_type).and_return(type)
         expect(port_info.type).to eq(type)
       end
     end

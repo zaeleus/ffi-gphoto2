@@ -7,7 +7,7 @@ module GPhoto2
     describe '#value' do
       it 'has a String return value' do
         widget = RadioCameraWidget.new(nil)
-        widget.stub(:value).and_return('text')
+        allow(widget).to receive(:value).and_return('text')
         expect(widget.value).to be_kind_of(String)
       end
     end
@@ -17,8 +17,8 @@ module GPhoto2
         size = 2
 
         widget = RadioCameraWidget.new(nil)
-        widget.stub(:count_choices).and_return(size)
-        widget.stub(:get_choice).and_return("choice")
+        allow(widget).to receive(:count_choices).and_return(size)
+        allow(widget).to receive(:get_choice).and_return("choice")
 
         expect(widget).to receive(:get_choice).exactly(size).times
 
