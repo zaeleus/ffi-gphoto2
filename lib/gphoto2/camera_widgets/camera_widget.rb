@@ -108,6 +108,7 @@ module GPhoto2
       str_ptr.write_pointer(str)
 
       rc = gp_widget_get_type(ptr, str_ptr)
+      GPhoto2.check!(rc)
 
       str_ptr = str_ptr.read_pointer
       str_ptr.null? ? nil : str_ptr.read_string
