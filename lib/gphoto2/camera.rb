@@ -2,7 +2,7 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
 
-    attr_reader :context, :model, :port
+    attr_reader :model, :port
 
     def self.all
       context = Context.new
