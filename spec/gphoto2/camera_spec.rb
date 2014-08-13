@@ -5,6 +5,7 @@ module GPhoto2
     let(:model) { 'Nikon DSC D5100 (PTP mode)' }
     let(:port) { 'usb:250,006' }
 
+    it_behaves_like Camera::Capture
     it_behaves_like Camera::Configuration
     it_behaves_like Camera::Filesystem
 
@@ -98,44 +99,6 @@ module GPhoto2
         allow(camera).to receive(:_exit)
         expect(camera).to receive(:_exit)
         camera.exit
-      end
-    end
-
-    describe '#capture' do
-      let(:camera) { Camera.new(model, port) }
-      let(:path) { double('camera_file_path', folder: 'folder', name: 'name') }
-
-      before do
-        allow(camera).to receive(:_capture).and_return(path)
-      end
-
-      it 'saves the camera configuration' do
-        expect(camera).to receive(:save)
-        camera.capture
-      end
-
-      it 'returns a new CameraFile' do
-        expect(camera).to receive(:_capture)
-        expect(camera.capture).to be_kind_of(CameraFile)
-      end
-    end
-
-    describe '#preview' do
-      let(:camera) { Camera.new(model, port) }
-      let(:file) { double('camera_file') }
-
-      before do
-        allow(camera).to receive(:save)
-        allow(camera).to receive(:capture_preview).and_return(file)
-      end
-
-      it 'saves the camera configuration' do
-        expect(camera).to receive(:save)
-        camera.preview
-      end
-
-      it 'returns a new CameraFile' do
-        expect(camera.preview).to eq(file)
       end
     end
 
