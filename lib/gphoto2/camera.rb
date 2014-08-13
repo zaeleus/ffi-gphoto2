@@ -2,7 +2,9 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
     include GPhoto2::Struct
+
     include Configuration
+    include Filesystem
 
     attr_reader :model, :port
 
@@ -104,20 +106,6 @@ module GPhoto2
       @context ||= Context.new
     end
 
-    def filesystem(root = '/')
-      root = "/#{root}" if root[0] != '/'
-      CameraFolder.new(self, root)
-    end
-    alias_method :/, :filesystem
-
-    def file(file)
-      file_get(file)
-    end
-
-    def delete(file)
-      file_delete(file)
-    end
-
     def can?(operation)
       (abilities[:operations] & CameraOperation[operation]) != 0
     end
@@ -166,17 +154,6 @@ module GPhoto2
       rc = gp_camera_capture_preview(ptr, file.ptr, context.ptr)
       GPhoto2.check!(rc)
       file
-    end
-
-    def file_get(file, type = :normal)
-      rc = gp_camera_file_get(ptr, file.folder, file.name, type, file.ptr, context.ptr)
-      GPhoto2.check!(rc)
-      file
-    end
-
-    def file_delete(file)
-      rc = gp_camera_file_delete(ptr, file.folder, file.name, context.ptr)
-      GPhoto2.check!(rc)
     end
 
     def unref
