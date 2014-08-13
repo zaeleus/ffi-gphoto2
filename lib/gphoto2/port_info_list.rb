@@ -1,8 +1,7 @@
 module GPhoto2
   class PortInfoList
     include FFI::GPhoto2Port
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def initialize
       new
@@ -18,10 +17,6 @@ module GPhoto2
       PortInfo.new(self, index)
     end
     alias_method :[], :at
-
-    def to_ptr
-      @ptr
-    end
 
     private
 

@@ -1,8 +1,7 @@
 module GPhoto2
   class CameraAbilities
     include FFI::GPhoto2
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def self.find(model)
       context = Context.new
@@ -24,10 +23,6 @@ module GPhoto2
 
     def [](field)
       ptr[field]
-    end
-
-    def to_ptr
-      @ptr
     end
 
     private

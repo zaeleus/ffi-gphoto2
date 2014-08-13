@@ -1,6 +1,7 @@
 module GPhoto2
   class Camera
     include FFI::GPhoto2
+    include GPhoto2::Struct
 
     attr_reader :model, :port
 
@@ -155,10 +156,6 @@ module GPhoto2
       set_config
       @dirty = false
       true
-    end
-
-    def to_ptr
-      @ptr
     end
 
     private

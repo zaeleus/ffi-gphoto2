@@ -1,6 +1,6 @@
 module GPhoto2
   class CameraFilePath
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def initialize(ptr = nil)
       @ptr = ptr || FFI::GPhoto2::CameraFilePath.new
@@ -12,10 +12,6 @@ module GPhoto2
 
     def folder
       ptr[:folder].to_s
-    end
-
-    def to_ptr
-      @ptr
     end
   end
 end

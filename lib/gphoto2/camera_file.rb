@@ -1,8 +1,9 @@
 module GPhoto2
   class CameraFile
     include FFI::GPhoto2
+    include GPhoto2::Struct
 
-    attr_reader :folder, :name, :ptr
+    attr_reader :folder, :name
 
     def initialize(camera, folder = nil, name = nil)
       @camera = camera
@@ -28,10 +29,6 @@ module GPhoto2
 
     def size
       data_and_size.last
-    end
-
-    def to_ptr
-      @ptr
     end
 
     private

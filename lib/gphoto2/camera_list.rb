@@ -1,8 +1,7 @@
 module GPhoto2
   class CameraList
     include FFI::GPhoto2
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def initialize
       new
@@ -19,10 +18,6 @@ module GPhoto2
 
     def to_a
       size.times.map { |i| Entry.new(self, i) }
-    end
-
-    def to_ptr
-      @ptr
     end
 
     private

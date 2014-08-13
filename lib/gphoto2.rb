@@ -5,6 +5,7 @@ require 'ffi'
 require 'ffi/gphoto2'
 require 'ffi/gphoto2_port'
 
+require 'gphoto2/struct'
 require 'gphoto2/camera_widgets/camera_widget'
 require 'gphoto2/camera_widgets/date_camera_widget'
 require 'gphoto2/camera_widgets/menu_camera_widget'

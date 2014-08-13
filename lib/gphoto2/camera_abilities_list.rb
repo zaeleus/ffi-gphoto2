@@ -1,8 +1,7 @@
 module GPhoto2
   class CameraAbilitiesList
     include FFI::GPhoto2
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def initialize(context)
       @context = context
@@ -23,10 +22,6 @@ module GPhoto2
       CameraAbilities.new(self, index)
     end
     alias_method :[], :at
-
-    def to_ptr
-      @ptr
-    end
 
     private
 

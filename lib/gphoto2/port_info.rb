@@ -1,8 +1,7 @@
 module GPhoto2
   class PortInfo
     include FFI::GPhoto2Port
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def self.find(port)
       port_info_list = PortInfoList.new
@@ -26,10 +25,6 @@ module GPhoto2
 
     def type
       get_type
-    end
-
-    def to_ptr
-      @ptr
     end
 
     private

@@ -1,8 +1,7 @@
 module GPhoto2
   class CameraWidget
     include FFI::GPhoto2
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def self.factory(ptr, parent = nil)
       # ptr fields are supposed to be private, but we ignore that here
@@ -61,10 +60,6 @@ module GPhoto2
 
     def to_s
       value.to_s
-    end
-
-    def to_ptr
-      @ptr
     end
 
     private

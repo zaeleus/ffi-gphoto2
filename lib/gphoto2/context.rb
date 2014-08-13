@@ -1,8 +1,7 @@
 module GPhoto2
   class Context
     include FFI::GPhoto2
-
-    attr_reader :ptr
+    include GPhoto2::Struct
 
     def initialize
       new
@@ -12,10 +11,6 @@ module GPhoto2
       unref
     end
     alias_method :close, :finalize
-
-    def to_ptr
-      @ptr
-    end
 
     private
 
