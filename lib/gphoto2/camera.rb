@@ -2,6 +2,7 @@ module GPhoto2
   class Camera
     include FFI::GPhoto2
     include GPhoto2::Struct
+    include Configuration
 
     attr_reader :model, :port
 
@@ -48,8 +49,8 @@ module GPhoto2
     end
 
     def initialize(model, port)
+      super
       @model, @port = model, port
-      @dirty = false
     end
 
     def finalize
@@ -103,14 +104,6 @@ module GPhoto2
       @context ||= Context.new
     end
 
-    def window
-      @window ||= get_config
-    end
-
-    def config
-      @config ||= window.flatten
-    end
-
     def filesystem(root = '/')
       root = "/#{root}" if root[0] != '/'
       CameraFolder.new(self, root)
@@ -125,37 +118,8 @@ module GPhoto2
       file_delete(file)
     end
 
-    def [](key)
-      config[key.to_s]
-    end
-
-    def []=(key, value)
-      self[key].value = value
-      @dirty = true
-      value
-    end
-
-    def update(attributes = {})
-      attributes.each do |key, value|
-        self[key] = value
-      end
-
-      save
-    end
-
-    def dirty?
-      @dirty
-    end
-
     def can?(operation)
       (abilities[:operations] & CameraOperation[operation]) != 0
-    end
-
-    def save
-      return false unless dirty?
-      set_config
-      @dirty = false
-      true
     end
 
     private
@@ -202,19 +166,6 @@ module GPhoto2
       rc = gp_camera_capture_preview(ptr, file.ptr, context.ptr)
       GPhoto2.check!(rc)
       file
-    end
-
-    def get_config
-      widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
-      rc = gp_camera_get_config(ptr, widget_ptr, context.ptr)
-      GPhoto2.check!(rc)
-      widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
-      CameraWidget.factory(widget)
-    end
-
-    def set_config
-      rc = gp_camera_set_config(ptr, window.ptr, context.ptr)
-      GPhoto2.check!(rc)
     end
 
     def file_get(file, type = :normal)

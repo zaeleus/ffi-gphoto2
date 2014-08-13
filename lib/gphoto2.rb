@@ -6,6 +6,7 @@ require 'ffi/gphoto2'
 require 'ffi/gphoto2_port'
 
 require 'gphoto2/struct'
+
 require 'gphoto2/camera_widgets/camera_widget'
 require 'gphoto2/camera_widgets/date_camera_widget'
 require 'gphoto2/camera_widgets/menu_camera_widget'
@@ -15,7 +16,10 @@ require 'gphoto2/camera_widgets/section_camera_widget'
 require 'gphoto2/camera_widgets/text_camera_widget'
 require 'gphoto2/camera_widgets/toggle_camera_widget'
 require 'gphoto2/camera_widgets/window_camera_widget'
+
+require 'gphoto2/camera/configuration'
 require 'gphoto2/camera'
+
 require 'gphoto2/camera_abilities'
 require 'gphoto2/camera_abilities_list'
 require 'gphoto2/camera_event'
@@ -28,6 +32,7 @@ require 'gphoto2/entry'
 require 'gphoto2/port_info'
 require 'gphoto2/port_info_list'
 require 'gphoto2/port_result'
+
 require 'gphoto2/version'
 
 module GPhoto2
