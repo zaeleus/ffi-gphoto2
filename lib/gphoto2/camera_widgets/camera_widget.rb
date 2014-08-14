@@ -62,6 +62,16 @@ module GPhoto2
       value.to_s
     end
 
+    protected
+
+    def get_value
+      raise NotImplementedError
+    end
+
+    def set_value(value)
+      raise NotImplementedError
+    end
+
     private
 
     def free
@@ -79,14 +89,6 @@ module GPhoto2
 
       str_ptr = str_ptr.read_pointer
       str_ptr.null? ? nil : str_ptr.read_string
-    end
-
-    def get_value
-      raise NotImplementedError
-    end
-
-    def set_value(value)
-      raise NotImplementedError
     end
 
     def get_type
