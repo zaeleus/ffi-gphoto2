@@ -22,6 +22,25 @@ module GPhoto2
       end
     end
 
+    describe '#reload' do
+      let(:camera) do
+        camera = Camera.new(model, port)
+        window = double('camera_widget')
+        allow(window).to receive(:flatten)
+        allow(camera).to receive(:get_config).and_return(window)
+        camera
+      end
+
+      it 'reloads the configuration from the camera' do
+        expect(camera).to receive(:get_config).once
+        camera.reload
+      end
+
+      it 'marks the camera as not dirty' do
+        expect(camera.dirty?).to be(false)
+      end
+    end
+
     describe '#[]' do
       let(:window) { double('camera_widget') }
 

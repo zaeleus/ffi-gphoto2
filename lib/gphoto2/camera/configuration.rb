@@ -2,7 +2,7 @@ module GPhoto2
   class Camera
     module Configuration
       def initialize(model, port)
-        @dirty = false
+        reset
       end
 
       def window
@@ -11,6 +11,12 @@ module GPhoto2
 
       def config
         @config ||= window.flatten
+      end
+
+      def reload
+        @window.finalize if @window
+        reset
+        config
       end
 
       def [](key)
@@ -43,6 +49,12 @@ module GPhoto2
       end
 
       private
+
+      def reset
+        @window = nil
+        @config = nil
+        @dirty = false
+      end
 
       def get_config
         widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
