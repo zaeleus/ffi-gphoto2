@@ -5,6 +5,7 @@ module GPhoto2
 
     include Capture
     include Configuration
+    include Event
     include Filesystem
 
     attr_reader :model, :port
@@ -67,19 +68,6 @@ module GPhoto2
       _exit
     end
 
-    # timeout in milliseconds
-    def wait(timeout = 2000)
-      wait_for_event(timeout)
-    end
-
-    def wait_for(event_type)
-      begin
-        event = wait
-      end until event.type == event_type
-
-      event
-    end
-
     def ptr
       @ptr || (init && @ptr)
     end
@@ -135,39 +123,6 @@ module GPhoto2
     def unref
       rc = gp_camera_unref(ptr)
       GPhoto2.check!(rc)
-    end
-
-    def wait_for_event(timeout)
-      # assume CameraEventType is an int
-      type = FFI::MemoryPointer.new(:int)
-
-      data = FFI::MemoryPointer.new(:pointer)
-      data_ptr = FFI::MemoryPointer.new(:pointer)
-      data_ptr.write_pointer(data)
-
-      rc = gp_camera_wait_for_event(ptr, timeout, type, data_ptr, context.ptr)
-      GPhoto2.check!(rc)
-
-      type = CameraEventType[type.read_int]
-      data = data_ptr.read_pointer
-
-      data =
-        case type
-        when :unknown
-          data.null? ? nil : data.read_string
-        when :file_added
-          path_ptr = FFI::GPhoto2::CameraFilePath.new(data)
-          path = CameraFilePath.new(path_ptr)
-          CameraFile.new(self, path.folder, path.name)
-        when :folder_added
-          path_ptr = FFI::GPhoto2::CameraFilePath.new(data)
-          path = CameraFilePath.new(path_ptr)
-          CameraFolder.new(self, '%s/%s' % [path.folder, path.name])
-        else
-          nil
-        end
-
-      CameraEvent.new(type, data)
     end
   end
 end
