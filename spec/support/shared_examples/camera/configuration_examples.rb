@@ -37,6 +37,7 @@ module GPhoto2
       end
 
       it 'marks the camera as not dirty' do
+        camera.reload
         expect(camera.dirty?).to be(false)
       end
     end
