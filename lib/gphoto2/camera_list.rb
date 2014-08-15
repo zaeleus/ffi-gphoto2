@@ -7,11 +7,6 @@ module GPhoto2
       new
     end
 
-    # @return [void]
-    def finalize
-      free
-    end
-
     # @return [Integer]
     def size
       count
