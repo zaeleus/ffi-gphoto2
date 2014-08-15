@@ -127,9 +127,9 @@ module GPhoto2
     end
 
     def count_children
-      rc = gp_widget_count_children(ptr)
+      count = rc = gp_widget_count_children(ptr)
       GPhoto2.check!(rc)
-      rc
+      count
     end
 
     def get_child(index)
