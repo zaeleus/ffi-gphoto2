@@ -7,6 +7,7 @@ module GPhoto2
       new
     end
 
+    # @return [void]
     def finalize
       unref
     end

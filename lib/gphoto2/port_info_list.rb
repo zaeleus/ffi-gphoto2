@@ -8,11 +8,15 @@ module GPhoto2
       load
     end
 
+    # @param [String] port
+    # @return [Integer]
     def lookup_path(port)
       _lookup_path(port)
     end
     alias_method :index, :lookup_path
 
+    # @param [Integer] index
+    # @return [GPhoto2::PortInfo]
     def at(index)
       PortInfo.new(self, index)
     end

@@ -3,6 +3,8 @@ module GPhoto2
     include FFI::GPhoto2
     include GPhoto2::Struct
 
+    # @param [String] model the name of the device
+    # @return [GPhoto2::CameraAbilities]
     def self.find(model)
       context = Context.new
 
@@ -15,12 +17,15 @@ module GPhoto2
       abilities
     end
 
+    # @param [GPhoto2::CameraAbilitiesList] camera_abilities_list
+    # @param [Integer] index
     def initialize(camera_abilities_list, index)
       @camera_abilities_list = camera_abilities_list
       @index = index
       get_abilities
     end
 
+    # @return [Object]
     def [](field)
       ptr[field]
     end

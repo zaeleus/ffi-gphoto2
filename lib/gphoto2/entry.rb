@@ -7,10 +7,12 @@ module GPhoto2
       @index = index
     end
 
+    # @return [String]
     def name
       get_name
     end
 
+    # @return [String]
     def value
       get_value
     end

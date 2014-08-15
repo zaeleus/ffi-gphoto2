@@ -7,15 +7,18 @@ module GPhoto2
       new
     end
 
+    # @return [void]
     def finalize
       free
     end
 
+    # @return [Integer]
     def size
       count
     end
     alias_method :length, :size
 
+    # @return [Array<GPhoto2::Entry>]
     def to_a
       size.times.map { |i| Entry.new(self, i) }
     end

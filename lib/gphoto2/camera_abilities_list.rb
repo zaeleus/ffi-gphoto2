@@ -3,21 +3,27 @@ module GPhoto2
     include FFI::GPhoto2
     include GPhoto2::Struct
 
+    # @param [GPhoto2::Context] context
     def initialize(context)
       @context = context
       new
       load
     end
 
+    # @return [GPhoto2::CameraList]
     def detect
       _detect
     end
 
+    # @param [String] model
+    # @return [Integer]
     def lookup_model(model)
       _lookup_model(model)
     end
     alias_method :index, :lookup_model
 
+    # @param [Integer] index
+    # @return [GPhoto2::CameraAbilities]
     def at(index)
       CameraAbilities.new(self, index)
     end

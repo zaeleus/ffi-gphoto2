@@ -8,8 +8,17 @@ module GPhoto2
     include Event
     include Filesystem
 
-    attr_reader :model, :port
+    # @return [String]
+    attr_reader :model
 
+    # @return [String]
+    attr_reader :port
+
+    # @example
+    #   cameras = GPhoto2::Camera.all
+    #   # => [#<GPhoto2::Camera>, #<GPhoto2::Camera>, ...]
+    #
+    # @return [Array<GPhoto2::Camera>] a list of all available devices
     def self.all
       context = Context.new
 
@@ -26,12 +35,44 @@ module GPhoto2
       entries
     end
 
+    # @example
+    #   camera = GPhoto2::Camera.first
+    #
+    #   begin
+    #     # ...
+    #   ensure
+    #     camera.finalize
+    #   end
+    #
+    # @return [GPhoto2::Camera] the first detected camera
+    # @raise [RuntimeError] when no devices are detected
     def self.first
       entries = all
       raise RuntimeError, 'no devices detected' if entries.empty?
       entries.first
     end
 
+    # @example
+    #   model = 'Nikon DSC D5100 (PTP mode)'
+    #   port = 'usb:250,006'
+    #
+    #   camera = GPhoto2::Camera.open(model, port)
+    #
+    #   begin
+    #     # ...
+    #   ensure
+    #     camera.finalize
+    #   end
+    #
+    #   # Alternatively, pass a block to automatically finalize the camera
+    #   # after the block finishes.
+    #   GPhoto2::Camera.open(model, port) do |camera|
+    #     # ...
+    #   end
+    #
+    # @param [String] model
+    # @param [String] port
+    # @return [GPhoto2::Camera]
     def self.open(model, port)
       camera = new(model, port)
 
@@ -46,17 +87,26 @@ module GPhoto2
       end
     end
 
+    # @example
+    #   # Find the cameras whose model names contain Nikon.
+    #   cameras = GPhoto2::Camera.where(model: /nikon/i)
+    #
+    # @param [Hash] condition
+    # @return [Array<GPhoto2::Camera>]
     def self.where(condition)
       name = condition.keys.first
       pattern = condition.values.first
       all.select { |c| c.send(name).match(pattern) }
     end
 
+    # @param [String] model
+    # @param [String] port
     def initialize(model, port)
       super
       @model, @port = model, port
     end
 
+    # @return [void]
     def finalize
       @context.finalize if @context
       @window.finalize if @window
@@ -64,26 +114,37 @@ module GPhoto2
     end
     alias_method :close, :finalize
 
+    # @return [void]
     def exit
       _exit
     end
 
+    # @return [FFI::GPhoto::Camera]
     def ptr
       @ptr || (init && @ptr)
     end
 
+    # @return [GPhoto2::CameraAbilities]
     def abilities
       @abilities || (init && @abilities)
     end
 
+    # @return [GPhoto2::PortInfo]
     def port_info
       @port_info || (init && @port_info)
     end
 
+    # @return [GPhoto2::Context]
     def context
       @context ||= Context.new
     end
 
+    # @example
+    #   camera.can? :capture_image
+    #   # => true
+    #
+    # @param [CameraOperation] operation
+    # @return [Boolean]
     def can?(operation)
       (abilities[:operations] & CameraOperation[operation]) != 0
     end

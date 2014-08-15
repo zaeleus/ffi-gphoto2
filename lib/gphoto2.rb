@@ -39,10 +39,14 @@ require 'gphoto2/port_result'
 require 'gphoto2/version'
 
 module GPhoto2
+  # @return [Logger]
   def self.logger
     @logger ||= Logger.new(STDERR)
   end
 
+  # @param [Integer] rc
+  # @return [void]
+  # @raise RuntimeError when the return code is not {FFI::GPhoto2Port::GP_OK}
   def self.check!(rc)
     logger.debug "#{caller.first} => #{rc}" if ENV['DEBUG']
     return if rc >= FFI::GPhoto2Port::GP_OK

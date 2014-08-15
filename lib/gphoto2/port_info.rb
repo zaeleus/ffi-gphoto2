@@ -3,26 +3,33 @@ module GPhoto2
     include FFI::GPhoto2Port
     include GPhoto2::Struct
 
+    # @param [String] port
+    # @return [GPhoto2::PortInfo]
     def self.find(port)
       port_info_list = PortInfoList.new
       index = port_info_list.lookup_path(port)
       port_info_list[index]
     end
 
+    # @param [GPhoto2::PortInfoList] port_info_list
+    # @param [Integer] index
     def initialize(port_info_list, index)
       @port_info_list = port_info_list
       @index = index
       new
     end
 
+    # @return [String]
     def name
       get_name
     end
 
+    # @return [String]
     def path
       get_path
     end
 
+    # @return [GPPortType]
     def type
       get_type
     end

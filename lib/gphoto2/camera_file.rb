@@ -3,30 +3,43 @@ module GPhoto2
     include FFI::GPhoto2
     include GPhoto2::Struct
 
-    attr_reader :folder, :name
+    # @return [String]
+    attr_reader :folder
 
+    # @return [String]
+    attr_reader :name
+
+    # @param [GPhoto2::Camera] camera
+    # @param [String] folder
+    # @param [String] name
     def initialize(camera, folder = nil, name = nil)
       @camera = camera
       @folder, @name = folder, name
       new
     end
 
+    # @return [Boolean]
     def preview?
       @folder.nil? && @name.nil?
     end
 
+    # @param [String] pathname
+    # @return [Integer] the number of bytes written
     def save(pathname = default_filename)
       File.binwrite(pathname, data)
     end
 
+    # @return [void]
     def delete
       @camera.delete(self)
     end
 
+    # @return [String]
     def data
       data_and_size.first
     end
 
+    # @return [Integer]
     def size
       data_and_size.last
     end

@@ -1,5 +1,6 @@
 module GPhoto2
   class RangeCameraWidget < CameraWidget
+    # @return [Array<Number>]
     def range
       min, max, inc = get_range
       (min..max).step(inc).to_a

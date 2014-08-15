@@ -1,5 +1,6 @@
 module GPhoto2
   class RadioCameraWidget < CameraWidget
+    # @return [Array<String>]
     def choices
       count_choices.times.map { |i| get_choice(i) }
     end

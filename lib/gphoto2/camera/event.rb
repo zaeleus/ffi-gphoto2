@@ -1,11 +1,14 @@
 module GPhoto2
   class Camera
     module Event
-      # timeout in milliseconds
+      # @param [Integer] timeout time to wait in milliseconds
+      # @return [CameraEvent]
       def wait(timeout = 2000)
         wait_for_event(timeout)
       end
 
+      # @param [CameraEventType] event_type
+      # @return [CameraEvent]
       def wait_for(event_type)
         begin
           event = wait

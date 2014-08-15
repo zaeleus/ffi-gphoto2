@@ -6,10 +6,12 @@ module GPhoto2
       @ptr = ptr || FFI::GPhoto2::CameraFilePath.new
     end
 
+    # @return [String]
     def name
       ptr[:name].to_s
     end
 
+    # @return [String]
     def folder
       ptr[:folder].to_s
     end

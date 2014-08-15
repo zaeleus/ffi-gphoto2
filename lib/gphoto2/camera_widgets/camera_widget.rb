@@ -1,8 +1,11 @@
 module GPhoto2
+  # @abstract
   class CameraWidget
     include FFI::GPhoto2
     include GPhoto2::Struct
 
+    # @param [FFI::GPhoto2::CameraWidget] ptr
+    # @param [GPhoto2::CameraWidget] parent
     def self.factory(ptr, parent = nil)
       # ptr fields are supposed to be private, but we ignore that here
       type = ptr[:type].to_s.split('_').last.capitalize
@@ -10,41 +13,52 @@ module GPhoto2
       klass.new(ptr, parent)
     end
 
+    # @param [FFI::GPhoto2::CameraWidget] ptr
+    # @param [GPhoto2::CameraWidget] parent
     def initialize(ptr, parent = nil)
       @ptr = ptr
       @parent = parent
     end
 
+    # @return [void]
     def finalize
       free
     end
     alias_method :close, :finalize
 
+    # @return [String]
     def label
       get_label
     end
 
+    # @return [String]
     def name
       get_name
     end
 
+    # @return [Object]
     def value
       get_value
     end
 
+    # @return [Object]
     def value=(value)
       set_value(value)
       value
     end
 
+    # @return [CameraWidgetType]
     def type
       get_type
     end
 
+    # @return [Array<GPhoto2::CameraWidget>]
     def children
       count_children.times.map { |i| get_child(i) }
     end
 
+    # @param [Hash<String,GPhoto2::CameraWidget>] map
+    # @return [Hash<String,GPhoto2::CameraWidget>]
     def flatten(map = {})
       case type
       when :window, :section
@@ -58,6 +72,7 @@ module GPhoto2
       map
     end
 
+    # @param [String]
     def to_s
       value.to_s
     end

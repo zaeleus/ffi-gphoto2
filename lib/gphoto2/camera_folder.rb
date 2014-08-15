@@ -2,6 +2,7 @@ module GPhoto2
   class CameraFolder
     include FFI::GPhoto2
 
+    # @return [String]
     attr_reader :path
 
     def initialize(camera, path = '/')
@@ -9,10 +10,12 @@ module GPhoto2
       @path = path
     end
 
+    # @return [Boolean]
     def root?
       @path == '/'
     end
 
+    # @return [String]
     def name
       if root?
         '/'
@@ -21,14 +24,18 @@ module GPhoto2
       end
     end
 
+    # @return [Array<GPhoto2::CameraFolder>]
     def folders
       folder_list_folders
     end
 
+    # @return [Array<GPhoto2::CameraFile>]
     def files
       folder_list_files
     end
 
+    # @param [String] name the name of the directory
+    # @return [GPhoto2::CameraFolder]
     def cd(name)
       case name
       when '.'
@@ -41,10 +48,13 @@ module GPhoto2
     end
     alias_method :/, :cd
 
+    # @param [String] name the filename of the file to open
+    # @return [GPhoto2::CameraFile]
     def open(name)
       CameraFile.new(@camera, @path, name)
     end
 
+    # @return [GPhoto2::CameraFolder]
     def up
       if root?
         self
@@ -55,6 +65,7 @@ module GPhoto2
       end
     end
 
+    # @return [String]
     def to_s
       name
     end
