@@ -2,7 +2,7 @@ require 'gphoto2'
 
 # Run and pipe to a video player that can demux raw mjpeg. For example,
 #
-#     ruby live_view.rb | mpv --demuxer=+lavf --demuxer-lavf-format=mjpeg --demuxer-lavf-analyzeduration=0.1 -
+#     ruby live_view.rb | mpv --demuxer-lavf-format=mjpeg -
 
 # Automatically flush the IO buffer.
 STDOUT.sync = true
