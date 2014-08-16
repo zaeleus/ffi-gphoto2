@@ -1,5 +1,7 @@
 require 'gphoto2'
 
+# List all configuration values in tree form.
+
 def visit(widget, level = 0)
   indent = '  ' * level
 
@@ -28,10 +30,6 @@ def visit(widget, level = 0)
   end
 end
 
-camera = GPhoto2::Camera.first
-
-begin
+GPhoto2::Camera.first do |camera|
   visit(camera.window)
-ensure
-  camera.finalize
 end
