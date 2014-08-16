@@ -44,13 +44,19 @@ module GPhoto2
     #     camera.finalize
     #   end
     #
+    #   # Alternatively, pass a block, which will automatically close the camera.
+    #   GPhoto2::Camera.first do |camera|
+    #     # ...
+    #   end
+    #
     # @return [GPhoto2::Camera] the first detected camera
     # @raise [RuntimeError] when no devices are detected
-    def self.first
+    def self.first(&blk)
       entries = all
       raise RuntimeError, 'no devices detected' if entries.empty?
-      entries.first
-    end
+      camera = entries.first
+      autorelease(camera, &blk)
+   end
 
     # @example
     #   model = 'Nikon DSC D5100 (PTP mode)'
@@ -64,8 +70,7 @@ module GPhoto2
     #     camera.finalize
     #   end
     #
-    #   # Alternatively, pass a block to automatically finalize the camera
-    #   # after the block finishes.
+    #   # Alternatively, pass a block, which will automatically close the camera.
     #   GPhoto2::Camera.open(model, port) do |camera|
     #     # ...
     #   end
@@ -73,18 +78,9 @@ module GPhoto2
     # @param [String] model
     # @param [String] port
     # @return [GPhoto2::Camera]
-    def self.open(model, port)
+    def self.open(model, port, &blk)
       camera = new(model, port)
-
-      if block_given?
-        begin
-          yield camera
-        ensure
-          camera.finalize
-        end
-      else
-        camera
-      end
+      autorelease(camera, &blk)
     end
 
     # @example
@@ -150,6 +146,22 @@ module GPhoto2
     end
 
     private
+
+    # Ensures the given camera is finalized when passed a block.
+    #
+    # If no block is given, the camera is returned and the caller must must
+    # manually close it.
+    def self.autorelease(camera)
+      if block_given?
+        begin
+          yield camera
+        ensure
+          camera.finalize
+        end
+      else
+        camera
+      end
+    end
 
     def init
       new

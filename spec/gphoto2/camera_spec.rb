@@ -30,10 +30,28 @@ module GPhoto2
 
     describe '.first' do
       context 'when devices are automatically detected' do
-        it 'returns a new Camera using the first entry' do
-          camera = Camera.new(model, port)
+        let(:camera) { Camera.new(model, port) }
+
+        before do
           allow(Camera).to receive(:all).and_return([camera])
-          expect(Camera.first).to be_kind_of(Camera)
+        end
+
+        context 'when a block is given' do
+          it 'yeilds the first detected camera' do
+            expect(Camera).to receive(:first).and_yield(camera)
+            Camera.first { |c| }
+          end
+
+          it 'finalizes the camera when the block terminates' do
+            expect(camera).to receive(:finalize)
+            Camera.first { |c| }
+          end
+        end
+
+        context 'when no block is given' do
+          it 'returns a new Camera using the first entry' do
+            expect(Camera.first).to be_kind_of(Camera)
+          end
         end
       end
 
