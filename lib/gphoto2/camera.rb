@@ -56,7 +56,7 @@ module GPhoto2
       raise RuntimeError, 'no devices detected' if entries.empty?
       camera = entries.first
       autorelease(camera, &blk)
-   end
+    end
 
     # @example
     #   model = 'Nikon DSC D5100 (PTP mode)'
