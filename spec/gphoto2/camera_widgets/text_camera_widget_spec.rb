@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GPhoto2
   describe TextCameraWidget do
-    it_behaves_like CameraWidget, TextCameraWidget
+    it_behaves_like CameraWidget
 
     describe '#value' do
       it 'has a String return value' do

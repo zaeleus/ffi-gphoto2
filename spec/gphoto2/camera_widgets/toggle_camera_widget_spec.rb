@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GPhoto2
   describe ToggleCameraWidget do
-    it_behaves_like CameraWidget, ToggleCameraWidget
+    it_behaves_like CameraWidget
 
     describe '#value' do
       it 'can have a TrueClass return value' do

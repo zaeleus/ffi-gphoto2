@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GPhoto2
   describe RangeCameraWidget do
-    it_behaves_like CameraWidget, RangeCameraWidget
+    it_behaves_like CameraWidget
 
     describe '#value' do
       it 'has a Float return value' do

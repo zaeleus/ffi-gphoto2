@@ -1,4 +1,6 @@
-shared_examples_for GPhoto2::CameraWidget do |klass|
+shared_examples_for GPhoto2::CameraWidget do
+  let(:klass) { described_class }
+
   describe '#name' do
     it 'returns the name of the widget' do
       name = 'name'

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GPhoto2
   describe DateCameraWidget do
-    it_behaves_like CameraWidget, DateCameraWidget
+    it_behaves_like CameraWidget
 
     describe '#value' do
       it 'has a Time return value' do
