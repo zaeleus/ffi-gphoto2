@@ -15,9 +15,6 @@ def visit(widget, level = 0)
   indent << '  '
 
   puts "#{indent}type: #{widget.type}"
-
-  return if widget.type == :menu
-
   puts "#{indent}value: #{widget.value}"
 
   case widget.type
@@ -25,7 +22,7 @@ def visit(widget, level = 0)
     range = widget.range
     step = (range.size > 1) ? range[1] - range[0] : 1.0
     puts "#{indent}options: #{range.first}..#{range.last}:step(#{step})"
-  when :radio
+  when :radio, :menu
     puts "#{indent}options: #{widget.choices.inspect}"
   end
 end

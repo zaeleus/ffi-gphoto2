@@ -63,8 +63,6 @@ module GPhoto2
       case type
       when :window, :section
         children.each { |child| child.flatten(map) }
-      when :menu
-        # noop
       else
         map[name] = self
       end

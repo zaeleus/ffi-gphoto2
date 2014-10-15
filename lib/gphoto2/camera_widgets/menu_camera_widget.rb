@@ -1,4 +1,4 @@
 module GPhoto2
-  class MenuCameraWidget < CameraWidget
+  class MenuCameraWidget < RadioCameraWidget
   end
 end
