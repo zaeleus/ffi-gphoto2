@@ -17,7 +17,7 @@ idiomatic Ruby way.
 
 ## Usage
 
-```
+```ruby
 require 'gphoto2'
 
 # list available cameras
