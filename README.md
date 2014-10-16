@@ -89,7 +89,7 @@ folder = camera/'store_00010001/DCIM/100D5100'
 # list files
 files = folder.files
 folder.files.map(&:name)
-=> ["DSC_0001.JPG", "DSC_0002.JPG", ...]
+# => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
 
 # copy a file from the camera
 file = files.first
