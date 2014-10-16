@@ -29,6 +29,16 @@ module GPhoto2
       #
       # All unsaved changes will be lost.
       #
+      # @example
+      #   camera['iso']
+      #   # => 800
+      #
+      #   camera['iso'] = 200
+      #   camera.reload
+      #
+      #   camera['iso']
+      #   # => 800
+      #
       # @return [void]
       def reload
         @window.finalize if @window
