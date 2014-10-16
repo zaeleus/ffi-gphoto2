@@ -102,7 +102,9 @@ file.delete
 camera.finalize
 ```
 
-More examples can be found in [`examples/`][2].
+More examples can be found in [`examples/`][2]. YARD documentation can be
+generated using the `rake yard` task or [browsed online][3].
 
 [1]: http://www.gphoto.org/
 [2]: https://github.com/zaeleus/ffi-gphoto2/tree/master/examples
+[3]: http://www.rubydoc.info/gems/ffi-gphoto2/frames
