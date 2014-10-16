@@ -67,6 +67,13 @@ module GPhoto2
 
       # Updates the configuration on the camera.
       #
+      # @example
+      #   camera['iso'] = 800
+      #   camera.save
+      #   # => true
+      #   camera.save
+      #   # => false (nothing to update)
+      #
       # @return [Boolean] whether setting the configuration was attempted
       def save
         return false unless dirty?
