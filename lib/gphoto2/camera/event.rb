@@ -30,7 +30,7 @@ module GPhoto2
         rc = gp_camera_wait_for_event(ptr, timeout, type, data_ptr, context.ptr)
         GPhoto2.check!(rc)
 
-        type = CameraEventType[type.read_int]
+        type = FFI::GPhoto2::CameraEventType[type.read_int]
         data = data_ptr.read_pointer
 
         data =
