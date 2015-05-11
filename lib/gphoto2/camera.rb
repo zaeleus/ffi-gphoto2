@@ -139,6 +139,7 @@ module GPhoto2
     #   camera.can? :capture_image
     #   # => true
     #
+    # @see FFI::GPhoto2::CameraOperation
     # @param [CameraOperation] operation
     # @return [Boolean]
     def can?(operation)
