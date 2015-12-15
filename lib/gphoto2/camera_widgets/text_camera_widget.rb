@@ -15,7 +15,7 @@ module GPhoto2
     end
 
     def set_value(text)
-      val = FFI::MemoryPointer.from_string(text)
+      val = FFI::MemoryPointer.from_string(text.to_s)
       rc = gp_widget_set_value(ptr, val)
       GPhoto2.check!(rc)
     end
