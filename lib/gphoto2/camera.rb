@@ -83,9 +83,17 @@ module GPhoto2
       autorelease(camera, &blk)
     end
 
+    # Filters devices by a given condition.
+    #
+    # Filter keys can be either `model` or `port`. Only the first filter is
+    # used.
+    #
     # @example
     #   # Find the cameras whose model names contain Nikon.
     #   cameras = GPhoto2::Camera.where(model: /nikon/i)
+    #
+    #   # Select a camera by its port.
+    #   camera = GPhoto2::Camera.where(port: 'usb:250,004').first
     #
     # @param [Hash] condition
     # @return [Array<GPhoto2::Camera>]
