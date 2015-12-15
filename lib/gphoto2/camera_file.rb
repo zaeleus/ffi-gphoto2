@@ -3,6 +3,9 @@ module GPhoto2
     include FFI::GPhoto2
     include GPhoto2::Struct
 
+    # The preview data is assumed to be a jpg.
+    PREVIEW_FILENAME = 'capture_preview.jpg'.freeze
+
     # @return [String]
     attr_reader :folder
 
@@ -54,8 +57,7 @@ module GPhoto2
     end
 
     def default_filename
-      # previews are always jpg
-      preview? ? 'capture_preview.jpg' : @name
+      preview? ? CAPTURE_FILENAME : @name
     end
 
     def new
