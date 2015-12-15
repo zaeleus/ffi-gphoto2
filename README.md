@@ -1,6 +1,6 @@
 # ffi-gphoto2
 
-**ffi-gphoto2** provides an FFI for common functions in [libgphoto2][1].
+**ffi-gphoto2** provides an FFI for common functions in [libgphoto2][gphoto].
 It also includes a facade to interact with the library in a more
 idiomatic Ruby way.
 
@@ -34,8 +34,16 @@ camera = cameras.first
 # ...or more conveniently
 camera = GPhoto2::Camera.first
 
-# ...or even search by model name
+# search by model name
 camera = GPhoto2::Camera.where(model: /nikon/i).first
+
+# the above examples require the camera be manually closed when done
+camera.close
+
+# pass a block to automatically close the camera
+GPhoto2::Camera.first do |camera|
+  # ...
+end
 
 # check camera abilities (see `FFI::GPhoto2::CameraOperation.symbols`)
 camera.can? :capture_image
@@ -97,14 +105,11 @@ file.save
 
 # ...and then delete it from the camera
 file.delete
-
-# close the camera
-camera.finalize
 ```
 
-More examples can be found in [`examples/`][2]. YARD documentation can be
-generated using the `rake yard` task or [browsed online][3].
+More examples can be found in [`examples/`][examples]. YARD documentation can be
+generated using the `rake yard` task or [browsed online][rubydoc].
 
-[1]: http://www.gphoto.org/
-[2]: https://github.com/zaeleus/ffi-gphoto2/tree/master/examples
-[3]: http://www.rubydoc.info/gems/ffi-gphoto2/frames
+[gphoto]: http://www.gphoto.org/
+[examples]: https://github.com/zaeleus/ffi-gphoto2/tree/master/examples
+[rubydoc]: http://www.rubydoc.info/gems/ffi-gphoto2/frames
