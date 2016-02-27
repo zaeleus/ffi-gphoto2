@@ -24,9 +24,9 @@ module FFI
     require 'ffi/gphoto2/camera_abilities_list'
     require 'ffi/gphoto2/camera_file'
     require 'ffi/gphoto2/camera_file_path'
+    require 'ffi/gphoto2/entry'
     require 'ffi/gphoto2/camera_list'
     require 'ffi/gphoto2/camera_widget'
-    require 'ffi/gphoto2/entry'
     require 'ffi/gphoto2/gp_context'
 
     # gphoto2/gphoto2-abilities-list.h

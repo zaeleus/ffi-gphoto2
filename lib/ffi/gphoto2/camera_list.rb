@@ -4,7 +4,7 @@ module FFI
       # libgphoto2/gphoto2-list.c
       layout :used, :int,
              :max, :int,
-             :_entry, :pointer, # Entry*
+             :_entry, Entry.by_ref,
              :ref_count, :int
 
       def self.release(ptr)

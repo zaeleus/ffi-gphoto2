@@ -2,7 +2,7 @@ module FFI
   module GPhoto2Port
     class GPPortInfoList < FFI::ManagedStruct
       # libgphoto2_port/libgphoto2_port/gphoto2-port-info-list.c
-      layout :info, :pointer, # GPPortInfo*
+      layout :info, GPPortInfo.by_ref,
              :count, :uint,
              :iolib_count, :uint
 

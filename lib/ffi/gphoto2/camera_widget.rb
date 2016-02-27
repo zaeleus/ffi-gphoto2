@@ -7,7 +7,7 @@ module FFI
              :info, [:char, 1024],
              :name, [:char, 256],
 
-             :parent, :pointer, # CameraWidget
+             :parent, CameraWidget.by_ref,
 
              :value_string, :string,
              :value_int, :int,
