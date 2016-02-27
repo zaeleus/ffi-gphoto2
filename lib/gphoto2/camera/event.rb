@@ -21,16 +21,13 @@ module GPhoto2
 
       def wait_for_event(timeout)
         # assume CameraEventType is an int
-        type = FFI::MemoryPointer.new(:int)
-
-        data = FFI::MemoryPointer.new(:pointer)
+        type_ptr = FFI::MemoryPointer.new(:int)
         data_ptr = FFI::MemoryPointer.new(:pointer)
-        data_ptr.write_pointer(data)
 
-        rc = gp_camera_wait_for_event(ptr, timeout, type, data_ptr, context.ptr)
+        rc = gp_camera_wait_for_event(ptr, timeout, type_ptr, data_ptr, context.ptr)
         GPhoto2.check!(rc)
 
-        type = FFI::GPhoto2::CameraEventType[type.read_int]
+        type = FFI::GPhoto2::CameraEventType[type_ptr.read_int]
         data = data_ptr.read_pointer
 
         data =

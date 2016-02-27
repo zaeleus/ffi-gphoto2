@@ -20,9 +20,7 @@ module GPhoto2
     private
 
     def get_name
-      name = FFI::MemoryPointer.new(:string)
       ptr = FFI::MemoryPointer.new(:pointer)
-      ptr.write_pointer(name)
 
       rc = gp_list_get_name(@camera_list.ptr, @index, ptr)
       GPhoto2.check!(rc)
@@ -32,9 +30,7 @@ module GPhoto2
     end
 
     def get_value
-      value = FFI::MemoryPointer.new(:string)
       ptr = FFI::MemoryPointer.new(:pointer)
-      ptr.write_pointer(value)
 
       rc = gp_list_get_value(@camera_list.ptr, @index, ptr)
       GPhoto2.check!(rc)

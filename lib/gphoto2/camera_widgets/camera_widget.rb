@@ -93,9 +93,7 @@ module GPhoto2
     end
 
     def get_name
-      str = FFI::MemoryPointer.new(:string)
       str_ptr = FFI::MemoryPointer.new(:pointer)
-      str_ptr.write_pointer(str)
 
       rc = gp_widget_get_name(ptr, str_ptr)
       GPhoto2.check!(rc)
@@ -113,9 +111,7 @@ module GPhoto2
     end
 
     def get_label
-      str = FFI::MemoryPointer.new(:string)
       str_ptr = FFI::MemoryPointer.new(:pointer)
-      str_ptr.write_pointer(str)
 
       rc = gp_widget_get_type(ptr, str_ptr)
       GPhoto2.check!(rc)

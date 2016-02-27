@@ -68,15 +68,13 @@ module GPhoto2
     end
 
     def get_data_and_size
-      data = FFI::MemoryPointer.new(:uchar)
       data_ptr = FFI::MemoryPointer.new(:pointer)
-      data_ptr.write_pointer(data)
-      size = FFI::MemoryPointer.new(:ulong)
+      size_ptr = FFI::MemoryPointer.new(:ulong)
 
-      rc = gp_file_get_data_and_size(ptr, data_ptr, size)
+      rc = gp_file_get_data_and_size(ptr, data_ptr, size_ptr)
       GPhoto2.check!(rc)
 
-      size = size.read_ulong
+      size = size_ptr.read_ulong
       data = data_ptr.read_pointer.read_bytes(size)
 
       [data, size]

@@ -8,9 +8,7 @@ module GPhoto2
     protected
 
     def get_value
-      val = FFI::MemoryPointer.new(:string)
       val_ptr = FFI::MemoryPointer.new(:pointer)
-      val_ptr.write_pointer(val)
 
       rc = gp_widget_get_value(ptr, val_ptr)
       GPhoto2.check!(rc)
@@ -34,9 +32,7 @@ module GPhoto2
     end
 
     def get_choice(i)
-      val = FFI::MemoryPointer.new(:string)
       val_ptr = FFI::MemoryPointer.new(:pointer)
-      val_ptr.write_pointer(val)
 
       rc = gp_widget_get_choice(ptr, i, val_ptr)
       GPhoto2.check!(rc)
