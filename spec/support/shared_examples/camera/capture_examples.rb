@@ -19,6 +19,19 @@ module GPhoto2
       end
     end
 
+    describe '#trigger' do
+      let(:camera) { Camera.new(model, port) }
+
+      before do
+        allow(camera).to receive(:trigger_capture)
+      end
+
+      it 'saves the camera configuration' do
+        expect(camera).to receive(:save)
+        camera.trigger
+      end
+    end
+
     describe '#preview' do
       let(:camera) { Camera.new(model, port) }
       let(:file) { double('camera_file') }

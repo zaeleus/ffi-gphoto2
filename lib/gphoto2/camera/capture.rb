@@ -16,6 +16,23 @@ module GPhoto2
         CameraFile.new(self, path.folder, path.name)
       end
 
+      # Triggers a capture and immedately returns.
+      #
+      # A camera trigger is the first half of a {#capture}. Instead of
+      # returning a {GPhoto2::CameraFile}, a trigger immediately returns and
+      # the caller has to poll for events.
+      #
+      # @example
+      #   camera.trigger
+      #   event = camera.wait_for(:file_added)
+      #   event.data # => CameraFile
+      #
+      # @return [void]
+      def trigger
+        save
+        trigger_capture
+      end
+
       # Captures a preview from the camera.
       #
       # Previews are not stored on the camera but are returned as data in a
@@ -53,6 +70,11 @@ module GPhoto2
         rc = gp_camera_capture_preview(ptr, file.ptr, context.ptr)
         GPhoto2.check!(rc)
         file
+      end
+
+      def trigger_capture
+        rc = gp_camera_trigger_capture(ptr, context.ptr)
+        GPhoto2.check!(rc)
       end
     end
   end
