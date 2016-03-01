@@ -39,6 +39,9 @@ require 'gphoto2/port_result'
 require 'gphoto2/version'
 
 module GPhoto2
+  # A runtime error for unsuccessful return codes.
+  class Error < RuntimeError; end
+
   # @return [Logger]
   def self.logger
     @logger ||= Logger.new(STDERR)
@@ -46,10 +49,10 @@ module GPhoto2
 
   # @param [Integer] rc
   # @return [void]
-  # @raise RuntimeError when the return code is not {FFI::GPhoto2Port::GP_OK}
+  # @raise [GPhoto2::Error] when the return code is not {FFI::GPhoto2Port::GP_OK}
   def self.check!(rc)
     logger.debug "#{caller.first} => #{rc}" if ENV['DEBUG']
     return if rc >= FFI::GPhoto2Port::GP_OK
-    raise "#{PortResult.as_string(rc)} (#{rc})"
+    raise Error, "#{PortResult.as_string(rc)} (#{rc})"
   end
 end
