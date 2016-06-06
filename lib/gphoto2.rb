@@ -43,14 +43,13 @@ module GPhoto2
   class Error < RuntimeError
     attr_reader :code
 
-    def initialize(message, code = nil)
+    def initialize(message, code)
       @code = code
       super(message)
     end
 
     def to_s
-      return "#{super} (#{code})" unless code.nil?
-      return super
+      "#{super} (#{code})"
     end
   end
 
