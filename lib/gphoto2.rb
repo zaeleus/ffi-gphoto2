@@ -41,13 +41,17 @@ require 'gphoto2/version'
 module GPhoto2
   # A runtime error for unsuccessful return codes.
   class Error < RuntimeError
+    # @return [Integer]
     attr_reader :code
 
+    # @param [String] message
+    # @param [Integer] code
     def initialize(message, code)
       super(message)
       @code = code
     end
 
+    # @return [String]
     def to_s
       "#{super} (#{code})"
     end
