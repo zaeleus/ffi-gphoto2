@@ -40,7 +40,18 @@ require 'gphoto2/version'
 
 module GPhoto2
   # A runtime error for unsuccessful return codes.
-  class Error < RuntimeError; end
+  class Error < RuntimeError
+    attr_reader :code
+
+    def initialize(message, code)
+      @code = code
+      super(message)
+    end
+
+    def to_s
+      "#{super} (#{code})"
+    end
+  end
 
   # @return [Logger]
   def self.logger
@@ -53,6 +64,6 @@ module GPhoto2
   def self.check!(rc)
     logger.debug "#{caller.first} => #{rc}" if ENV['DEBUG']
     return if rc >= FFI::GPhoto2Port::GP_OK
-    raise Error, "#{PortResult.as_string(rc)} (#{rc})"
+    raise Error.new PortResult.as_string(rc), rc
   end
 end
