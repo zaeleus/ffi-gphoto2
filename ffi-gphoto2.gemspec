@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/zaeleus/ffi-gphoto2'
 
   spec.authors       = ['Michael Macias']
-  spec.email         = ['mamacias@go.olemiss.edu']
+  spec.email         = ['zaeleus@gmail.com']
 
   spec.version       = GPhoto2::VERSION
   spec.license       = 'MIT'
