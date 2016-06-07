@@ -32,8 +32,11 @@ module GPhoto2
 
     # @return [Integer]
     def operations
-      return 0 if self[:operations] === :none
-      self[:operations]
+      if self[:operations] === :none
+        CameraOperation[:none]
+      else
+        self[:operations]
+      end
     end
 
     private
