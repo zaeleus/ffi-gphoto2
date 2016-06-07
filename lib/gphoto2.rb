@@ -68,6 +68,6 @@ module GPhoto2
   def self.check!(rc)
     logger.debug "#{caller.first} => #{rc}" if ENV['DEBUG']
     return if rc >= FFI::GPhoto2Port::GP_OK
-    raise Error.new PortResult.as_string(rc), rc
+    raise Error.new(PortResult.as_string(rc), rc)
   end
 end
