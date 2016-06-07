@@ -151,8 +151,7 @@ module GPhoto2
     # @param [CameraOperation] operation
     # @return [Boolean]
     def can?(operation)
-      return false if abilities[:operations] === :none
-      (abilities[:operations] & (CameraOperation[operation] || 0)) != 0
+      (abilities.operations & (CameraOperation[operation] || 0)) != 0
     end
 
     private
