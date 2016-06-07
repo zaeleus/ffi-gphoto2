@@ -44,8 +44,8 @@ module GPhoto2
     attr_reader :code
 
     def initialize(message, code)
-      @code = code
       super(message)
+      @code = code
     end
 
     def to_s
