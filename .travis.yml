@@ -1,5 +1,8 @@
-sudo: false
+sudo: required
 language: ruby
 rvm:
   - 2.3.1
-before_install: gem install bundler -v 1.12.5
+before_install:
+  - gem install bundler -v 1.12.5
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libgphoto2-2 libgphoto2-port0
