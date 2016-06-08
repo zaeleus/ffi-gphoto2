@@ -32,7 +32,7 @@ module GPhoto2
 
     # @return [Integer]
     def operations
-      if self[:operations] === :none
+      if self[:operations] == :none
         CameraOperation[:none]
       else
         self[:operations]
