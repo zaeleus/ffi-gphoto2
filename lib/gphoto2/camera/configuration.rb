@@ -70,7 +70,8 @@ module GPhoto2
       # @param [Object] value
       # @return [Object]
       def []=(key, value)
-        self[key].value = value
+        return unless option = self[key]
+        option.value = value
         @dirty = true
         value
       end
