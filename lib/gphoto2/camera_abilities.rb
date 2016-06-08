@@ -30,6 +30,15 @@ module GPhoto2
       ptr[field]
     end
 
+    # @return [Integer]
+    def operations
+      if self[:operations] == :none
+        CameraOperation[:none]
+      else
+        self[:operations]
+      end
+    end
+
     private
 
     def get_abilities

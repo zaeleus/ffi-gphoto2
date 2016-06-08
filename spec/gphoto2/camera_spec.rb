@@ -127,6 +127,7 @@ module GPhoto2
 
       before do
         allow(camera).to receive_message_chain(:abilities, :[]).and_return(operations)
+        allow(camera.abilities).to receive(:operations).and_return(operations)
       end
 
       context 'when the camera has the ability to perform an operation' do
