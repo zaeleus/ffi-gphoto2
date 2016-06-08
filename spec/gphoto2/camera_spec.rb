@@ -147,6 +147,15 @@ module GPhoto2
           expect(camera.can?(:dance)).to be(false)
         end
       end
+
+      context 'the camera has no abilities' do
+        it 'returns false' do
+          camera = Camera.new(model, port)
+          operations = FFI::GPhoto2::CameraOperation[0]
+          allow(camera).to receive_message_chain(:abilities, :[]).and_return(operations)
+          expect(camera.can?(:capture_image)).to be(false)
+        end
+      end
     end
   end
 end
