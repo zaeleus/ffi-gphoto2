@@ -30,7 +30,7 @@ module GPhoto2
       ptr[field]
     end
 
-    # @return [Integer]
+    # @return [Integer] a bit field of supported operations
     def operations
       if self[:operations] == :none
         CameraOperation[:none]

@@ -34,5 +34,28 @@ module GPhoto2
         expect(abilities[key]).to eq(value)
       end
     end
+
+    describe '#operations' do
+      context 'when no or one operation is supported' do
+        it 'returns a bit field of supported operations' do
+          abilities = CameraAbilities.new(camera_abilities_list, index)
+          allow(abilities).to receive(:[]).and_return(:none)
+          expect(abilities.operations).to eq(0)
+        end
+      end
+
+      context 'when multiple operations are supported' do
+        it 'returns a bit field of supported operations' do
+          abilities = CameraAbilities.new(camera_abilities_list, index)
+
+          capture_image = FFI::GPhoto2::CameraOperation[:capture_image]
+          config = FFI::GPhoto2::CameraOperation[:config]
+          operations = capture_image | config
+
+          allow(abilities).to receive(:[]).and_return(operations)
+          expect(abilities.operations).to eq(0x11)
+        end
+      end
+    end
   end
 end

@@ -126,8 +126,7 @@ module GPhoto2
       let(:operations) { FFI::GPhoto2::CameraOperation[:capture_image] }
 
       before do
-        allow(camera).to receive_message_chain(:abilities, :[]).and_return(operations)
-        allow(camera.abilities).to receive(:operations).and_return(operations)
+        allow(camera).to receive_message_chain(:abilities, :operations).and_return(operations)
       end
 
       context 'when the camera has the ability to perform an operation' do
@@ -145,15 +144,6 @@ module GPhoto2
       context 'an invalid operation is given' do
         it 'returns false' do
           expect(camera.can?(:dance)).to be(false)
-        end
-      end
-
-      context 'the camera has no abilities' do
-        it 'returns false' do
-          camera = Camera.new(model, port)
-          operations = FFI::GPhoto2::CameraOperation[0]
-          allow(camera).to receive_message_chain(:abilities, :[]).and_return(operations)
-          expect(camera.can?(:capture_image)).to be(false)
         end
       end
     end
