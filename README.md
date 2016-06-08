@@ -1,5 +1,9 @@
 # ffi-gphoto2
 
+
+[![Gem Version](https://badge.fury.io/rb/ffi-gphoto2.svg)](https://badge.fury.io/rb/ffi-gphoto2)
+[![Build Status](https://travis-ci.org/zaeleus/ffi-gphoto2.svg?branch=master)](https://travis-ci.org/zaeleus/ffi-gphoto2)
+
 **ffi-gphoto2** provides an FFI for common functions in [libgphoto2][gphoto].
 It also includes a facade to interact with the library in a more
 idiomatic Ruby way.
