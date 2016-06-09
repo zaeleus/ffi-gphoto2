@@ -65,29 +65,37 @@ module GPhoto2
     end
 
     describe '#[]=' do
-      let(:window) do
-        window = double('camera_widget')
-        expect(window).to receive(:value=).with(400)
-        window
+      let(:camera) { Camera.new(model, port) }
+
+      context 'when the specified key is valid' do
+        let(:window) { double('camera_widget', :value= => 400) }
+
+        before do
+          allow(camera).to receive(:[]).and_return(window)
+        end
+
+        it "sets a widget's value" do
+          camera['iso'] = 400
+        end
+
+        it 'marks the camera as dirty' do
+          camera['iso'] = 400
+          expect(camera).to be_dirty
+        end
+
+        it 'returns the passed value' do
+          expect(camera['iso'] = 400).to eq(400)
+        end
       end
 
-      let(:camera) do
-        camera = Camera.new(model, port)
-        allow(camera).to receive(:[]).and_return(window)
-        camera
-      end
+      context 'when the specified key is invalid' do
+        before do
+          allow(camera).to receive(:[]).and_return(nil)
+        end
 
-      it "sets a widget's value" do
-        camera['iso'] = 400
-      end
-
-      it 'marks the camera as dirty' do
-        camera['iso'] = 400
-        expect(camera).to be_dirty
-      end
-
-      it 'returns the passed value' do
-        expect(camera['iso'] = 400).to eq(400)
+        it 'raises an ArgumentError' do
+          expect { camera['flavor'] = 'strawberry' }.to raise_error(ArgumentError)
+        end
       end
     end
 
