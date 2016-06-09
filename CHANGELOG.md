@@ -2,6 +2,8 @@
 
 ## HEAD
 
+* [FIX] `Camera#[]=` raises an `ArgumentError` when passed an invalid key
+  instead of failing on `nil`.
 * [ADD] Add `CameraAbilities#operations` to always return an `Integer`.
   libgphoto2 does not stay in the defined enum set of `CameraOperations`;
   therefore, it is treated as an integer bit field instead.
