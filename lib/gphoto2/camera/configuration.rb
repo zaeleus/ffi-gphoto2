@@ -70,6 +70,7 @@ module GPhoto2
       # @param [Object] value
       # @return [Object]
       def []=(key, value)
+        raise ArgumentError, "invalid key: #{key}" unless self[key]
         self[key].value = value
         @dirty = true
         value
