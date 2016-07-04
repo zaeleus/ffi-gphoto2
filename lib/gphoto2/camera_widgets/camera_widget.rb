@@ -113,7 +113,7 @@ module GPhoto2
     def get_label
       str_ptr = FFI::MemoryPointer.new(:pointer)
 
-      rc = gp_widget_get_type(ptr, str_ptr)
+      rc = gp_widget_get_label(ptr, str_ptr)
       GPhoto2.check!(rc)
 
       str_ptr = str_ptr.read_pointer
