@@ -14,6 +14,7 @@ def visit(widget, level = 0)
 
   indent << '  '
 
+  puts "#{indent}label: #{widget.label}"
   puts "#{indent}type: #{widget.type}"
   puts "#{indent}value: #{widget.value}"
 
