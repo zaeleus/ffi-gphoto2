@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* [FIX] `CameraWidget#label` calls the correct widget label function.
 * [FIX] `Camera#[]=` raises an `ArgumentError` when passed an invalid key
   instead of failing on `nil`.
 * [ADD] Add `CameraAbilities#operations` to always return an `Integer`.
