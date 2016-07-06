@@ -70,7 +70,7 @@ module GPhoto2
       map
     end
 
-    # @param [String]
+    # @return [String]
     def to_s
       value.to_s
     end
