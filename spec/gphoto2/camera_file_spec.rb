@@ -75,5 +75,22 @@ module GPhoto2
         expect(file.size).to eq(data_and_size.last)
       end
     end
+
+    describe '#info' do
+      context 'the file is a preview' do
+        it 'returns nil' do
+          file = CameraFile.new(camera)
+          expect(file.info).to be(nil)
+        end
+      end
+
+      context 'the file is a file' do
+        it 'it returns an instance of FileCameraFileInfo' do
+          file = CameraFile.new(camera, folder, name)
+          allow(file).to receive(:get_info).and_return(FileCameraFileInfo.new(nil))
+          expect(file.info).to be_kind_of(FileCameraFileInfo)
+        end
+      end
+    end
   end
 end

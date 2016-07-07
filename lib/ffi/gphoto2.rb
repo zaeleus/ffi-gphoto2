@@ -11,7 +11,10 @@ module FFI
     require 'ffi/gphoto2/camera_driver_status'
     require 'ffi/gphoto2/camera_event_type'
     require 'ffi/gphoto2/camera_file_access_type'
+    require 'ffi/gphoto2/camera_file_info_fields'
     require 'ffi/gphoto2/camera_file_operation'
+    require 'ffi/gphoto2/camera_file_permissions'
+    require 'ffi/gphoto2/camera_file_status'
     require 'ffi/gphoto2/camera_file_type'
     require 'ffi/gphoto2/camera_folder_operation'
     require 'ffi/gphoto2/camera_operation'
@@ -23,6 +26,10 @@ module FFI
     require 'ffi/gphoto2/camera_abilities'
     require 'ffi/gphoto2/camera_abilities_list'
     require 'ffi/gphoto2/camera_file'
+    require 'ffi/gphoto2/camera_file_info_audio'
+    require 'ffi/gphoto2/camera_file_info_file'
+    require 'ffi/gphoto2/camera_file_info_preview'
+    require 'ffi/gphoto2/camera_file_info'
     require 'ffi/gphoto2/camera_file_path'
     require 'ffi/gphoto2/entry'
     require 'ffi/gphoto2/camera_list'
@@ -52,6 +59,7 @@ module FFI
     attach_function :gp_camera_wait_for_event, [Camera.by_ref, :int, :pointer, :pointer, GPContext.by_ref], :int
     attach_function :gp_camera_folder_list_files, [Camera.by_ref, :string, CameraList.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_folder_list_folders, [Camera.by_ref, :string, CameraList.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_file_get_info, [Camera.by_ref, :string, :string, CameraFileInfo.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_file_get, [Camera.by_ref, :string, :string, CameraFileType, CameraFile.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_file_delete, [Camera.by_ref, :string, :string, GPContext.by_ref], :int
 

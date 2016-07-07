@@ -2,6 +2,8 @@
 
 ## HEAD
 
+* [ADD] Add `CameraFileInfo` and related operations. `CameraFile#info` only
+  supports files.
 * [FIX] `CameraWidget#label` calls the correct widget label function.
 * [FIX] `Camera#[]=` raises an `ArgumentError` when passed an invalid key
   instead of failing on `nil`.

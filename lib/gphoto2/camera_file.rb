@@ -47,6 +47,11 @@ module GPhoto2
       data_and_size.last
     end
 
+    # @return [GPhoto2::CameraFileInfo, nil]
+    def info
+      preview? ? nil : get_info
+    end
+
     private
 
     def data_and_size
@@ -78,6 +83,19 @@ module GPhoto2
       data = data_ptr.read_pointer.read_bytes(size)
 
       [data, size]
+    end
+
+    def get_info
+      info = FFI::GPhoto2::CameraFileInfo.new
+
+      rc = gp_camera_file_get_info(@camera.ptr,
+                                   @folder,
+                                   @name,
+                                   info,
+                                   @camera.context.ptr)
+      GPhoto2.check!(rc)
+
+      FileCameraFileInfo.new(info[:file])
     end
   end
 end

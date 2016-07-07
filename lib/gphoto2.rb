@@ -17,6 +17,9 @@ require 'gphoto2/camera_widgets/text_camera_widget'
 require 'gphoto2/camera_widgets/toggle_camera_widget'
 require 'gphoto2/camera_widgets/window_camera_widget'
 
+require 'gphoto2/camera_file_info/camera_file_info'
+require 'gphoto2/camera_file_info/file_camera_file_info'
+
 require 'gphoto2/camera/capture'
 require 'gphoto2/camera/configuration'
 require 'gphoto2/camera/event'
