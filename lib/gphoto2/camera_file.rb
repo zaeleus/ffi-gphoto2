@@ -62,7 +62,7 @@ module GPhoto2
     end
 
     def default_filename
-      preview? ? CAPTURE_FILENAME : @name
+      preview? ? PREVIEW_FILENAME : @name
     end
 
     def new

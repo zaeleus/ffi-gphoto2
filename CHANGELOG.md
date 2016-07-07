@@ -2,6 +2,7 @@
 
 ## HEAD
 
+* [FIX] Use the correct default filename when a `CameraFile` is a preview.
 * [ADD] Add `CameraFileInfo` and related operations. `CameraFile#info` only
   supports files.
 * [FIX] `CameraWidget#label` calls the correct widget label function.
