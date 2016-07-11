@@ -2,6 +2,8 @@
 
 ## HEAD
 
+## 0.6.0
+
 * [FIX] Use the correct default filename when a `CameraFile` is a preview.
 * [ADD] Add `CameraFileInfo` and related operations. `CameraFile#info` only
   supports files.
