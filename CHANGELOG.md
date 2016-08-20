@@ -2,7 +2,11 @@
 
 ## HEAD
 
-## 0.6.0
+* [FIX] `ManagedStruct.release` actually calls `*_free` functions. Autorelease
+  invocations were silently failing with a `TypeError` because the functions
+  expected structs, not pointers.
+
+## 0.6.0 (2016-07-11)
 
 * [FIX] Use the correct default filename when a `CameraFile` is a preview.
 * [ADD] Add `CameraFileInfo` and related operations. `CameraFile#info` only

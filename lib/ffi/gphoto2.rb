@@ -38,7 +38,7 @@ module FFI
 
     # gphoto2/gphoto2-abilities-list.h
     attach_function :gp_abilities_list_new, [:pointer], :int
-    attach_function :gp_abilities_list_free, [CameraAbilitiesList.by_ref], :int
+    attach_function :gp_abilities_list_free, [:pointer], :int
     attach_function :gp_abilities_list_load, [CameraAbilitiesList.by_ref, GPContext.by_ref], :int
     attach_function :gp_abilities_list_detect, [CameraAbilitiesList.by_ref, GPhoto2Port::GPPortInfoList.by_ref, CameraList.by_ref, GPContext.by_ref], :int
     attach_function :gp_abilities_list_lookup_model, [CameraAbilitiesList.by_ref, :string], :int
@@ -70,12 +70,12 @@ module FFI
 
     # gphoto2/gphoto2-file.h
     attach_function :gp_file_new, [:pointer], :int
-    attach_function :gp_file_free, [CameraFile.by_ref], :int
+    attach_function :gp_file_free, [:pointer], :int
     attach_function :gp_file_get_data_and_size, [CameraFile.by_ref, :pointer, :pointer], :int
 
     # gphoto2/gphoto2-list.h
     attach_function :gp_list_new, [:pointer], :int
-    attach_function :gp_list_free, [CameraList.by_ref], :int
+    attach_function :gp_list_free, [:pointer], :int
     attach_function :gp_list_count, [CameraList.by_ref], :int
     attach_function :gp_list_get_name, [CameraList.by_ref, :int, :pointer], :int
     attach_function :gp_list_get_value, [CameraList.by_ref, :int, :pointer], :int
