@@ -32,7 +32,7 @@ module GPhoto2
     private
 
     def new
-      ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraAbilitiesList)
+      ptr = FFI::MemoryPointer.new(:pointer)
       rc = gp_abilities_list_new(ptr)
       GPhoto2.check!(rc)
       @ptr = FFI::GPhoto2::CameraAbilitiesList.new(ptr.read_pointer)

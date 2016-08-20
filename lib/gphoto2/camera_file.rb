@@ -66,7 +66,7 @@ module GPhoto2
     end
 
     def new
-      ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraFile)
+      ptr = FFI::MemoryPointer.new(:pointer)
       rc = gp_file_new(ptr)
       GPhoto2.check!(rc)
       @ptr = FFI::GPhoto2::CameraFile.new(ptr.read_pointer)

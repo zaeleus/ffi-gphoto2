@@ -25,7 +25,7 @@ module GPhoto2
     private
 
     def new
-      ptr = FFI::MemoryPointer.new(GPPortInfoList)
+      ptr = FFI::MemoryPointer.new(:pointer)
       rc = gp_port_info_list_new(ptr)
       GPhoto2.check!(rc)
       @ptr = GPPortInfoList.new(ptr.read_pointer)

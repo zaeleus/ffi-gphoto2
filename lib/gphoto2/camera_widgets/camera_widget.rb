@@ -127,7 +127,7 @@ module GPhoto2
     end
 
     def get_child(index)
-      widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
+      widget_ptr = FFI::MemoryPointer.new(:pointer)
       rc = gp_widget_get_child(ptr, index, widget_ptr)
       GPhoto2.check!(rc)
       widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)

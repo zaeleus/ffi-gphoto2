@@ -138,7 +138,7 @@ module GPhoto2
       end
 
       def get_config
-        widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
+        widget_ptr = FFI::MemoryPointer.new(:pointer)
         rc = gp_camera_get_config(ptr, widget_ptr, context.ptr)
         GPhoto2.check!(rc)
         widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
