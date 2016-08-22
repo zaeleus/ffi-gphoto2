@@ -2,6 +2,8 @@
 
 ## HEAD
 
+## 0.6.1 (2016-08-21)
+
 * [FIX] `ManagedStruct.release` actually calls `*_free` functions. Autorelease
   invocations were silently failing with a `TypeError` because the functions
   expected structs, not pointers.
