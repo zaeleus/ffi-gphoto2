@@ -2,6 +2,9 @@
 
 ## HEAD
 
+* [ADD] Add `FFI::GPhoto2Port::GPPort` struct and related functions to do a
+  port reset.
+
 ## 0.6.1 (2016-08-21)
 
 * [FIX] `ManagedStruct.release` actually calls `*_free` functions. Autorelease

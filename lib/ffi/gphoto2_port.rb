@@ -8,9 +8,16 @@ module FFI
     require 'ffi/gphoto2_port/gp_port_result'
 
     # enums
+    require 'ffi/gphoto2_port/gp_port_serial_parity'
     require 'ffi/gphoto2_port/gp_port_type'
 
     # structs
+    require 'ffi/gphoto2_port/gp_port_settings_serial'
+    require 'ffi/gphoto2_port/gp_port_settings_usb'
+    require 'ffi/gphoto2_port/gp_port_settings_usb_disk_direct'
+    require 'ffi/gphoto2_port/gp_port_settings_usb_scsi'
+    require 'ffi/gphoto2_port/gp_port_settings'
+    require 'ffi/gphoto2_port/gp_port'
     require 'ffi/gphoto2_port/gp_port_info'
     require 'ffi/gphoto2_port/gp_port_info_list'
 
@@ -27,5 +34,16 @@ module FFI
 
     # libgphoto2_port/gphoto2/gphoto2-port-result.h
     attach_function :gp_port_result_as_string, [:int], :string
+
+    # libgphoto2_port/gphoto2/gphoto2-port.h
+    attach_function :gp_port_new, [:pointer], :int
+    attach_function :gp_port_free, [:pointer], :int
+
+    attach_function :gp_port_set_info, [GPPort.by_ref, GPPortInfo], :int
+
+    attach_function :gp_port_open, [GPPort.by_ref], :int
+    attach_function :gp_port_close, [GPPort.by_ref], :int
+
+    attach_function :gp_port_reset, [GPPort.by_ref], :int
   end
 end
