@@ -2,6 +2,8 @@
 
 ## HEAD
 
+* [CHANGE] Raise minimum `libgphoto2` version to 2.5.2. This version introduced
+  `gp_port_reset`.
 * [ADD] Add `FFI::GPhoto2Port::GPPort` struct and related functions to do a
   port reset.
 
