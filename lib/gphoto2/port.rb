@@ -7,7 +7,7 @@ module GPhoto2
       @ptr = new
     end
 
-    # @param [PortInfo]
+    # @param [PortInfo] info
     # @return [PortInfo]
     def info=(info)
       set_info(info)
