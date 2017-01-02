@@ -2,6 +2,8 @@
 
 ## HEAD
 
+## 0.7.1 (2017-01-02)
+
 * [FIX] Load `ffi` before any usage of the bindings.
 
 ## 0.7.0 (2016-09-19)
