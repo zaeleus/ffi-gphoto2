@@ -1,3 +1,4 @@
+require 'ffi'
 require 'ffi/gphoto2_port'
 
 module FFI

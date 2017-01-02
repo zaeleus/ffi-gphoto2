@@ -2,6 +2,8 @@
 
 ## HEAD
 
+* [FIX] Load `ffi` before any usage of the bindings.
+
 ## 0.7.0 (2016-09-19)
 
 * [CHANGE] Raise minimum `libgphoto2` version to 2.5.2. This version introduced

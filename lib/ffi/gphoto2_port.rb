@@ -1,3 +1,5 @@
+require 'ffi'
+
 module FFI
   module GPhoto2Port
     extend FFI::Library

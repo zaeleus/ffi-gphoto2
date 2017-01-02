@@ -1,7 +1,5 @@
 require 'logger'
 
-require 'ffi'
-
 require 'ffi/gphoto2'
 require 'ffi/gphoto2_port'
 
