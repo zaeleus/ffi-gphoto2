@@ -52,6 +52,11 @@ module GPhoto2
       preview? ? nil : get_info
     end
 
+    def release
+        FFI::GPhoto2::CameraFile.release(ptr)
+        @ptr = nil
+    end
+    
     private
 
     def data_and_size
