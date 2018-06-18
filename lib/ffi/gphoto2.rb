@@ -1,5 +1,6 @@
 require 'ffi'
 require 'ffi/gphoto2_port'
+require 'ffi/gphoto2/result'
 
 module FFI
   module GPhoto2
@@ -74,7 +75,16 @@ module FFI
     # gphoto2/gphoto2-file.h
     attach_function :gp_file_new, [:pointer], :int
     attach_function :gp_file_free, [:pointer], :int
+    attach_function :gp_file_unref, [CameraFile.by_ref], :int
+    # int gp_file_get_data_and_size (CameraFile *file, const char **data, unsigned long int *size)
     attach_function :gp_file_get_data_and_size, [CameraFile.by_ref, :pointer, :pointer], :int
+    # int gp_file_set_data_and_size (CameraFile *file, char *data, unsigned long int size)
+    attach_function :gp_file_set_data_and_size, [CameraFile.by_ref, :pointer, :int], :int
+    # int gp_file_set_mime_type (CameraFile *file, const char *mime_type)
+    attach_function :gp_file_set_mime_type, [CameraFile.by_ref, :string], :int
+    # int gp_file_new_from_fd (CameraFile **file, int fd)
+    attach_function :gp_file_new_from_fd, [:pointer, :int], :int
+
 
     # gphoto2/gphoto2-list.h
     attach_function :gp_list_new, [:pointer], :int
