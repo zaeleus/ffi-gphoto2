@@ -80,6 +80,9 @@ module FFI
     attach_function :gp_list_count, [CameraList.by_ref], :int
     attach_function :gp_list_get_name, [CameraList.by_ref, :int, :pointer], :int
     attach_function :gp_list_get_value, [CameraList.by_ref, :int, :pointer], :int
+    attach_function :gp_widget_set_changed, [CameraWidget.by_ref, :int], :int
+    attach_function :gp_widget_get_readonly, [CameraWidget.by_ref, :pointer], :int
+    attach_function :gp_widget_set_readonly, [CameraWidget.by_ref, :int], :int
 
     # gphoto2/gphoto2-widget.h
     attach_function :gp_widget_free, [CameraWidget.by_ref], :int

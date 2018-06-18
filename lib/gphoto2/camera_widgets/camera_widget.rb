@@ -36,6 +36,11 @@ module GPhoto2
       get_name
     end
 
+    # @return [Boolean]
+    def readonly?
+      get_readonly
+    end
+
     # @return [Object]
     def value
       get_value
@@ -118,6 +123,15 @@ module GPhoto2
 
       str_ptr = str_ptr.read_pointer
       str_ptr.null? ? nil : str_ptr.read_string
+    end
+
+    def get_readonly
+      bool = FFI::MemoryPointer.new(:int)
+      rc = gp_widget_get_readonly(ptr, bool)
+      GPhoto2.check!(rc)
+
+      int_value = bool.read_int
+      int_value == 0 ? false : true
     end
 
     def count_children
