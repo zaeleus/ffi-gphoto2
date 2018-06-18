@@ -52,8 +52,8 @@ module FFI
     attach_function :gp_camera_exit, [Camera.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_ref, [Camera.by_ref], :int
     attach_function :gp_camera_unref, [Camera.by_ref], :int
-    attach_function :gp_camera_get_config, [Camera.by_ref, :pointer, GPContext.by_ref], :int
-    attach_function :gp_camera_set_config, [Camera.by_ref, CameraWidget.by_ref, GPContext.by_ref], :int
+    attach_function :gp_camera_get_config, [Camera.by_ref, :pointer, GPContext.by_ref], :int, blocking: true
+    attach_function :gp_camera_set_config, [Camera.by_ref, CameraWidget.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_capture, [Camera.by_ref, CameraCaptureType, CameraFilePath.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_trigger_capture, [Camera.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_capture_preview, [Camera.by_ref, CameraFile.by_ref, GPContext.by_ref], :int, blocking: true
