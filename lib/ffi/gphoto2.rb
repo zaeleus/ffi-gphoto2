@@ -64,6 +64,8 @@ module FFI
     attach_function :gp_camera_file_get, [Camera.by_ref, :string, :string, CameraFileType, CameraFile.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_file_delete, [Camera.by_ref, :string, :string, GPContext.by_ref], :int
 
+    attach_function :gp_camera_get_single_config, [Camera.by_ref, :string, :pointer, GPContext.by_ref], :int
+
     # gphoto2/gphoto2-context.h
     attach_function :gp_context_new, [], :pointer
     attach_function :gp_context_ref, [GPContext.by_ref], :void
