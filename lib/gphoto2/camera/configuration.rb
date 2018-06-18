@@ -131,7 +131,7 @@ module GPhoto2
 
       # Added by ryan to fetch a single value
       def get_single_value(key)
-        widget_ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraWidget)
+        widget_ptr = FFI::MemoryPointer.new(:pointer)
         rc = gp_camera_get_single_config(ptr, key, widget_ptr, context.ptr)
         GPhoto2.check!(rc)
         widget = FFI::GPhoto2::CameraWidget.new(widget_ptr.read_pointer)
@@ -154,6 +154,9 @@ module GPhoto2
         # the camera on the next set_config call (which can cause errors)
         rc = gp_widget_set_changed(self[key].ptr, 0)
         GPhoto2.check!(rc)
+
+        # Free the temp widget
+        widget.finalize
 
         value
       end
