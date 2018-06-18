@@ -18,6 +18,7 @@ module GPhoto2
     def initialize(camera, folder = nil, name = nil)
       @camera = camera
       @folder, @name = folder, name
+      @loaded = false
       new
     end
 
@@ -52,11 +53,20 @@ module GPhoto2
       preview? ? nil : get_info
     end
 
+
+
+    def load_as(type)
+      return if @loaded
+      rc = @camera.gp_camera_file_get(@camera.ptr, folder, name, type, ptr, @camera.context.ptr)
+      GPhoto2.check!(rc)
+      @loaded = true
+    end
+
     private
 
     def data_and_size
       @data_and_size ||= begin
-        @camera.file(self) unless preview?
+        @camera.file(self) unless preview? || @loaded
         get_data_and_size
       end
     end
@@ -70,6 +80,37 @@ module GPhoto2
       rc = gp_file_new(ptr)
       GPhoto2.check!(rc)
       @ptr = FFI::GPhoto2::CameraFile.new(ptr.read_pointer)
+    end
+
+    def new_from_fd(fd)
+      @loaded = true
+      ptr = FFI::MemoryPointer.new(FFI::GPhoto2::CameraFile)
+      rc = gp_file_new_from_fd(ptr, fd)
+      GPhoto2.check!(rc)
+      @ptr = FFI::GPhoto2::CameraFile.new(ptr.read_pointer)
+    end
+
+    def set_data_and_size(bytes)
+      data = FFI::MemoryPointer.new(:char, bytes.size)
+      # data.put_string(bytes)
+      data.put_bytes(0, bytes, 0)
+      # data_ptr = FFI::MemoryPointer.new(:pointer)
+      # data_ptr.write_pointer(data)
+      # size = FFI::MemoryPointer.new(:ulong)
+      # ulong_size = [bytes.size].pack('L_')
+      # # size.put_string(ulong_size)
+      # size.put_bytes(0, ulong_size, 0)
+
+      puts "WRITE: #{bytes.size}"
+      rc = gp_file_set_data_and_size(ptr, data, bytes.size)
+      # puts "RC: #{rc.inspect}"
+      GPhoto2.check!(rc)
+
+      # Set mime
+      # mt_ptr = FFI::MemoryPointer.from_string("jpg")
+      rc = gp_file_set_mime_type(ptr, "jpg")
+      # puts "RC2: #{rc}"
+      GPhoto2.check!(rc)
     end
 
     def get_data_and_size
