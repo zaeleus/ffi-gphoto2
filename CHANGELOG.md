@@ -2,9 +2,10 @@
 
 ## HEAD
 
+## 0.8.0 (2020-06-29)
+
 * [FIX] Fix deprecation warning (`warning: rb_safe_level will be removed in
   Ruby 3.0`) by updating to ffi 1.12.0.
-
 * [CHANGE] Raise minimum Ruby version to 2.0.0, which comes from the dependency
   on ffi 1.12.0 (specifically 1.11.1).
 
