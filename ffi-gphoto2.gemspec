@@ -23,9 +23,9 @@ Gem::Specification.new do |spec|
   spec.requirements << 'libgphoto2_port >= 0.10.1'
   spec.required_ruby_version = '>= 2.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.3'
-  spec.add_development_dependency 'rake', '~> 12.0'
-  spec.add_development_dependency 'rspec', '~> 3.5.0'
+  spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '~> 3.9.0'
   spec.add_development_dependency 'yard', '~> 0.9.0'
 
   spec.add_dependency 'ffi', '~> 1.12.0'
