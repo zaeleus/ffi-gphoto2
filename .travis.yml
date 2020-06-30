@@ -4,7 +4,7 @@ language: ruby
 rvm:
   - 2.3.1
 before_install:
-  - gem install bundler -v 1.12.5
+  - gem install bundler
   - sudo apt-get -qq update
   - sudo apt-get install libgphoto2-6 libgphoto2-port10
   - sudo ln -s /usr/lib/x86_64-linux-gnu/libgphoto2.so{.6,}
