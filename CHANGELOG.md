@@ -2,6 +2,9 @@
 
 ## HEAD
 
+* [FIX] Fix deprecation warning (`warning: rb_safe_level will be removed in
+  Ruby 3.0`) by updating to ffi 1.12.0.
+
 ## 0.7.1 (2017-01-02)
 
 * [FIX] Load `ffi` before any usage of the bindings.
