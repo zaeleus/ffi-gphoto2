@@ -12,7 +12,7 @@ idiomatic Ruby way.
 
 ### Prerequisites
 
-  * Ruby >= 2.0
+  * Ruby >= 2.3
   * libgphoto2 >= 2.5.2
   * libgphoto2_port >= 0.10.1
 
