@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.9.0 (2021-04-17)
+
 * [CHANGE] Update to ffi 1.15.0. This raises the minimum Ruby version to 2.3.0.
 
 ## 0.8.0 (2020-06-29)
