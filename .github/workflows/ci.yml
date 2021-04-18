@@ -1,0 +1,19 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          sudo apt-get update
+          sudo apt-get --yes install gcc make libgphoto2-6 libgphoto2-port12
+          sudo ln -s /usr/lib/x86_64-linux-gnu/libgphoto2.so{.6,}
+          sudo ln -s /usr/lib/x86_64-linux-gnu/libgphoto2_port.so{.12,}
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+      - run: bundle install
+      - run: bundle exec rake
