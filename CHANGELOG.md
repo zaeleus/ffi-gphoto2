@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+* [CHANGE] Mark `gp_camera_wait_for_event` as a blocking call ([#19]).
+
+[#19]: https://github.com/zaeleus/ffi-gphoto2/pull/19
+
 ## 0.9.0 (2021-04-17)
 
 * [CHANGE] Update to ffi 1.15.0. This raises the minimum Ruby version to 2.3.0.
