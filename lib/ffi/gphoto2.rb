@@ -57,7 +57,7 @@ module FFI
     attach_function :gp_camera_capture, [Camera.by_ref, CameraCaptureType, CameraFilePath.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_trigger_capture, [Camera.by_ref, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_capture_preview, [Camera.by_ref, CameraFile.by_ref, GPContext.by_ref], :int, blocking: true
-    attach_function :gp_camera_wait_for_event, [Camera.by_ref, :int, :pointer, :pointer, GPContext.by_ref], :int
+    attach_function :gp_camera_wait_for_event, [Camera.by_ref, :int, :pointer, :pointer, GPContext.by_ref], :int, blocking: true
     attach_function :gp_camera_folder_list_files, [Camera.by_ref, :string, CameraList.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_folder_list_folders, [Camera.by_ref, :string, CameraList.by_ref, GPContext.by_ref], :int
     attach_function :gp_camera_file_get_info, [Camera.by_ref, :string, :string, CameraFileInfo.by_ref, GPContext.by_ref], :int
