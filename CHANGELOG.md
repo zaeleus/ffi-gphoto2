@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.0 (2022-09-02)
 
 * [CHANGE] Mark `gp_camera_wait_for_event` as a blocking call ([#19]).
 
